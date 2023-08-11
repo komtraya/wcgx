@@ -22,6 +22,12 @@
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>200</height>
+   </size>
+  </property>
   <property name="baseSize">
    <size>
     <width>1599</width>
@@ -115,7 +121,7 @@
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-        <widget class="QFrame" name="frame">
+        <widget class="QFrame" name="frame_main1">
          <layout class="QHBoxLayout" name="horizontalLayout_23">
           <item>
            <layout class="QHBoxLayout" name="pathsAndparameters">
@@ -604,7 +610,7 @@
                            <height>24</height>
                           </size>
                          </property>
-                         <widget class="QWidget" name="parameters_windowPage1" native="true">
+                         <widget class="QWidget" name="parameters_windowPage1">
                           <attribute name="title">
                            <string>Repeat</string>
                           </attribute>
@@ -777,7 +783,7 @@ is reached.</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage2" native="true">
+                         <widget class="QWidget" name="parameters_windowPage2">
                           <attribute name="title">
                            <string>Font Size</string>
                           </attribute>
@@ -1073,7 +1079,7 @@ computation, but result in a worse fit.</string>
                                </widget>
                               </item>
                               <item row="1" column="1">
-                               <widget class="QFrame" name="">
+                               <widget class="QFrame" name="frame">
                                 <layout class="QHBoxLayout" name="horizontalLayout_4">
                                  <item>
                                   <spacer name="horizontalSpacer_11">
@@ -1223,7 +1229,7 @@ computation, but result in a worse fit.</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage3" native="true">
+                         <widget class="QWidget" name="parameters_windowPage3">
                           <attribute name="title">
                            <string>Margin</string>
                           </attribute>
@@ -1427,7 +1433,7 @@ computation, but result in a worse fit.</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage4" native="true">
+                         <widget class="QWidget" name="parameters_windowPage4">
                           <attribute name="title">
                            <string>H. Odds</string>
                           </attribute>
@@ -1624,7 +1630,7 @@ but not guaranteed!</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage5" native="true">
+                         <widget class="QWidget" name="parameters_windowPage5">
                           <attribute name="title">
                            <string>Scale</string>
                           </attribute>
@@ -1804,7 +1810,7 @@ results in faster rendering.</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage6" native="true">
+                         <widget class="QWidget" name="parameters_windowPage6">
                           <attribute name="title">
                            <string>StopWords</string>
                           </attribute>
@@ -1963,7 +1969,7 @@ Ignored if using generate_from_frequencies.</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage7" native="true">
+                         <widget class="QWidget" name="parameters_windowPage7">
                           <attribute name="title">
                            <string>CLC</string>
                           </attribute>
@@ -2092,7 +2098,7 @@ Ignored if using generate_from_frequencies.</string>
                            </item>
                           </layout>
                          </widget>
-                         <widget class="QWidget" name="parameters_windowPage8" native="true">
+                         <widget class="QWidget" name="parameters_windowPage8">
                           <attribute name="title">
                            <string>CLC Thresh</string>
                           </attribute>
@@ -2405,78 +2411,55 @@ to be included in the word cloud as 1 phrase.</string>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_21">
                <item>
-                <widget class="QFrame" name="SelectFontFrame">
+                <widget class="QFrame" name="generated_text_frame">
+                 <property name="minimumSize">
+                  <size>
+                   <width>370</width>
+                   <height>300</height>
+                  </size>
+                 </property>
                  <property name="maximumSize">
                   <size>
-                   <width>571</width>
+                   <width>200</width>
                    <height>16777215</height>
                   </size>
                  </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_4">
+                 <layout class="QVBoxLayout" name="verticalLayout_3">
                   <item alignment="Qt::AlignHCenter">
-                   <widget class="QPushButton" name="select_font_button">
+                   <widget class="QPushButton" name="custom_font_directory_selection">
                     <property name="minimumSize">
                      <size>
-                      <width>150</width>
+                      <width>50</width>
                       <height>50</height>
                      </size>
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>250</width>
-                      <height>50</height>
+                      <width>200</width>
+                      <height>16777215</height>
                      </size>
                     </property>
-                    <property name="font">
-                     <font>
-                      <family>Play</family>
-                      <pointsize>18</pointsize>
-                      <bold>true</bold>
-                     </font>
-                    </property>
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Select custom font for the generated text &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                    </property>
                     <property name="text">
-                     <string>Select Font</string>
+                     <string>  Change Fonts Folder  </string>
                     </property>
                    </widget>
                   </item>
-                  <item alignment="Qt::AlignHCenter">
-                   <widget class="QLabel" name="font_label">
-                    <property name="font">
-                     <font>
-                      <family>IBM Plex Sans</family>
-                      <pointsize>14</pointsize>
-                      <bold>true</bold>
-                     </font>
+                  <item>
+                   <widget class="QListWidget" name="font_list">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>200</height>
+                     </size>
                     </property>
-                    <property name="toolTip">
-                     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Font for generated text &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                    <property name="autoScrollMargin">
+                     <number>20</number>
                     </property>
-                    <property name="text">
-                     <string>TextLabel</string>
+                    <property name="tabKeyNavigation">
+                     <bool>false</bool>
                     </property>
                    </widget>
                   </item>
-                 </layout>
-                </widget>
-               </item>
-               <item>
-                <widget class="QFrame" name="generated_text_frame">
-                 <property name="minimumSize">
-                  <size>
-                   <width>370</width>
-                   <height>500</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>370</width>
-                   <height>500</height>
-                  </size>
-                 </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_3">
                   <item>
                    <widget class="QLabel" name="generated_text_label">
                     <property name="font">
@@ -3751,6 +3734,7 @@ color: rgb(255, 255, 255);</string>
                <property name="font">
                 <font>
                  <family>Sarpanch SemiBold</family>
+                 <bold>false</bold>
                 </font>
                </property>
                <property name="title">

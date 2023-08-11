@@ -13,6 +13,7 @@ from PySide6.QtGui import QFont, QFontDatabase, QPixmap
 # from PySide6 import QtGui as gui
 from ui.output import Ui_MainWindow
 from PySide6.QtWidgets import QFileDialog
+from PySide6.QtWidgets import QListWidgetItem
 from PIL import Image
 
 userPath = os.path.expanduser("~")
@@ -41,6 +42,15 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         # Make sure text input is not empty
         self.word_input.textChanged.connect(self.text_input_Changed)
+
+        ### scan fonts set by default (windows path) and populate the list
+        self.fonts_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"  # default font directory on start of the app
+        self.scan_fonts(self.fonts_directory)  # This scans the default directory for fonts
+        # self.font_list.itemClicked.connect(self.apply_selected_font)  # connect list items to function, so that it applies the selected font to the text
+        self.font_list.currentItemChanged.connect(self.apply_selected_font)  # This enables clicks, as well as keyboard arrows to browse through the list
+
+        self.custom_font_directory_selection.clicked.connect(self.select_custom_fonts_folder)
+
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
         self.generate_wordcloud_button.setVisible(False)
         self.export_as_frame.setVisible(False)
@@ -55,9 +65,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.colormaps_dropdown.currentTextChanged.connect(self.check_dropdown_selected_item)
         # Call to check image dimensions on app start
         self.update_image_dimensions()
-        # Default font text and settings
-        self.font_label.setText("No font selected.")
-        self.font_label.setStyleSheet("font-size: 10px;color:red;")
+
         ## MASK IMAGE SELECTION
         # Connect the "Select Mask" button's clicked signal to the custom slot
         self.mask_select_button.clicked.connect(self.mask_select_button_clicked)
@@ -76,8 +84,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.destination_path.textChanged.connect(self.destination_Changed)
 
         # ## FONT HANDLING
-        self.font_path = None
-        self.select_font_button.clicked.connect(self.selected_font_file)
+        # self.font_path = None
 
         ## Browsing through the list of parameters
         self.parameters_list.currentItemChanged.connect(self.change_tab_based_on_selected_item)
@@ -139,6 +146,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.custom_regexp = r"\w+(?:\.\w+)*"
         # Call the color conditions function, to establish colormap, or if a custom function will be used
         # self.colormap_conditions()
+        self.aaa = None
 
     def check_export_format_before_generate_WordCloud(self):
         if self.export_format_options.currentText() == "PNG":
@@ -161,7 +169,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
             contour_color=0,
             margin=self.margin_slider.value(),
-            font_path=self.font_path,
+            font_path=self.font_list.currentItem().data(1001),
             repeat=self.repeat_checkbox.isChecked(),
             collocation_threshold=self.collocations_thresh_slider.value(),
             collocations=self.collocations_checkbox.isChecked(),
@@ -190,7 +198,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         wordcloud_image = Image.fromarray(wordcloud_image)
 
         # Export the PIL Image object as a PNG image file
-        output_image_path = rf"{self.destination_path.text()}\{self.font_name}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+        output_image_path = rf"{self.destination_path.text()}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
         wordcloud_image.save(output_image_path)
 
     def generate_WordCloud_svg(self):
@@ -206,7 +214,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
             contour_color=0,
             margin=self.margin_slider.value(),
-            font_path=self.font_path,
+            font_path=self.font_list.currentItem().data(1001),
             repeat=self.repeat_checkbox.isChecked(),
             collocation_threshold=self.collocations_thresh_slider.value(),
             collocations=self.collocations_checkbox.isChecked(),
@@ -228,7 +236,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Generate the SVG representation of the word cloud
         svg_code = wordcloud.to_svg()
         # Export the SVG code to a file
-        output_image_path_1 = rf"{self.destination_path.text()}\{self.font_name}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+        output_image_path_1 = rf"{self.destination_path.text()}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
         with open(f"{output_image_path_1}", "w", encoding="utf-8") as f:
             f.write(svg_code)
 
@@ -245,7 +253,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
             contour_color=0,
             margin=self.margin_slider.value(),
-            font_path=self.font_path,
+            font_path=self.font_list.currentItem().data(1001),
             repeat=self.repeat_checkbox.isChecked(),
             collocation_threshold=self.collocations_thresh_slider.value(),
             collocations=self.collocations_checkbox.isChecked(),
@@ -267,7 +275,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Generate the SVG representation of the word cloud
         svg_code = wordcloud.to_svg()
         # Export the SVG code to a file
-        output_image_path = rf"{self.destination_path.text()}\{self.font_name}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+        output_image_path = rf"{self.destination_path.text()}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
         with open(f"{output_image_path}", "w", encoding="utf-8") as f:
             f.write(svg_code)
 
@@ -390,7 +398,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## ENABLE WORDCLOUD BUTTON##
     def enable_WordCloud_Generator_Button(self):
-        if image_state == True and self.destination_path.text() and self.word_input.toPlainText() != "" and self.font_path != None:
+        if image_state == True and self.destination_path.text() and self.word_input.toPlainText() != "":
             # self.generate_wordcloud_button.setEnabled(True)
             self.generate_wordcloud_button.setVisible(True)
             self.export_as_frame.setVisible(True)
@@ -403,30 +411,59 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Set the background color to red when the button is clicked
         self.name_here.setStyleSheet(f"color: {color};")
 
-    ## SELECT FONT
-    def selected_font_file(self):
+    ## SELECT FONT and FONT HANDLING
+    def apply_selected_font(self, item):
+        try:
+            font_path = item.data(1001)
+            font_id = QFontDatabase.addApplicationFont(font_path)
+            font_families = QFontDatabase.applicationFontFamilies(font_id)
+
+            if font_families:
+                selected_font = QFont(font_families[0], 15)  # Use the first font family
+                self.word_input.setFont(selected_font)
+        except:
+            pass
+
+    # Scan font firectory and populate list with font names
+    def scan_fonts(self, fontDirectory):
+        font_files = self.get_font_files(fontDirectory)
+
+        for font_path in font_files:
+            try:
+                font_name = os.path.basename(font_path)
+                font_name_display = font_name.split(".")[0].capitalize()
+                item = QListWidgetItem(font_name_display)
+                item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
+                self.font_list.addItem(item)  # - populate the list with fonts
+                self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+            except:
+                pass
+        # Disable the Generate WordCloud button if the selected path contains no font files
+        if self.font_list.count() == 0:
+            self.generate_wordcloud_button.setEnabled(False)
+        else:
+            self.generate_wordcloud_button.setEnabled(True)
+
+    # Allow users to specify custom font directory (using the "Change Fonts Folder"(custom_fonts_directory_selection) button)
+    def select_custom_fonts_folder(self):
         options = QFileDialog.Options()
-        options |= QFileDialog.ReadOnly  # Make the selected file read-only
-        # Specify the predetermined directory path here
+        options |= QFileDialog.ShowDirsOnly
         initial_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"
-        file_filter = "Font Files (*.ttf *.otf)"
-        font_file, _ = QFileDialog.getOpenFileName(self, "Select Font File", initial_directory, file_filter, options=options)
-        if font_file:
-            self.font_name = font_file.split("/")[-1].split(".")[0]
-            self.font_label.setText(self.font_name)
-            self.font_label.setStyleSheet("font-size:20px;")
-            self.font_path = rf"{font_file}"
-            # Extract font information from path, so we can set the word_input font-family to the one selected to use in the wordcloud
-            font_id = QFontDatabase.addApplicationFont(self.font_path)
-            if font_id != -1:
-                # Font loaded successfully, create a QFont object with the loaded font family
-                font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
-                font = QFont(font_family, 15)  # Replace 12 with the desired font size
-            else:
-                # Font loading failed, fall back to the default system font
-                font = QFont()
-            self.word_input.setFont(font)
-            self.enable_WordCloud_Generator_Button()
+        selected_directory = QFileDialog.getExistingDirectory(self, "Select Fonts Directory", initial_directory, options=options)
+
+        if selected_directory:
+            self.fonts_directory = selected_directory
+            self.font_list.clear()
+            self.scan_fonts(self.fonts_directory)
+
+    # Scan a folder for font files
+    def get_font_files(self, directory):
+        font_files = []
+        for root, _, files in os.walk(directory):
+            for file in files:
+                if file.lower().endswith((".ttf", ".otf")):
+                    font_files.append(os.path.join(root, file))
+        return font_files
 
     ## RANDOM COLOR PRESETS FUNCTIONS ##
     def rcp_bright_function(self):

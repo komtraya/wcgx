@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainstuff-Redesign.ui'
+## Form generated from reading UI file 'mainR1.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.5.2
 ##
@@ -37,6 +37,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QSize(0, 200))
         MainWindow.setBaseSize(QSize(1599, 1180))
         icon = QIcon()
         icon.addFile(u":/Icon/WCGXicon2.ico", QSize(), QIcon.Normal, QIcon.Off)
@@ -83,13 +84,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_25.addWidget(self.TitleContainer)
 
-        self.frame = QFrame(self.FRAME_X)
-        self.frame.setObjectName(u"frame")
-        self.horizontalLayout_23 = QHBoxLayout(self.frame)
+        self.frame_main1 = QFrame(self.FRAME_X)
+        self.frame_main1.setObjectName(u"frame_main1")
+        self.horizontalLayout_23 = QHBoxLayout(self.frame_main1)
         self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
         self.pathsAndparameters = QHBoxLayout()
         self.pathsAndparameters.setObjectName(u"pathsAndparameters")
-        self.frame_11 = QFrame(self.frame)
+        self.frame_11 = QFrame(self.frame_main1)
         self.frame_11.setObjectName(u"frame_11")
         self.frame_11.setMinimumSize(QSize(0, 630))
         self.frame_11.setMaximumSize(QSize(855, 630))
@@ -493,22 +494,22 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.label_10, 0, 1, 1, 1)
 
-        self.frame1 = QFrame(self.frame_font_step)
-        self.frame1.setObjectName(u"frame1")
-        self.horizontalLayout_4 = QHBoxLayout(self.frame1)
+        self.frame = QFrame(self.frame_font_step)
+        self.frame.setObjectName(u"frame")
+        self.horizontalLayout_4 = QHBoxLayout(self.frame)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_11)
 
-        self.fontstep_label = QLabel(self.frame1)
+        self.fontstep_label = QLabel(self.frame)
         self.fontstep_label.setObjectName(u"fontstep_label")
         self.fontstep_label.setMaximumSize(QSize(16777215, 50))
         self.fontstep_label.setFont(font10)
 
         self.horizontalLayout_4.addWidget(self.fontstep_label)
 
-        self.font_step_slider = QSlider(self.frame1)
+        self.font_step_slider = QSlider(self.frame)
         self.font_step_slider.setObjectName(u"font_step_slider")
         self.font_step_slider.setMinimumSize(QSize(30, 150))
         self.font_step_slider.setMaximumSize(QSize(30, 150))
@@ -521,7 +522,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.font_step_slider, 0, Qt.AlignHCenter)
 
-        self.font_step_indicator_label = QLabel(self.frame1)
+        self.font_step_indicator_label = QLabel(self.frame)
         self.font_step_indicator_label.setObjectName(u"font_step_indicator_label")
         self.font_step_indicator_label.setMinimumSize(QSize(50, 0))
         self.font_step_indicator_label.setMaximumSize(QSize(50, 50))
@@ -534,7 +535,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addItem(self.horizontalSpacer_16)
 
 
-        self.gridLayout.addWidget(self.frame1, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.frame, 1, 1, 1, 1)
 
         self.horizontalSpacer_17 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -996,7 +997,7 @@ class Ui_MainWindow(object):
 
         self.pathsAndparameters.addWidget(self.frame_11)
 
-        self.frame_13 = QFrame(self.frame)
+        self.frame_13 = QFrame(self.frame_main1)
         self.frame_13.setObjectName(u"frame_13")
         self.frame_13.setMinimumSize(QSize(0, 630))
         self.frame_13.setMaximumSize(QSize(16777215, 630))
@@ -1004,58 +1005,43 @@ class Ui_MainWindow(object):
         self.frame_13.setFrameShadow(QFrame.Raised)
         self.verticalLayout_21 = QVBoxLayout(self.frame_13)
         self.verticalLayout_21.setObjectName(u"verticalLayout_21")
-        self.SelectFontFrame = QFrame(self.frame_13)
-        self.SelectFontFrame.setObjectName(u"SelectFontFrame")
-        self.SelectFontFrame.setMaximumSize(QSize(571, 16777215))
-        self.verticalLayout_4 = QVBoxLayout(self.SelectFontFrame)
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.select_font_button = QPushButton(self.SelectFontFrame)
-        self.select_font_button.setObjectName(u"select_font_button")
-        self.select_font_button.setMinimumSize(QSize(150, 50))
-        self.select_font_button.setMaximumSize(QSize(250, 50))
-        font15 = QFont()
-        font15.setFamilies([u"Play"])
-        font15.setPointSize(18)
-        font15.setBold(True)
-        self.select_font_button.setFont(font15)
-
-        self.verticalLayout_4.addWidget(self.select_font_button, 0, Qt.AlignHCenter)
-
-        self.font_label = QLabel(self.SelectFontFrame)
-        self.font_label.setObjectName(u"font_label")
-        font16 = QFont()
-        font16.setFamilies([u"IBM Plex Sans"])
-        font16.setPointSize(14)
-        font16.setBold(True)
-        self.font_label.setFont(font16)
-
-        self.verticalLayout_4.addWidget(self.font_label, 0, Qt.AlignHCenter)
-
-
-        self.verticalLayout_21.addWidget(self.SelectFontFrame)
-
         self.generated_text_frame = QFrame(self.frame_13)
         self.generated_text_frame.setObjectName(u"generated_text_frame")
-        self.generated_text_frame.setMinimumSize(QSize(370, 500))
-        self.generated_text_frame.setMaximumSize(QSize(370, 500))
+        self.generated_text_frame.setMinimumSize(QSize(370, 300))
+        self.generated_text_frame.setMaximumSize(QSize(200, 16777215))
         self.verticalLayout_3 = QVBoxLayout(self.generated_text_frame)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.custom_font_directory_selection = QPushButton(self.generated_text_frame)
+        self.custom_font_directory_selection.setObjectName(u"custom_font_directory_selection")
+        self.custom_font_directory_selection.setMinimumSize(QSize(50, 50))
+        self.custom_font_directory_selection.setMaximumSize(QSize(200, 16777215))
+
+        self.verticalLayout_3.addWidget(self.custom_font_directory_selection, 0, Qt.AlignHCenter)
+
+        self.font_list = QListWidget(self.generated_text_frame)
+        self.font_list.setObjectName(u"font_list")
+        self.font_list.setMinimumSize(QSize(0, 200))
+        self.font_list.setAutoScrollMargin(20)
+        self.font_list.setTabKeyNavigation(False)
+
+        self.verticalLayout_3.addWidget(self.font_list)
+
         self.generated_text_label = QLabel(self.generated_text_frame)
         self.generated_text_label.setObjectName(u"generated_text_label")
-        font17 = QFont()
-        font17.setFamilies([u"Play"])
-        font17.setPointSize(11)
-        font17.setBold(True)
-        self.generated_text_label.setFont(font17)
+        font15 = QFont()
+        font15.setFamilies([u"Play"])
+        font15.setPointSize(11)
+        font15.setBold(True)
+        self.generated_text_label.setFont(font15)
 
         self.verticalLayout_3.addWidget(self.generated_text_label)
 
         self.word_input = QTextEdit(self.generated_text_frame)
         self.word_input.setObjectName(u"word_input")
-        font18 = QFont()
-        font18.setFamilies([u"Play"])
-        font18.setPointSize(14)
-        self.word_input.setFont(font18)
+        font16 = QFont()
+        font16.setFamilies([u"Play"])
+        font16.setPointSize(14)
+        self.word_input.setFont(font16)
         self.word_input.setStyleSheet(u"border:1px solid rgb(55,55,55);")
 
         self.verticalLayout_3.addWidget(self.word_input)
@@ -1071,7 +1057,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_24 = QVBoxLayout()
         self.verticalLayout_24.setObjectName(u"verticalLayout_24")
-        self.mask_and_parameters_summary_container = QFrame(self.frame)
+        self.mask_and_parameters_summary_container = QFrame(self.frame_main1)
         self.mask_and_parameters_summary_container.setObjectName(u"mask_and_parameters_summary_container")
         self.mask_and_parameters_summary_container.setMinimumSize(QSize(300, 5))
         self.mask_and_parameters_summary_container.setMaximumSize(QSize(300, 630))
@@ -1091,7 +1077,7 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_24.addWidget(self.mask_and_parameters_summary_container)
 
-        self.frame_14 = QFrame(self.frame)
+        self.frame_14 = QFrame(self.frame_main1)
         self.frame_14.setObjectName(u"frame_14")
         self.frame_14.setMinimumSize(QSize(301, 401))
         self.frame_14.setMaximumSize(QSize(301, 401))
@@ -1278,7 +1264,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_23.addLayout(self.verticalLayout_24)
 
 
-        self.verticalLayout_25.addWidget(self.frame, 0, Qt.AlignHCenter|Qt.AlignVCenter)
+        self.verticalLayout_25.addWidget(self.frame_main1, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 
         self.frame_15 = QFrame(self.FRAME_X)
         self.frame_15.setObjectName(u"frame_15")
@@ -1290,11 +1276,11 @@ class Ui_MainWindow(object):
         self.color_presets_group.setObjectName(u"color_presets_group")
         self.color_presets_group.setMinimumSize(QSize(535, 291))
         self.color_presets_group.setMaximumSize(QSize(535, 291))
-        font19 = QFont()
-        font19.setFamilies([u"IBM Plex Sans"])
-        font19.setPointSize(11)
-        font19.setBold(False)
-        self.color_presets_group.setFont(font19)
+        font17 = QFont()
+        font17.setFamilies([u"IBM Plex Sans"])
+        font17.setPointSize(11)
+        font17.setBold(False)
+        self.color_presets_group.setFont(font17)
         self.verticalLayout_18 = QVBoxLayout(self.color_presets_group)
         self.verticalLayout_18.setSpacing(5)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
@@ -1308,7 +1294,11 @@ class Ui_MainWindow(object):
         self.label_color_presets = QLabel(self.cp_title_dropdown)
         self.label_color_presets.setObjectName(u"label_color_presets")
         self.label_color_presets.setMaximumSize(QSize(150, 30))
-        self.label_color_presets.setFont(font16)
+        font18 = QFont()
+        font18.setFamilies([u"IBM Plex Sans"])
+        font18.setPointSize(14)
+        font18.setBold(True)
+        self.label_color_presets.setFont(font18)
 
         self.verticalLayout_19.addWidget(self.label_color_presets, 0, Qt.AlignHCenter)
 
@@ -1358,11 +1348,11 @@ class Ui_MainWindow(object):
         self.colormaps_dropdown.setObjectName(u"colormaps_dropdown")
         self.colormaps_dropdown.setMinimumSize(QSize(0, 30))
         self.colormaps_dropdown.setMaximumSize(QSize(300, 30))
-        font20 = QFont()
-        font20.setFamilies([u"IBM Plex Sans"])
-        font20.setPointSize(14)
-        font20.setBold(False)
-        self.colormaps_dropdown.setFont(font20)
+        font19 = QFont()
+        font19.setFamilies([u"IBM Plex Sans"])
+        font19.setPointSize(14)
+        font19.setBold(False)
+        self.colormaps_dropdown.setFont(font19)
         self.colormaps_dropdown.setStyleSheet(u"")
 
         self.verticalLayout_19.addWidget(self.colormaps_dropdown)
@@ -1390,11 +1380,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
         self.red_min = QSpinBox(self.ColorsMinGP)
         self.red_min.setObjectName(u"red_min")
-        font21 = QFont()
-        font21.setFamilies([u"Play"])
-        font21.setPointSize(20)
-        font21.setBold(True)
-        self.red_min.setFont(font21)
+        font20 = QFont()
+        font20.setFamilies([u"Play"])
+        font20.setPointSize(20)
+        font20.setBold(True)
+        self.red_min.setFont(font20)
         self.red_min.setStyleSheet(u"background-color: rgb(200, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.red_min.setMinimum(0)
@@ -1405,7 +1395,7 @@ class Ui_MainWindow(object):
 
         self.green_min = QSpinBox(self.ColorsMinGP)
         self.green_min.setObjectName(u"green_min")
-        self.green_min.setFont(font21)
+        self.green_min.setFont(font20)
         self.green_min.setStyleSheet(u"background-color: rgb(0, 200, 0);\n"
 "color: rgb(25, 25, 25);")
         self.green_min.setMaximum(255)
@@ -1415,7 +1405,7 @@ class Ui_MainWindow(object):
 
         self.blue_min = QSpinBox(self.ColorsMinGP)
         self.blue_min.setObjectName(u"blue_min")
-        self.blue_min.setFont(font21)
+        self.blue_min.setFont(font20)
         self.blue_min.setStyleSheet(u"background-color: rgb(0, 0, 200);\n"
 "color: rgb(255, 255, 255);")
         self.blue_min.setMaximum(255)
@@ -1434,7 +1424,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.red_max = QSpinBox(self.ColorsMaxGP)
         self.red_max.setObjectName(u"red_max")
-        self.red_max.setFont(font21)
+        self.red_max.setFont(font20)
         self.red_max.setStyleSheet(u"background-color: rgb(200, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.red_max.setMinimum(0)
@@ -1445,7 +1435,7 @@ class Ui_MainWindow(object):
 
         self.green_max = QSpinBox(self.ColorsMaxGP)
         self.green_max.setObjectName(u"green_max")
-        self.green_max.setFont(font21)
+        self.green_max.setFont(font20)
         self.green_max.setStyleSheet(u"background-color: rgb(0, 200, 0);\n"
 "color: rgb(25, 25, 25);")
         self.green_max.setMaximum(255)
@@ -1455,7 +1445,7 @@ class Ui_MainWindow(object):
 
         self.blue_max = QSpinBox(self.ColorsMaxGP)
         self.blue_max.setObjectName(u"blue_max")
-        self.blue_max.setFont(font21)
+        self.blue_max.setFont(font20)
         self.blue_max.setStyleSheet(u"background-color: rgb(0, 0, 200);\n"
 "color: rgb(255, 255, 255);")
         self.blue_max.setMaximum(255)
@@ -1488,18 +1478,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.rcp_maximize_blue = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_maximize_blue.setObjectName(u"rcp_maximize_blue")
-        font22 = QFont()
-        font22.setFamilies([u"Barlow"])
-        font22.setPointSize(10)
-        font22.setBold(True)
-        self.rcp_maximize_blue.setFont(font22)
+        font21 = QFont()
+        font21.setFamilies([u"Barlow"])
+        font21.setPointSize(10)
+        font21.setBold(True)
+        self.rcp_maximize_blue.setFont(font21)
         self.rcp_maximize_blue.setStyleSheet(u"color: rgb(0, 0, 250);")
 
         self.horizontalLayout_17.addWidget(self.rcp_maximize_blue)
 
         self.rcp_minimize_blue = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_minimize_blue.setObjectName(u"rcp_minimize_blue")
-        self.rcp_minimize_blue.setFont(font22)
+        self.rcp_minimize_blue.setFont(font21)
         self.rcp_minimize_blue.setStyleSheet(u"color: rgb(0, 0, 250);")
 
         self.horizontalLayout_17.addWidget(self.rcp_minimize_blue)
@@ -1512,14 +1502,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_31.setObjectName(u"horizontalLayout_31")
         self.rcp_minimize_green = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_minimize_green.setObjectName(u"rcp_minimize_green")
-        self.rcp_minimize_green.setFont(font22)
+        self.rcp_minimize_green.setFont(font21)
         self.rcp_minimize_green.setStyleSheet(u"color: rgb(0, 250, 0);")
 
         self.horizontalLayout_31.addWidget(self.rcp_minimize_green)
 
         self.rcp_maximize_green = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_maximize_green.setObjectName(u"rcp_maximize_green")
-        self.rcp_maximize_green.setFont(font22)
+        self.rcp_maximize_green.setFont(font21)
         self.rcp_maximize_green.setStyleSheet(u"color: rgb(0, 250, 0);")
 
         self.horizontalLayout_31.addWidget(self.rcp_maximize_green)
@@ -1532,14 +1522,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.rcp_minimize_red = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_minimize_red.setObjectName(u"rcp_minimize_red")
-        self.rcp_minimize_red.setFont(font22)
+        self.rcp_minimize_red.setFont(font21)
         self.rcp_minimize_red.setStyleSheet(u"color: rgb(250, 0, 0);")
 
         self.horizontalLayout_11.addWidget(self.rcp_minimize_red)
 
         self.rcp_maximize_red = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_maximize_red.setObjectName(u"rcp_maximize_red")
-        self.rcp_maximize_red.setFont(font22)
+        self.rcp_maximize_red.setFont(font21)
         self.rcp_maximize_red.setStyleSheet(u"color: rgb(250, 0, 0);")
 
         self.horizontalLayout_11.addWidget(self.rcp_maximize_red)
@@ -1558,19 +1548,19 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.rcp_bright = QPushButton(self.rcpresets3)
         self.rcp_bright.setObjectName(u"rcp_bright")
-        self.rcp_bright.setFont(font22)
+        self.rcp_bright.setFont(font21)
 
         self.gridLayout_3.addWidget(self.rcp_bright, 0, 0, 1, 1)
 
         self.rcp_reset = QPushButton(self.rcpresets3)
         self.rcp_reset.setObjectName(u"rcp_reset")
-        self.rcp_reset.setFont(font22)
+        self.rcp_reset.setFont(font21)
 
         self.gridLayout_3.addWidget(self.rcp_reset, 0, 2, 1, 1)
 
         self.rcp_dark = QPushButton(self.rcpresets3)
         self.rcp_dark.setObjectName(u"rcp_dark")
-        self.rcp_dark.setFont(font22)
+        self.rcp_dark.setFont(font21)
 
         self.gridLayout_3.addWidget(self.rcp_dark, 0, 1, 1, 1)
 
@@ -1598,15 +1588,16 @@ class Ui_MainWindow(object):
         self.export_as_frame.setObjectName(u"export_as_frame")
         self.export_as_frame.setMinimumSize(QSize(90, 61))
         self.export_as_frame.setMaximumSize(QSize(102, 70))
-        font23 = QFont()
-        font23.setFamilies([u"Sarpanch SemiBold"])
-        self.export_as_frame.setFont(font23)
+        font22 = QFont()
+        font22.setFamilies([u"Sarpanch SemiBold"])
+        font22.setBold(False)
+        self.export_as_frame.setFont(font22)
         self.verticalLayout_26 = QVBoxLayout(self.export_as_frame)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
         self.exportAs_label = QLabel(self.export_as_frame)
         self.exportAs_label.setObjectName(u"exportAs_label")
         self.exportAs_label.setMinimumSize(QSize(88, 25))
-        self.exportAs_label.setFont(font16)
+        self.exportAs_label.setFont(font18)
 
         self.verticalLayout_26.addWidget(self.exportAs_label)
 
@@ -1626,7 +1617,7 @@ class Ui_MainWindow(object):
         self.generate_wordcloud_button.setObjectName(u"generate_wordcloud_button")
         self.generate_wordcloud_button.setEnabled(True)
         self.generate_wordcloud_button.setMinimumSize(QSize(700, 150))
-        self.generate_wordcloud_button.setFont(font21)
+        self.generate_wordcloud_button.setFont(font20)
         self.generate_wordcloud_button.setToolTipDuration(-1)
         self.generate_wordcloud_button.setStyleSheet(u"QPushButton{\n"
 "color: rgb(200,200,200);\n"
@@ -1874,14 +1865,7 @@ class Ui_MainWindow(object):
         self.parameters_window.setTabText(self.parameters_window.indexOf(self.parameters_windowPage8), QCoreApplication.translate("MainWindow", u"CLC Thresh", None))
         self.include_number_checkbox.setText(QCoreApplication.translate("MainWindow", u"Include Numbers", None))
         self.parameters_window.setTabText(self.parameters_window.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Numbers", None))
-#if QT_CONFIG(tooltip)
-        self.select_font_button.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Select custom font for the generated text </span></p><p><br/></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.select_font_button.setText(QCoreApplication.translate("MainWindow", u"Select Font", None))
-#if QT_CONFIG(tooltip)
-        self.font_label.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Font for generated text </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.font_label.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.custom_font_directory_selection.setText(QCoreApplication.translate("MainWindow", u"  Change Fonts Folder  ", None))
         self.generated_text_label.setText(QCoreApplication.translate("MainWindow", u"Generated Text:", None))
         self.word_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"WordCloud text goes here. Different words will be identified based on space. Ex: word1 word2", None))
         self.mask_image_thumbnail.setText(QCoreApplication.translate("MainWindow", u"MASK IMAGE WILL BE PLACED HERE", None))
