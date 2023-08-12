@@ -18,11 +18,10 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
     QGridLayout, QGroupBox, QHBoxLayout, QLabel,
-    QLineEdit, QListView, QListWidget, QListWidgetItem,
-    QMainWindow, QMenuBar, QPushButton, QRadioButton,
-    QSizePolicy, QSlider, QSpacerItem, QSpinBox,
-    QStatusBar, QTabWidget, QTextEdit, QVBoxLayout,
-    QWidget)
+    QListView, QListWidget, QListWidgetItem, QMainWindow,
+    QMenuBar, QPushButton, QRadioButton, QSizePolicy,
+    QSlider, QSpacerItem, QSpinBox, QStatusBar,
+    QTabWidget, QTextEdit, QVBoxLayout, QWidget)
 import Resources_rc
 
 class Ui_MainWindow(object):
@@ -100,8 +99,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.All_ResourcePaths_Frame = QFrame(self.frame_11)
         self.All_ResourcePaths_Frame.setObjectName(u"All_ResourcePaths_Frame")
-        self.horizontalLayout_3 = QHBoxLayout(self.All_ResourcePaths_Frame)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.verticalLayout_27 = QVBoxLayout(self.All_ResourcePaths_Frame)
+        self.verticalLayout_27.setObjectName(u"verticalLayout_27")
         self.resource_paths_frame = QFrame(self.All_ResourcePaths_Frame)
         self.resource_paths_frame.setObjectName(u"resource_paths_frame")
         self.resource_paths_frame.setMinimumSize(QSize(820, 98))
@@ -109,103 +108,56 @@ class Ui_MainWindow(object):
         self.resource_paths_frame.setFrameShadow(QFrame.Raised)
         self.horizontalLayout = QHBoxLayout(self.resource_paths_frame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.SELECTMASK = QVBoxLayout()
-        self.SELECTMASK.setObjectName(u"SELECTMASK")
-        self.mask_dimensions_label = QLabel(self.resource_paths_frame)
-        self.mask_dimensions_label.setObjectName(u"mask_dimensions_label")
+        self.frame = QFrame(self.resource_paths_frame)
+        self.frame.setObjectName(u"frame")
+        self.frame.setMinimumSize(QSize(150, 0))
+        self.verticalLayout_4 = QVBoxLayout(self.frame)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.mask_select_button = QPushButton(self.frame)
+        self.mask_select_button.setObjectName(u"mask_select_button")
+        self.mask_select_button.setMinimumSize(QSize(150, 50))
         font1 = QFont()
-        font1.setFamilies([u"Play"])
+        font1.setFamilies([u"Montserrat"])
         font1.setPointSize(10)
         font1.setBold(True)
-        font1.setUnderline(False)
-        font1.setStyleStrategy(QFont.PreferDefault)
-        self.mask_dimensions_label.setFont(font1)
-        self.mask_dimensions_label.setCursor(QCursor(Qt.ArrowCursor))
+        self.mask_select_button.setFont(font1)
+        self.mask_select_button.setStyleSheet(u"background-color: #7754c8;\n"
+"color:#3cf3b6;\n"
+"border-radius:10px;\n"
+"border:2px solid red; ")
 
-        self.SELECTMASK.addWidget(self.mask_dimensions_label)
-
-        self.horizontalLayout_2 = QHBoxLayout()
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.mask_path = QLineEdit(self.resource_paths_frame)
-        self.mask_path.setObjectName(u"mask_path")
-        self.mask_path.setMinimumSize(QSize(0, 50))
-        font2 = QFont()
-        font2.setFamilies([u"IBM Plex Sans"])
-        font2.setPointSize(10)
-        font2.setBold(True)
-        self.mask_path.setFont(font2)
-        self.mask_path.setFocusPolicy(Qt.WheelFocus)
-        self.mask_path.setAutoFillBackground(False)
-        self.mask_path.setStyleSheet(u"")
-        self.mask_path.setDragEnabled(False)
-        self.mask_path.setReadOnly(False)
-
-        self.horizontalLayout_2.addWidget(self.mask_path)
-
-        self.mask_select_button = QPushButton(self.resource_paths_frame)
-        self.mask_select_button.setObjectName(u"mask_select_button")
-        self.mask_select_button.setMinimumSize(QSize(0, 50))
-        font3 = QFont()
-        font3.setFamilies([u"Montserrat"])
-        font3.setPointSize(10)
-        font3.setBold(True)
-        self.mask_select_button.setFont(font3)
-
-        self.horizontalLayout_2.addWidget(self.mask_select_button)
+        self.verticalLayout_4.addWidget(self.mask_select_button)
 
 
-        self.SELECTMASK.addLayout(self.horizontalLayout_2)
-
-
-        self.horizontalLayout.addLayout(self.SELECTMASK)
-
-        self.DESTINATION = QVBoxLayout()
-        self.DESTINATION.setObjectName(u"DESTINATION")
-        self.destination_gp_placeholder_label = QLabel(self.resource_paths_frame)
-        self.destination_gp_placeholder_label.setObjectName(u"destination_gp_placeholder_label")
-        self.destination_gp_placeholder_label.setEnabled(False)
-        self.destination_gp_placeholder_label.setFont(font1)
-        self.destination_gp_placeholder_label.setCursor(QCursor(Qt.ArrowCursor))
-
-        self.DESTINATION.addWidget(self.destination_gp_placeholder_label)
-
-        self.dest_no_placeholder = QHBoxLayout()
-        self.dest_no_placeholder.setObjectName(u"dest_no_placeholder")
-        self.destination_path = QLineEdit(self.resource_paths_frame)
-        self.destination_path.setObjectName(u"destination_path")
-        self.destination_path.setMinimumSize(QSize(0, 50))
-        self.destination_path.setFont(font2)
-        self.destination_path.setReadOnly(True)
-
-        self.dest_no_placeholder.addWidget(self.destination_path)
+        self.horizontalLayout.addWidget(self.frame)
 
         self.select_destination_button = QPushButton(self.resource_paths_frame)
         self.select_destination_button.setObjectName(u"select_destination_button")
         self.select_destination_button.setEnabled(True)
-        self.select_destination_button.setMinimumSize(QSize(0, 50))
-        self.select_destination_button.setFont(font3)
+        self.select_destination_button.setMinimumSize(QSize(150, 50))
+        self.select_destination_button.setFont(font1)
+        self.select_destination_button.setStyleSheet(u"background-color: #7754c8;\n"
+"color:#3cf3b6;\n"
+"border-radius:10px;\n"
+"border:2px solid red; ")
 
-        self.dest_no_placeholder.addWidget(self.select_destination_button)
+        self.horizontalLayout.addWidget(self.select_destination_button)
 
         self.open_destination_folder = QPushButton(self.resource_paths_frame)
         self.open_destination_folder.setObjectName(u"open_destination_folder")
         self.open_destination_folder.setMinimumSize(QSize(0, 0))
         self.open_destination_folder.setMaximumSize(QSize(40, 50))
-        font4 = QFont()
-        font4.setPointSize(14)
-        self.open_destination_folder.setFont(font4)
-        self.open_destination_folder.setStyleSheet(u"color: rgb(0, 170, 0);")
+        font2 = QFont()
+        font2.setPointSize(14)
+        self.open_destination_folder.setFont(font2)
+        self.open_destination_folder.setStyleSheet(u"color: rgb(0, 170, 0);\n"
+"background-color: #7754c8;\n"
+"border-radius:5px;")
 
-        self.dest_no_placeholder.addWidget(self.open_destination_folder)
-
-
-        self.DESTINATION.addLayout(self.dest_no_placeholder)
-
-
-        self.horizontalLayout.addLayout(self.DESTINATION)
+        self.horizontalLayout.addWidget(self.open_destination_folder, 0, Qt.AlignVCenter)
 
 
-        self.horizontalLayout_3.addWidget(self.resource_paths_frame)
+        self.verticalLayout_27.addWidget(self.resource_paths_frame)
 
 
         self.verticalLayout_7.addWidget(self.All_ResourcePaths_Frame)
@@ -217,11 +169,11 @@ class Ui_MainWindow(object):
         self.Parameters_Title_label = QLabel(self.frame_2)
         self.Parameters_Title_label.setObjectName(u"Parameters_Title_label")
         self.Parameters_Title_label.setMaximumSize(QSize(400, 50))
-        font5 = QFont()
-        font5.setFamilies([u"IBM Plex Sans SemiBold"])
-        font5.setPointSize(25)
-        font5.setBold(True)
-        self.Parameters_Title_label.setFont(font5)
+        font3 = QFont()
+        font3.setFamilies([u"IBM Plex Sans SemiBold"])
+        font3.setPointSize(25)
+        font3.setBold(True)
+        self.Parameters_Title_label.setFont(font3)
 
         self.verticalLayout_2.addWidget(self.Parameters_Title_label, 0, Qt.AlignHCenter)
 
@@ -254,10 +206,10 @@ class Ui_MainWindow(object):
         __qlistwidgetitem5.setFlags(Qt.ItemIsDragEnabled|Qt.ItemIsUserCheckable);
         QListWidgetItem(self.parameters_list)
         QListWidgetItem(self.parameters_list)
-        font6 = QFont()
-        font6.setStrikeOut(False)
+        font4 = QFont()
+        font4.setStrikeOut(False)
         __qlistwidgetitem6 = QListWidgetItem(self.parameters_list)
-        __qlistwidgetitem6.setFont(font6);
+        __qlistwidgetitem6.setFont(font4);
         __qlistwidgetitem6.setFlags(Qt.ItemIsDragEnabled|Qt.ItemIsUserCheckable);
         QListWidgetItem(self.parameters_list)
         brush = QBrush(QColor(0, 0, 0, 255))
@@ -267,11 +219,11 @@ class Ui_MainWindow(object):
         self.parameters_list.setObjectName(u"parameters_list")
         self.parameters_list.setMinimumSize(QSize(221, 391))
         self.parameters_list.setMaximumSize(QSize(221, 391))
-        font7 = QFont()
-        font7.setFamilies([u"IBM Plex Sans"])
-        font7.setPointSize(11)
-        font7.setBold(True)
-        self.parameters_list.setFont(font7)
+        font5 = QFont()
+        font5.setFamilies([u"IBM Plex Sans"])
+        font5.setPointSize(11)
+        font5.setBold(True)
+        self.parameters_list.setFont(font5)
         self.parameters_list.setAcceptDrops(False)
         self.parameters_list.setFrameShadow(QFrame.Plain)
         self.parameters_list.setLineWidth(1)
@@ -291,10 +243,10 @@ class Ui_MainWindow(object):
         self.parameters_window.setSizePolicy(sizePolicy1)
         self.parameters_window.setMinimumSize(QSize(341, 231))
         self.parameters_window.setMaximumSize(QSize(600, 500))
-        font8 = QFont()
-        font8.setPointSize(8)
-        font8.setKerning(True)
-        self.parameters_window.setFont(font8)
+        font6 = QFont()
+        font6.setPointSize(8)
+        font6.setKerning(True)
+        self.parameters_window.setFont(font6)
         self.parameters_window.setTabPosition(QTabWidget.North)
         self.parameters_window.setTabShape(QTabWidget.Rounded)
         self.parameters_window.setIconSize(QSize(24, 24))
@@ -310,12 +262,12 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.label = QLabel(self.frame_3)
         self.label.setObjectName(u"label")
-        font9 = QFont()
-        font9.setFamilies([u"IBM Plex Sans"])
-        font9.setPointSize(11)
-        font9.setBold(True)
-        font9.setKerning(True)
-        self.label.setFont(font9)
+        font7 = QFont()
+        font7.setFamilies([u"IBM Plex Sans"])
+        font7.setPointSize(11)
+        font7.setBold(True)
+        font7.setKerning(True)
+        self.label.setFont(font7)
 
         self.verticalLayout_6.addWidget(self.label, 0, Qt.AlignHCenter)
 
@@ -332,12 +284,12 @@ class Ui_MainWindow(object):
         self.repeat_words_label = QLabel(self.frame_3)
         self.repeat_words_label.setObjectName(u"repeat_words_label")
         self.repeat_words_label.setMaximumSize(QSize(150, 16777215))
-        font10 = QFont()
-        font10.setFamilies([u"Play"])
-        font10.setPointSize(14)
-        font10.setBold(True)
-        font10.setKerning(True)
-        self.repeat_words_label.setFont(font10)
+        font8 = QFont()
+        font8.setFamilies([u"Play"])
+        font8.setPointSize(14)
+        font8.setBold(True)
+        font8.setKerning(True)
+        self.repeat_words_label.setFont(font8)
 
         self.horizontalLayout_5.addWidget(self.repeat_words_label)
 
@@ -347,12 +299,12 @@ class Ui_MainWindow(object):
         self.repeat_checkbox.setMaximumSize(QSize(50, 20))
         self.repeat_checkbox.setSizeIncrement(QSize(0, 0))
         self.repeat_checkbox.setBaseSize(QSize(0, 0))
-        font11 = QFont()
-        font11.setFamilies([u"Segoe UI"])
-        font11.setPointSize(10)
-        font11.setBold(True)
-        font11.setKerning(True)
-        self.repeat_checkbox.setFont(font11)
+        font9 = QFont()
+        font9.setFamilies([u"Segoe UI"])
+        font9.setPointSize(10)
+        font9.setBold(True)
+        font9.setKerning(True)
+        self.repeat_checkbox.setFont(font9)
         self.repeat_checkbox.setIconSize(QSize(24, 24))
         self.repeat_checkbox.setCheckable(True)
         self.repeat_checkbox.setChecked(True)
@@ -388,7 +340,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.setObjectName(u"verticalLayout_8")
         self.label_4 = QLabel(self.frame_4)
         self.label_4.setObjectName(u"label_4")
-        self.label_4.setFont(font9)
+        self.label_4.setFont(font7)
 
         self.verticalLayout_8.addWidget(self.label_4, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 
@@ -397,7 +349,7 @@ class Ui_MainWindow(object):
         self.min_font_size_label = QLabel(self.frame_4)
         self.min_font_size_label.setObjectName(u"min_font_size_label")
         self.min_font_size_label.setMaximumSize(QSize(150, 100))
-        self.min_font_size_label.setFont(font10)
+        self.min_font_size_label.setFont(font8)
 
         self.horizontalLayout_6.addWidget(self.min_font_size_label)
 
@@ -407,12 +359,12 @@ class Ui_MainWindow(object):
         self.min_font_size_slider.setMinimumSize(QSize(30, 0))
         self.min_font_size_slider.setMaximumSize(QSize(30, 16777215))
         self.min_font_size_slider.setSizeIncrement(QSize(10, 0))
-        font12 = QFont()
-        font12.setFamilies([u"Segoe UI"])
-        font12.setPointSize(8)
-        font12.setBold(False)
-        font12.setKerning(True)
-        self.min_font_size_slider.setFont(font12)
+        font10 = QFont()
+        font10.setFamilies([u"Segoe UI"])
+        font10.setPointSize(8)
+        font10.setBold(False)
+        font10.setKerning(True)
+        self.min_font_size_slider.setFont(font10)
         self.min_font_size_slider.setMouseTracking(False)
         self.min_font_size_slider.setFocusPolicy(Qt.ClickFocus)
         self.min_font_size_slider.setMinimum(1)
@@ -427,12 +379,12 @@ class Ui_MainWindow(object):
         self.label_min_font_size_slider.setObjectName(u"label_min_font_size_slider")
         self.label_min_font_size_slider.setMinimumSize(QSize(50, 0))
         self.label_min_font_size_slider.setMaximumSize(QSize(50, 50))
-        font13 = QFont()
-        font13.setFamilies([u"Montserrat"])
-        font13.setPointSize(14)
-        font13.setBold(True)
-        font13.setKerning(True)
-        self.label_min_font_size_slider.setFont(font13)
+        font11 = QFont()
+        font11.setFamilies([u"Montserrat"])
+        font11.setPointSize(14)
+        font11.setBold(True)
+        font11.setKerning(True)
+        self.label_min_font_size_slider.setFont(font11)
 
         self.horizontalLayout_6.addWidget(self.label_min_font_size_slider)
 
@@ -444,7 +396,7 @@ class Ui_MainWindow(object):
         self.max_font_size_label = QLabel(self.frame_4)
         self.max_font_size_label.setObjectName(u"max_font_size_label")
         self.max_font_size_label.setMaximumSize(QSize(150, 100))
-        self.max_font_size_label.setFont(font10)
+        self.max_font_size_label.setFont(font8)
 
         self.horizontalLayout_7.addWidget(self.max_font_size_label)
 
@@ -454,7 +406,7 @@ class Ui_MainWindow(object):
         self.max_font_size_slider.setMinimumSize(QSize(30, 0))
         self.max_font_size_slider.setMaximumSize(QSize(30, 16777215))
         self.max_font_size_slider.setSizeIncrement(QSize(10, 0))
-        self.max_font_size_slider.setFont(font12)
+        self.max_font_size_slider.setFont(font10)
         self.max_font_size_slider.setMouseTracking(False)
         self.max_font_size_slider.setFocusPolicy(Qt.ClickFocus)
         self.max_font_size_slider.setMinimum(5)
@@ -469,7 +421,7 @@ class Ui_MainWindow(object):
         self.label_max_font_size_slider.setObjectName(u"label_max_font_size_slider")
         self.label_max_font_size_slider.setMinimumSize(QSize(50, 0))
         self.label_max_font_size_slider.setMaximumSize(QSize(50, 50))
-        self.label_max_font_size_slider.setFont(font13)
+        self.label_max_font_size_slider.setFont(font11)
 
         self.horizontalLayout_7.addWidget(self.label_max_font_size_slider)
 
@@ -490,26 +442,26 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName(u"gridLayout")
         self.label_10 = QLabel(self.frame_font_step)
         self.label_10.setObjectName(u"label_10")
-        self.label_10.setFont(font9)
+        self.label_10.setFont(font7)
 
         self.gridLayout.addWidget(self.label_10, 0, 1, 1, 1)
 
-        self.frame = QFrame(self.frame_font_step)
-        self.frame.setObjectName(u"frame")
-        self.horizontalLayout_4 = QHBoxLayout(self.frame)
+        self.frame1 = QFrame(self.frame_font_step)
+        self.frame1.setObjectName(u"frame1")
+        self.horizontalLayout_4 = QHBoxLayout(self.frame1)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
         self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_11)
 
-        self.fontstep_label = QLabel(self.frame)
+        self.fontstep_label = QLabel(self.frame1)
         self.fontstep_label.setObjectName(u"fontstep_label")
         self.fontstep_label.setMaximumSize(QSize(16777215, 50))
-        self.fontstep_label.setFont(font10)
+        self.fontstep_label.setFont(font8)
 
         self.horizontalLayout_4.addWidget(self.fontstep_label)
 
-        self.font_step_slider = QSlider(self.frame)
+        self.font_step_slider = QSlider(self.frame1)
         self.font_step_slider.setObjectName(u"font_step_slider")
         self.font_step_slider.setMinimumSize(QSize(30, 150))
         self.font_step_slider.setMaximumSize(QSize(30, 150))
@@ -522,11 +474,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.font_step_slider, 0, Qt.AlignHCenter)
 
-        self.font_step_indicator_label = QLabel(self.frame)
+        self.font_step_indicator_label = QLabel(self.frame1)
         self.font_step_indicator_label.setObjectName(u"font_step_indicator_label")
         self.font_step_indicator_label.setMinimumSize(QSize(50, 0))
         self.font_step_indicator_label.setMaximumSize(QSize(50, 50))
-        self.font_step_indicator_label.setFont(font13)
+        self.font_step_indicator_label.setFont(font11)
 
         self.horizontalLayout_4.addWidget(self.font_step_indicator_label, 0, Qt.AlignHCenter)
 
@@ -535,7 +487,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addItem(self.horizontalSpacer_16)
 
 
-        self.gridLayout.addWidget(self.frame, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.frame1, 1, 1, 1, 1)
 
         self.horizontalSpacer_17 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
@@ -556,7 +508,7 @@ class Ui_MainWindow(object):
         self.label_3 = QLabel(self.parameters_windowPage3)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setMaximumSize(QSize(305, 95))
-        self.label_3.setFont(font9)
+        self.label_3.setFont(font7)
 
         self.verticalLayout_9.addWidget(self.label_3, 0, Qt.AlignHCenter)
 
@@ -573,7 +525,7 @@ class Ui_MainWindow(object):
         self.margin_label_2 = QLabel(self.parameters_windowPage3)
         self.margin_label_2.setObjectName(u"margin_label_2")
         self.margin_label_2.setMaximumSize(QSize(250, 100))
-        self.margin_label_2.setFont(font10)
+        self.margin_label_2.setFont(font8)
         self.margin_label_2.setWordWrap(False)
         self.margin_label_2.setMargin(0)
 
@@ -585,7 +537,7 @@ class Ui_MainWindow(object):
         self.margin_slider.setMinimumSize(QSize(30, 0))
         self.margin_slider.setMaximumSize(QSize(30, 16777215))
         self.margin_slider.setSizeIncrement(QSize(10, 0))
-        self.margin_slider.setFont(font12)
+        self.margin_slider.setFont(font10)
         self.margin_slider.setMouseTracking(False)
         self.margin_slider.setFocusPolicy(Qt.ClickFocus)
         self.margin_slider.setMinimum(0)
@@ -600,7 +552,7 @@ class Ui_MainWindow(object):
         self.label_margin_slider.setObjectName(u"label_margin_slider")
         self.label_margin_slider.setMinimumSize(QSize(50, 0))
         self.label_margin_slider.setMaximumSize(QSize(50, 50))
-        self.label_margin_slider.setFont(font13)
+        self.label_margin_slider.setFont(font11)
         self.label_margin_slider.setMargin(0)
 
         self.horizontalLayout_8.addWidget(self.label_margin_slider)
@@ -629,7 +581,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
         self.label_5 = QLabel(self.frame_5)
         self.label_5.setObjectName(u"label_5")
-        self.label_5.setFont(font9)
+        self.label_5.setFont(font7)
 
         self.verticalLayout_11.addWidget(self.label_5, 0, Qt.AlignHCenter)
 
@@ -646,7 +598,7 @@ class Ui_MainWindow(object):
         self.prefer_horizontal_label = QLabel(self.frame_5)
         self.prefer_horizontal_label.setObjectName(u"prefer_horizontal_label")
         self.prefer_horizontal_label.setMaximumSize(QSize(250, 100))
-        self.prefer_horizontal_label.setFont(font10)
+        self.prefer_horizontal_label.setFont(font8)
 
         self.horizontalLayout_9.addWidget(self.prefer_horizontal_label)
 
@@ -670,7 +622,7 @@ class Ui_MainWindow(object):
         self.label_text_orientation_slider.setObjectName(u"label_text_orientation_slider")
         self.label_text_orientation_slider.setMinimumSize(QSize(50, 0))
         self.label_text_orientation_slider.setMaximumSize(QSize(50, 50))
-        self.label_text_orientation_slider.setFont(font13)
+        self.label_text_orientation_slider.setFont(font11)
 
         self.horizontalLayout_9.addWidget(self.label_text_orientation_slider)
 
@@ -708,7 +660,7 @@ class Ui_MainWindow(object):
         self.image_scale_label = QLabel(self.frame_6)
         self.image_scale_label.setObjectName(u"image_scale_label")
         self.image_scale_label.setMaximumSize(QSize(16777215, 30))
-        self.image_scale_label.setFont(font10)
+        self.image_scale_label.setFont(font8)
 
         self.horizontalLayout_10.addWidget(self.image_scale_label)
 
@@ -726,7 +678,7 @@ class Ui_MainWindow(object):
         self.label_scale_slider = QLabel(self.frame_6)
         self.label_scale_slider.setObjectName(u"label_scale_slider")
         self.label_scale_slider.setMaximumSize(QSize(50, 50))
-        self.label_scale_slider.setFont(font13)
+        self.label_scale_slider.setFont(font11)
         self.label_scale_slider.setMargin(5)
         self.label_scale_slider.setIndent(-1)
         self.label_scale_slider.setOpenExternalLinks(False)
@@ -746,7 +698,7 @@ class Ui_MainWindow(object):
 
         self.label_6 = QLabel(self.frame_6)
         self.label_6.setObjectName(u"label_6")
-        self.label_6.setFont(font9)
+        self.label_6.setFont(font7)
 
         self.gridLayout_4.addWidget(self.label_6, 0, 0, 1, 1)
 
@@ -770,7 +722,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.setObjectName(u"gridLayout_6")
         self.label_7 = QLabel(self.frame_7)
         self.label_7.setObjectName(u"label_7")
-        self.label_7.setFont(font9)
+        self.label_7.setFont(font7)
 
         self.gridLayout_6.addWidget(self.label_7, 0, 0, 1, 1)
 
@@ -785,7 +737,7 @@ class Ui_MainWindow(object):
         self.stopwords_label = QLabel(self.frame_8)
         self.stopwords_label.setObjectName(u"stopwords_label")
         self.stopwords_label.setMaximumSize(QSize(150, 30))
-        self.stopwords_label.setFont(font10)
+        self.stopwords_label.setFont(font8)
 
         self.horizontalLayout_13.addWidget(self.stopwords_label)
 
@@ -793,11 +745,11 @@ class Ui_MainWindow(object):
         self.stopwords_checkbox.setObjectName(u"stopwords_checkbox")
         self.stopwords_checkbox.setMinimumSize(QSize(50, 0))
         self.stopwords_checkbox.setMaximumSize(QSize(50, 20))
-        font14 = QFont()
-        font14.setPointSize(10)
-        font14.setBold(True)
-        font14.setKerning(True)
-        self.stopwords_checkbox.setFont(font14)
+        font12 = QFont()
+        font12.setPointSize(10)
+        font12.setBold(True)
+        font12.setKerning(True)
+        self.stopwords_checkbox.setFont(font12)
         self.stopwords_checkbox.setIconSize(QSize(24, 24))
         self.stopwords_checkbox.setCheckable(True)
         self.stopwords_checkbox.setChecked(False)
@@ -835,7 +787,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_14.setObjectName(u"verticalLayout_14")
         self.label_8 = QLabel(self.frame_9)
         self.label_8.setObjectName(u"label_8")
-        self.label_8.setFont(font9)
+        self.label_8.setFont(font7)
 
         self.verticalLayout_14.addWidget(self.label_8)
 
@@ -853,13 +805,13 @@ class Ui_MainWindow(object):
 
         self.label_collocations = QLabel(self.frame_10)
         self.label_collocations.setObjectName(u"label_collocations")
-        self.label_collocations.setFont(font10)
+        self.label_collocations.setFont(font8)
 
         self.horizontalLayout_18.addWidget(self.label_collocations)
 
         self.collocations_checkbox = QCheckBox(self.frame_10)
         self.collocations_checkbox.setObjectName(u"collocations_checkbox")
-        self.collocations_checkbox.setFont(font10)
+        self.collocations_checkbox.setFont(font8)
         self.collocations_checkbox.setChecked(True)
         self.collocations_checkbox.setTristate(False)
 
@@ -896,7 +848,7 @@ class Ui_MainWindow(object):
 
         self.label_9 = QLabel(self.frame_12)
         self.label_9.setObjectName(u"label_9")
-        self.label_9.setFont(font9)
+        self.label_9.setFont(font7)
 
         self.gridLayout_5.addWidget(self.label_9, 0, 0, 1, 1)
 
@@ -908,7 +860,7 @@ class Ui_MainWindow(object):
 
         self.label_collocations_thresh = QLabel(self.frame_12)
         self.label_collocations_thresh.setObjectName(u"label_collocations_thresh")
-        self.label_collocations_thresh.setFont(font10)
+        self.label_collocations_thresh.setFont(font8)
 
         self.horizontalLayout_20.addWidget(self.label_collocations_thresh)
 
@@ -927,7 +879,7 @@ class Ui_MainWindow(object):
         self.collocation_thresh_slider_label = QLabel(self.frame_12)
         self.collocation_thresh_slider_label.setObjectName(u"collocation_thresh_slider_label")
         self.collocation_thresh_slider_label.setMaximumSize(QSize(50, 50))
-        self.collocation_thresh_slider_label.setFont(font13)
+        self.collocation_thresh_slider_label.setFont(font11)
 
         self.horizontalLayout_20.addWidget(self.collocation_thresh_slider_label)
 
@@ -959,7 +911,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.include_number_checkbox = QCheckBox(self.frame_17)
         self.include_number_checkbox.setObjectName(u"include_number_checkbox")
-        self.include_number_checkbox.setFont(font10)
+        self.include_number_checkbox.setFont(font8)
         self.include_number_checkbox.setIconSize(QSize(24, 24))
         self.include_number_checkbox.setChecked(True)
 
@@ -1015,36 +967,29 @@ class Ui_MainWindow(object):
         self.custom_font_directory_selection.setObjectName(u"custom_font_directory_selection")
         self.custom_font_directory_selection.setMinimumSize(QSize(50, 50))
         self.custom_font_directory_selection.setMaximumSize(QSize(200, 16777215))
+        font13 = QFont()
+        font13.setFamilies([u"Montserrat"])
+        font13.setPointSize(11)
+        font13.setBold(True)
+        self.custom_font_directory_selection.setFont(font13)
+        self.custom_font_directory_selection.setStyleSheet(u"background-color: #7754c8;\n"
+"color:#3cf3b6;\n"
+"border-radius:10px;")
 
         self.verticalLayout_3.addWidget(self.custom_font_directory_selection, 0, Qt.AlignHCenter)
 
         self.font_list = QListWidget(self.generated_text_frame)
         self.font_list.setObjectName(u"font_list")
         self.font_list.setMinimumSize(QSize(0, 200))
+        font14 = QFont()
+        font14.setPointSize(11)
+        font14.setBold(True)
+        self.font_list.setFont(font14)
+        self.font_list.setStyleSheet(u"border:2px solid gray;")
         self.font_list.setAutoScrollMargin(20)
         self.font_list.setTabKeyNavigation(False)
 
         self.verticalLayout_3.addWidget(self.font_list)
-
-        self.generated_text_label = QLabel(self.generated_text_frame)
-        self.generated_text_label.setObjectName(u"generated_text_label")
-        font15 = QFont()
-        font15.setFamilies([u"Play"])
-        font15.setPointSize(11)
-        font15.setBold(True)
-        self.generated_text_label.setFont(font15)
-
-        self.verticalLayout_3.addWidget(self.generated_text_label)
-
-        self.word_input = QTextEdit(self.generated_text_frame)
-        self.word_input.setObjectName(u"word_input")
-        font16 = QFont()
-        font16.setFamilies([u"Play"])
-        font16.setPointSize(14)
-        self.word_input.setFont(font16)
-        self.word_input.setStyleSheet(u"border:1px solid rgb(55,55,55);")
-
-        self.verticalLayout_3.addWidget(self.word_input)
 
 
         self.verticalLayout_21.addWidget(self.generated_text_frame)
@@ -1061,7 +1006,7 @@ class Ui_MainWindow(object):
         self.mask_and_parameters_summary_container.setObjectName(u"mask_and_parameters_summary_container")
         self.mask_and_parameters_summary_container.setMinimumSize(QSize(300, 5))
         self.mask_and_parameters_summary_container.setMaximumSize(QSize(300, 630))
-        self.mask_and_parameters_summary_container.setStyleSheet(u"background-color: rgb(255, 85, 0);")
+        self.mask_and_parameters_summary_container.setStyleSheet(u"")
         self.mask_and_parameters_summary_container.setFrameShape(QFrame.StyledPanel)
         self.mask_and_parameters_summary_container.setFrameShadow(QFrame.Raised)
         self.horizontalLayout_19 = QHBoxLayout(self.mask_and_parameters_summary_container)
@@ -1077,12 +1022,30 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_24.addWidget(self.mask_and_parameters_summary_container)
 
+        self.mask_dimensions_label = QLabel(self.frame_main1)
+        self.mask_dimensions_label.setObjectName(u"mask_dimensions_label")
+        self.mask_dimensions_label.setMaximumSize(QSize(300, 16777215))
+        font15 = QFont()
+        font15.setFamilies([u"Montserrat"])
+        font15.setPointSize(11)
+        font15.setBold(True)
+        font15.setUnderline(False)
+        font15.setStyleStrategy(QFont.PreferDefault)
+        self.mask_dimensions_label.setFont(font15)
+        self.mask_dimensions_label.setCursor(QCursor(Qt.ArrowCursor))
+
+        self.verticalLayout_24.addWidget(self.mask_dimensions_label, 0, Qt.AlignHCenter)
+
         self.frame_14 = QFrame(self.frame_main1)
         self.frame_14.setObjectName(u"frame_14")
         self.frame_14.setMinimumSize(QSize(301, 401))
         self.frame_14.setMaximumSize(QSize(301, 401))
-        self.frame_14.setFont(font2)
-        self.frame_14.setStyleSheet(u"background-color: rgb(255, 170, 0);")
+        font16 = QFont()
+        font16.setFamilies([u"IBM Plex Sans"])
+        font16.setPointSize(10)
+        font16.setBold(True)
+        self.frame_14.setFont(font16)
+        self.frame_14.setStyleSheet(u"")
         self.frame_14.setFrameShape(QFrame.StyledPanel)
         self.frame_14.setFrameShadow(QFrame.Raised)
         self.verticalLayout_29 = QVBoxLayout(self.frame_14)
@@ -1091,13 +1054,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
         self.label_2 = QLabel(self.frame_14)
         self.label_2.setObjectName(u"label_2")
-        self.label_2.setFont(font2)
+        self.label_2.setFont(font16)
 
         self.horizontalLayout_16.addWidget(self.label_2)
 
         self.repeat_info_label = QLabel(self.frame_14)
         self.repeat_info_label.setObjectName(u"repeat_info_label")
-        self.repeat_info_label.setFont(font2)
+        self.repeat_info_label.setFont(font16)
 
         self.horizontalLayout_16.addWidget(self.repeat_info_label)
 
@@ -1108,13 +1071,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_29.setObjectName(u"horizontalLayout_29")
         self.label_18 = QLabel(self.frame_14)
         self.label_18.setObjectName(u"label_18")
-        self.label_18.setFont(font2)
+        self.label_18.setFont(font16)
 
         self.horizontalLayout_29.addWidget(self.label_18)
 
         self.margin_info_label = QLabel(self.frame_14)
         self.margin_info_label.setObjectName(u"margin_info_label")
-        self.margin_info_label.setFont(font2)
+        self.margin_info_label.setFont(font16)
 
         self.horizontalLayout_29.addWidget(self.margin_info_label)
 
@@ -1125,13 +1088,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
         self.label_14 = QLabel(self.frame_14)
         self.label_14.setObjectName(u"label_14")
-        self.label_14.setFont(font2)
+        self.label_14.setFont(font16)
 
         self.horizontalLayout_27.addWidget(self.label_14)
 
         self.min_font_size_info_label = QLabel(self.frame_14)
         self.min_font_size_info_label.setObjectName(u"min_font_size_info_label")
-        self.min_font_size_info_label.setFont(font2)
+        self.min_font_size_info_label.setFont(font16)
 
         self.horizontalLayout_27.addWidget(self.min_font_size_info_label)
 
@@ -1142,13 +1105,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_28.setObjectName(u"horizontalLayout_28")
         self.label_100 = QLabel(self.frame_14)
         self.label_100.setObjectName(u"label_100")
-        self.label_100.setFont(font2)
+        self.label_100.setFont(font16)
 
         self.horizontalLayout_28.addWidget(self.label_100)
 
         self.max_font_size_info_label = QLabel(self.frame_14)
         self.max_font_size_info_label.setObjectName(u"max_font_size_info_label")
-        self.max_font_size_info_label.setFont(font2)
+        self.max_font_size_info_label.setFont(font16)
 
         self.horizontalLayout_28.addWidget(self.max_font_size_info_label)
 
@@ -1159,13 +1122,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
         self.label_12 = QLabel(self.frame_14)
         self.label_12.setObjectName(u"label_12")
-        self.label_12.setFont(font2)
+        self.label_12.setFont(font16)
 
         self.horizontalLayout_26.addWidget(self.label_12)
 
         self.prefer_horizontal_info_label = QLabel(self.frame_14)
         self.prefer_horizontal_info_label.setObjectName(u"prefer_horizontal_info_label")
-        self.prefer_horizontal_info_label.setFont(font2)
+        self.prefer_horizontal_info_label.setFont(font16)
 
         self.horizontalLayout_26.addWidget(self.prefer_horizontal_info_label)
 
@@ -1176,13 +1139,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_30.setObjectName(u"horizontalLayout_30")
         self.label_20 = QLabel(self.frame_14)
         self.label_20.setObjectName(u"label_20")
-        self.label_20.setFont(font2)
+        self.label_20.setFont(font16)
 
         self.horizontalLayout_30.addWidget(self.label_20)
 
         self.fontstep_info_label = QLabel(self.frame_14)
         self.fontstep_info_label.setObjectName(u"fontstep_info_label")
-        self.fontstep_info_label.setFont(font2)
+        self.fontstep_info_label.setFont(font16)
 
         self.horizontalLayout_30.addWidget(self.fontstep_info_label)
 
@@ -1193,13 +1156,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_32.setObjectName(u"horizontalLayout_32")
         self.label_22 = QLabel(self.frame_14)
         self.label_22.setObjectName(u"label_22")
-        self.label_22.setFont(font2)
+        self.label_22.setFont(font16)
 
         self.horizontalLayout_32.addWidget(self.label_22)
 
         self.collocations_info_label = QLabel(self.frame_14)
         self.collocations_info_label.setObjectName(u"collocations_info_label")
-        self.collocations_info_label.setFont(font2)
+        self.collocations_info_label.setFont(font16)
 
         self.horizontalLayout_32.addWidget(self.collocations_info_label)
 
@@ -1210,13 +1173,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_33.setObjectName(u"horizontalLayout_33")
         self.label_24 = QLabel(self.frame_14)
         self.label_24.setObjectName(u"label_24")
-        self.label_24.setFont(font2)
+        self.label_24.setFont(font16)
 
         self.horizontalLayout_33.addWidget(self.label_24)
 
         self.collocations_thresh_info_label = QLabel(self.frame_14)
         self.collocations_thresh_info_label.setObjectName(u"collocations_thresh_info_label")
-        self.collocations_thresh_info_label.setFont(font2)
+        self.collocations_thresh_info_label.setFont(font16)
 
         self.horizontalLayout_33.addWidget(self.collocations_thresh_info_label)
 
@@ -1227,13 +1190,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_34.setObjectName(u"horizontalLayout_34")
         self.label_26 = QLabel(self.frame_14)
         self.label_26.setObjectName(u"label_26")
-        self.label_26.setFont(font2)
+        self.label_26.setFont(font16)
 
         self.horizontalLayout_34.addWidget(self.label_26)
 
         self.include_numbers_info_label = QLabel(self.frame_14)
         self.include_numbers_info_label.setObjectName(u"include_numbers_info_label")
-        self.include_numbers_info_label.setFont(font2)
+        self.include_numbers_info_label.setFont(font16)
 
         self.horizontalLayout_34.addWidget(self.include_numbers_info_label)
 
@@ -1244,13 +1207,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_35.setObjectName(u"horizontalLayout_35")
         self.label_28 = QLabel(self.frame_14)
         self.label_28.setObjectName(u"label_28")
-        self.label_28.setFont(font2)
+        self.label_28.setFont(font16)
 
         self.horizontalLayout_35.addWidget(self.label_28)
 
         self.scale_multiplier_info_label = QLabel(self.frame_14)
         self.scale_multiplier_info_label.setObjectName(u"scale_multiplier_info_label")
-        self.scale_multiplier_info_label.setFont(font2)
+        self.scale_multiplier_info_label.setFont(font16)
 
         self.horizontalLayout_35.addWidget(self.scale_multiplier_info_label)
 
@@ -1348,12 +1311,10 @@ class Ui_MainWindow(object):
         self.colormaps_dropdown.setObjectName(u"colormaps_dropdown")
         self.colormaps_dropdown.setMinimumSize(QSize(0, 30))
         self.colormaps_dropdown.setMaximumSize(QSize(300, 30))
-        font19 = QFont()
-        font19.setFamilies([u"IBM Plex Sans"])
-        font19.setPointSize(14)
-        font19.setBold(False)
-        self.colormaps_dropdown.setFont(font19)
-        self.colormaps_dropdown.setStyleSheet(u"")
+        self.colormaps_dropdown.setFont(font18)
+        self.colormaps_dropdown.setStyleSheet(u"background-color: #7754c8;\n"
+"color:#3cf3b6;\n"
+"")
 
         self.verticalLayout_19.addWidget(self.colormaps_dropdown)
 
@@ -1380,11 +1341,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
         self.red_min = QSpinBox(self.ColorsMinGP)
         self.red_min.setObjectName(u"red_min")
-        font20 = QFont()
-        font20.setFamilies([u"Play"])
-        font20.setPointSize(20)
-        font20.setBold(True)
-        self.red_min.setFont(font20)
+        font19 = QFont()
+        font19.setFamilies([u"Play"])
+        font19.setPointSize(20)
+        font19.setBold(True)
+        self.red_min.setFont(font19)
         self.red_min.setStyleSheet(u"background-color: rgb(200, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.red_min.setMinimum(0)
@@ -1395,7 +1356,7 @@ class Ui_MainWindow(object):
 
         self.green_min = QSpinBox(self.ColorsMinGP)
         self.green_min.setObjectName(u"green_min")
-        self.green_min.setFont(font20)
+        self.green_min.setFont(font19)
         self.green_min.setStyleSheet(u"background-color: rgb(0, 200, 0);\n"
 "color: rgb(25, 25, 25);")
         self.green_min.setMaximum(255)
@@ -1405,7 +1366,7 @@ class Ui_MainWindow(object):
 
         self.blue_min = QSpinBox(self.ColorsMinGP)
         self.blue_min.setObjectName(u"blue_min")
-        self.blue_min.setFont(font20)
+        self.blue_min.setFont(font19)
         self.blue_min.setStyleSheet(u"background-color: rgb(0, 0, 200);\n"
 "color: rgb(255, 255, 255);")
         self.blue_min.setMaximum(255)
@@ -1424,7 +1385,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.red_max = QSpinBox(self.ColorsMaxGP)
         self.red_max.setObjectName(u"red_max")
-        self.red_max.setFont(font20)
+        self.red_max.setFont(font19)
         self.red_max.setStyleSheet(u"background-color: rgb(200, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.red_max.setMinimum(0)
@@ -1435,7 +1396,7 @@ class Ui_MainWindow(object):
 
         self.green_max = QSpinBox(self.ColorsMaxGP)
         self.green_max.setObjectName(u"green_max")
-        self.green_max.setFont(font20)
+        self.green_max.setFont(font19)
         self.green_max.setStyleSheet(u"background-color: rgb(0, 200, 0);\n"
 "color: rgb(25, 25, 25);")
         self.green_max.setMaximum(255)
@@ -1445,7 +1406,7 @@ class Ui_MainWindow(object):
 
         self.blue_max = QSpinBox(self.ColorsMaxGP)
         self.blue_max.setObjectName(u"blue_max")
-        self.blue_max.setFont(font20)
+        self.blue_max.setFont(font19)
         self.blue_max.setStyleSheet(u"background-color: rgb(0, 0, 200);\n"
 "color: rgb(255, 255, 255);")
         self.blue_max.setMaximum(255)
@@ -1478,18 +1439,18 @@ class Ui_MainWindow(object):
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
         self.rcp_maximize_blue = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_maximize_blue.setObjectName(u"rcp_maximize_blue")
-        font21 = QFont()
-        font21.setFamilies([u"Barlow"])
-        font21.setPointSize(10)
-        font21.setBold(True)
-        self.rcp_maximize_blue.setFont(font21)
+        font20 = QFont()
+        font20.setFamilies([u"Barlow"])
+        font20.setPointSize(10)
+        font20.setBold(True)
+        self.rcp_maximize_blue.setFont(font20)
         self.rcp_maximize_blue.setStyleSheet(u"color: rgb(0, 0, 250);")
 
         self.horizontalLayout_17.addWidget(self.rcp_maximize_blue)
 
         self.rcp_minimize_blue = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_minimize_blue.setObjectName(u"rcp_minimize_blue")
-        self.rcp_minimize_blue.setFont(font21)
+        self.rcp_minimize_blue.setFont(font20)
         self.rcp_minimize_blue.setStyleSheet(u"color: rgb(0, 0, 250);")
 
         self.horizontalLayout_17.addWidget(self.rcp_minimize_blue)
@@ -1502,14 +1463,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_31.setObjectName(u"horizontalLayout_31")
         self.rcp_minimize_green = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_minimize_green.setObjectName(u"rcp_minimize_green")
-        self.rcp_minimize_green.setFont(font21)
+        self.rcp_minimize_green.setFont(font20)
         self.rcp_minimize_green.setStyleSheet(u"color: rgb(0, 250, 0);")
 
         self.horizontalLayout_31.addWidget(self.rcp_minimize_green)
 
         self.rcp_maximize_green = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_maximize_green.setObjectName(u"rcp_maximize_green")
-        self.rcp_maximize_green.setFont(font21)
+        self.rcp_maximize_green.setFont(font20)
         self.rcp_maximize_green.setStyleSheet(u"color: rgb(0, 250, 0);")
 
         self.horizontalLayout_31.addWidget(self.rcp_maximize_green)
@@ -1522,14 +1483,14 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.rcp_minimize_red = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_minimize_red.setObjectName(u"rcp_minimize_red")
-        self.rcp_minimize_red.setFont(font21)
+        self.rcp_minimize_red.setFont(font20)
         self.rcp_minimize_red.setStyleSheet(u"color: rgb(250, 0, 0);")
 
         self.horizontalLayout_11.addWidget(self.rcp_minimize_red)
 
         self.rcp_maximize_red = QPushButton(self.color_range_preset_buttons_frame)
         self.rcp_maximize_red.setObjectName(u"rcp_maximize_red")
-        self.rcp_maximize_red.setFont(font21)
+        self.rcp_maximize_red.setFont(font20)
         self.rcp_maximize_red.setStyleSheet(u"color: rgb(250, 0, 0);")
 
         self.horizontalLayout_11.addWidget(self.rcp_maximize_red)
@@ -1548,19 +1509,19 @@ class Ui_MainWindow(object):
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.rcp_bright = QPushButton(self.rcpresets3)
         self.rcp_bright.setObjectName(u"rcp_bright")
-        self.rcp_bright.setFont(font21)
+        self.rcp_bright.setFont(font20)
 
         self.gridLayout_3.addWidget(self.rcp_bright, 0, 0, 1, 1)
 
         self.rcp_reset = QPushButton(self.rcpresets3)
         self.rcp_reset.setObjectName(u"rcp_reset")
-        self.rcp_reset.setFont(font21)
+        self.rcp_reset.setFont(font20)
 
         self.gridLayout_3.addWidget(self.rcp_reset, 0, 2, 1, 1)
 
         self.rcp_dark = QPushButton(self.rcpresets3)
         self.rcp_dark.setObjectName(u"rcp_dark")
-        self.rcp_dark.setFont(font21)
+        self.rcp_dark.setFont(font20)
 
         self.gridLayout_3.addWidget(self.rcp_dark, 0, 1, 1, 1)
 
@@ -1584,14 +1545,40 @@ class Ui_MainWindow(object):
         self.generate_Wordcloud_Frame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_23 = QVBoxLayout(self.generate_Wordcloud_Frame)
         self.verticalLayout_23.setObjectName(u"verticalLayout_23")
+        self.generated_text_label = QLabel(self.generate_Wordcloud_Frame)
+        self.generated_text_label.setObjectName(u"generated_text_label")
+        font21 = QFont()
+        font21.setFamilies([u"Play"])
+        font21.setPointSize(14)
+        font21.setBold(True)
+        self.generated_text_label.setFont(font21)
+
+        self.verticalLayout_23.addWidget(self.generated_text_label, 0, Qt.AlignHCenter)
+
+        self.word_input = QTextEdit(self.generate_Wordcloud_Frame)
+        self.word_input.setObjectName(u"word_input")
+        font22 = QFont()
+        font22.setFamilies([u"Play"])
+        font22.setPointSize(14)
+        font22.setBold(False)
+        font22.setItalic(False)
+        self.word_input.setFont(font22)
+        self.word_input.setStyleSheet(u"border:2px solid red;")
+        self.word_input.setFrameShadow(QFrame.Plain)
+        self.word_input.setLineWidth(1)
+        self.word_input.setTabChangesFocus(False)
+        self.word_input.setUndoRedoEnabled(True)
+
+        self.verticalLayout_23.addWidget(self.word_input)
+
         self.export_as_frame = QGroupBox(self.generate_Wordcloud_Frame)
         self.export_as_frame.setObjectName(u"export_as_frame")
         self.export_as_frame.setMinimumSize(QSize(90, 61))
         self.export_as_frame.setMaximumSize(QSize(102, 70))
-        font22 = QFont()
-        font22.setFamilies([u"Sarpanch SemiBold"])
-        font22.setBold(False)
-        self.export_as_frame.setFont(font22)
+        font23 = QFont()
+        font23.setFamilies([u"Sarpanch SemiBold"])
+        font23.setBold(False)
+        self.export_as_frame.setFont(font23)
         self.verticalLayout_26 = QVBoxLayout(self.export_as_frame)
         self.verticalLayout_26.setObjectName(u"verticalLayout_26")
         self.exportAs_label = QLabel(self.export_as_frame)
@@ -1606,7 +1593,7 @@ class Ui_MainWindow(object):
         self.export_format_options.addItem("")
         self.export_format_options.addItem("")
         self.export_format_options.setObjectName(u"export_format_options")
-        self.export_format_options.setFont(font7)
+        self.export_format_options.setFont(font5)
 
         self.verticalLayout_26.addWidget(self.export_format_options, 0, Qt.AlignHCenter)
 
@@ -1617,7 +1604,7 @@ class Ui_MainWindow(object):
         self.generate_wordcloud_button.setObjectName(u"generate_wordcloud_button")
         self.generate_wordcloud_button.setEnabled(True)
         self.generate_wordcloud_button.setMinimumSize(QSize(700, 150))
-        self.generate_wordcloud_button.setFont(font20)
+        self.generate_wordcloud_button.setFont(font19)
         self.generate_wordcloud_button.setToolTipDuration(-1)
         self.generate_wordcloud_button.setStyleSheet(u"QPushButton{\n"
 "color: rgb(200,200,200);\n"
@@ -1679,20 +1666,10 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.actionShit.setText(QCoreApplication.translate("MainWindow", u"Shit", None))
         self.app_title.setText(QCoreApplication.translate("MainWindow", u"WordCloud Generator X-Treme", None))
-        self.mask_dimensions_label.setText(QCoreApplication.translate("MainWindow", u"image_path", None))
-#if QT_CONFIG(tooltip)
-        self.mask_path.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt;\">Path to mask image </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.mask_path.setPlaceholderText(QCoreApplication.translate("MainWindow", u"path to mask image", None))
 #if QT_CONFIG(tooltip)
         self.mask_select_button.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Select Mask image </span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.mask_select_button.setText(QCoreApplication.translate("MainWindow", u"Select Mask", None))
-        self.destination_gp_placeholder_label.setText("")
-#if QT_CONFIG(tooltip)
-        self.destination_path.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt;\">Destination for generated WordCloud </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.destination_path.setPlaceholderText(QCoreApplication.translate("MainWindow", u"destination folder", None))
 #if QT_CONFIG(tooltip)
         self.select_destination_button.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Select destination for generated PNG file</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
@@ -1866,9 +1843,8 @@ class Ui_MainWindow(object):
         self.include_number_checkbox.setText(QCoreApplication.translate("MainWindow", u"Include Numbers", None))
         self.parameters_window.setTabText(self.parameters_window.indexOf(self.tab_2), QCoreApplication.translate("MainWindow", u"Numbers", None))
         self.custom_font_directory_selection.setText(QCoreApplication.translate("MainWindow", u"  Change Fonts Folder  ", None))
-        self.generated_text_label.setText(QCoreApplication.translate("MainWindow", u"Generated Text:", None))
-        self.word_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"WordCloud text goes here. Different words will be identified based on space. Ex: word1 word2", None))
         self.mask_image_thumbnail.setText(QCoreApplication.translate("MainWindow", u"MASK IMAGE WILL BE PLACED HERE", None))
+        self.mask_dimensions_label.setText(QCoreApplication.translate("MainWindow", u"mask_dimensions_label", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Repeat Words:", None))
         self.repeat_info_label.setText(QCoreApplication.translate("MainWindow", u"result here", None))
         self.label_18.setText(QCoreApplication.translate("MainWindow", u"Margin:", None))
@@ -1972,6 +1948,8 @@ class Ui_MainWindow(object):
         self.rcp_dark.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Dark color range </span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.rcp_dark.setText(QCoreApplication.translate("MainWindow", u"Dark", None))
+        self.generated_text_label.setText(QCoreApplication.translate("MainWindow", u"Generated Text:", None))
+        self.word_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"WordCloud text goes here. Different words will be identified based on space. Ex: word1 word2", None))
         self.export_as_frame.setTitle("")
         self.exportAs_label.setText(QCoreApplication.translate("MainWindow", u"Export As", None))
         self.export_format_options.setItemText(0, QCoreApplication.translate("MainWindow", u"PNG", None))

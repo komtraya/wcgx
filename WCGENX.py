@@ -40,13 +40,16 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+        ## Modifications/data-setup for the start of the app
         # Make sure text input is not empty
         self.word_input.textChanged.connect(self.text_input_Changed)
-
+        self.destination_path = None
+        self.mask_path = None
+        self.mask_image_thumbnail.setVisible(False)
+        self.mask_dimensions_label.setText("")
         ### scan fonts set by default (windows path) and populate the list
         self.fonts_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"  # default font directory on start of the app
         self.scan_fonts(self.fonts_directory)  # This scans the default directory for fonts
-        # self.font_list.itemClicked.connect(self.apply_selected_font)  # connect list items to function, so that it applies the selected font to the text
         self.font_list.currentItemChanged.connect(self.apply_selected_font)  # This enables clicks, as well as keyboard arrows to browse through the list
 
         self.custom_font_directory_selection.clicked.connect(self.select_custom_fonts_folder)
@@ -57,20 +60,18 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Open destination folder if it's selected
         self.open_destination_folder.setVisible(False)
         self.open_destination_folder.clicked.connect(self.open_destination_folder_function)
+
         # Hide random colors frame
-        # self.RandomColorsFrame.setVisible(False)
         self.RandomColorGroupBox.setVisible(False)
-        # self.Presets_all_rcpg.setVisible(False)
+
         # Connect dropdown list to function
         self.colormaps_dropdown.currentTextChanged.connect(self.check_dropdown_selected_item)
-        # Call to check image dimensions on app start
-        self.update_image_dimensions()
 
         ## MASK IMAGE SELECTION
         # Connect the "Select Mask" button's clicked signal to the custom slot
         self.mask_select_button.clicked.connect(self.mask_select_button_clicked)
         # Connect the "Path Changed" signal of the mask_path to the custom slot (Update path)
-        self.mask_path.textChanged.connect(self.mask_path_Changed)
+        # self.mask_path.textChanged.connect(self.mask_path_Changed)
         ## INFO LABELS UPDATE
         self.update_info_labels()
         self.repeat_checkbox.clicked.connect(self.update_info_labels)
@@ -80,8 +81,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         # Connect the button click to the slot function
         self.select_destination_button.clicked.connect(self.select_destination_button_clicked)
-        # Connect the "Path Changed" signal of the mask_path to the custom slot (Update path)
-        self.destination_path.textChanged.connect(self.destination_Changed)
 
         # ## FONT HANDLING
         # self.font_path = None
@@ -159,7 +158,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def generate_WordCloud(self):
         # @ PARAMETERS
         # Open Mask Image
-        mask_image = np.array(Image.open((self.mask_path_wc)))
+        mask_image = np.array(Image.open((self.mask_path)))
         wordcloud = WordCloud(
             mask=mask_image,
             # width=width,
@@ -198,13 +197,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         wordcloud_image = Image.fromarray(wordcloud_image)
 
         # Export the PIL Image object as a PNG image file
-        output_image_path = rf"{self.destination_path.text()}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+        output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
         wordcloud_image.save(output_image_path)
 
     def generate_WordCloud_svg(self):
         # @ PARAMETERS
         # Open Mask Image
-        mask_image = np.array(Image.open((self.mask_path_wc)))
+        mask_image = np.array(Image.open((self.mask_path)))
         wordcloud = WordCloud(
             mask=mask_image,
             # width=width,
@@ -236,14 +235,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Generate the SVG representation of the word cloud
         svg_code = wordcloud.to_svg()
         # Export the SVG code to a file
-        output_image_path_1 = rf"{self.destination_path.text()}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+        output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
         with open(f"{output_image_path_1}", "w", encoding="utf-8") as f:
             f.write(svg_code)
 
     def generate_WordCloud_both(self):
         # @ PARAMETERS
         # Open Mask Image
-        mask_image = np.array(Image.open((self.mask_path_wc)))
+        mask_image = np.array(Image.open((self.mask_path)))
         wordcloud = WordCloud(
             mask=mask_image,
             # width=width,
@@ -275,7 +274,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Generate the SVG representation of the word cloud
         svg_code = wordcloud.to_svg()
         # Export the SVG code to a file
-        output_image_path = rf"{self.destination_path.text()}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+        output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
         with open(f"{output_image_path}", "w", encoding="utf-8") as f:
             f.write(svg_code)
 
@@ -285,7 +284,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         wordcloud_image = Image.fromarray(wordcloud_image)
 
         # Export the PIL Image object as a PNG image file
-        output_image_path_2 = rf"{self.destination_path.text()}\{self.font_name}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+        output_image_path_2 = rf"{self.destination_path}\{self.font_name}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
         wordcloud_image.save(output_image_path_2)
 
     ### !!!!! FUNCTIONS !!!!! ###
@@ -295,35 +294,47 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         options = QFileDialog.Options()
         file_name, _ = QFileDialog.getOpenFileName(self, "Open PNG Image", "", "PNG Files (*.png);;All Files (*)", options=options)
         if file_name:
-            self.mask_path.setText(file_name)
+            self.mask_path = file_name
+            self.enable_WordCloud_Generator_Button()
+        else:
+            self.mask_path = None
+            self.enable_WordCloud_Generator_Button()
+
+        if self.mask_path:
+            self.update_image_dimensions()
+            self.mask_select_button.setStyleSheet("background-color: #7754c8; color:#ff740a;border-radius:10px;")
+        else:
+            self.update_image_dimensions()
+            self.mask_select_button.setStyleSheet("border:2px solid red; background-color: #7754c8; color:#ff740a;border-radius:10px;")
 
     # @ CHECK FIELDS FOR CHANGES @ #
-    def mask_path_Changed(self, text):
-        # Update another variable (e.g., self.my_other_variable) with the edited file path
-        self.mask_path_wc = text
-        self.update_image_dimensions()
-        self.enable_WordCloud_Generator_Button()
-
-    # If path is edited, update path
-    def destination_Changed(self, text):
-        # Update another variable (e.g., self.my_other_variable) with the edited file path
-        self.destination_path_wc = text
-        # self.destination_path.setStyleSheet("color:green")
-        self.open_destination_folder.setVisible(True)
-        self.enable_WordCloud_Generator_Button()
 
     # Check text input field for changes
     def text_input_Changed(self):
         self.enable_WordCloud_Generator_Button()
+        if self.word_input.toPlainText():
+            self.word_input.setStyleSheet("border:2px solid green;")
+        else:
+            self.word_input.setStyleSheet("border:1px solid red;")
 
     def select_destination_button_clicked(self):
         options = QFileDialog.Options()
         selected_folder = QFileDialog.getExistingDirectory(self, "Select Folder", "", options=options)
         if selected_folder:
-            self.destination_path.setText(selected_folder)
+            self.destination_path = selected_folder
+            self.enable_WordCloud_Generator_Button()
+        else:
+            self.enable_WordCloud_Generator_Button()
+        # If there was a destination set, but the second time the selection was cancelled, make sure the button does not disappear
+        if not self.destination_path:
+            self.open_destination_folder.setVisible(False)
+            self.select_destination_button.setStyleSheet("border:2px solid red;background-color: #7754c8; color:#ff740a;border-radius:10px;")
+        else:
+            self.select_destination_button.setStyleSheet("background-color: #7754c8; color:#ff740a;border-radius:10px;")
+            self.open_destination_folder.setVisible(True)
 
     def open_destination_folder_function(self):
-        os.startfile(rf"{self.destination_path.text()}")
+        os.startfile(rf"{self.destination_path}")
 
     def margin_slider_changed(self, value: int):
         # Update corresponding label
@@ -372,25 +383,23 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         global height
         if self.mask_path:
             try:
-                with Image.open(self.mask_path.text()) as img:
+                with Image.open(self.mask_path) as img:
                     width, height = img.size
                     self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
                     self.mask_dimensions_label.setStyleSheet("color: green;")
-                    image_state = True
                     # mask image
                     self.mask_image_thumbnail.setVisible(True)
-                    pixmap = QPixmap(self.mask_path.text())
+                    pixmap = QPixmap(self.mask_path)
                     self.mask_image_thumbnail.setPixmap(pixmap)
 
             except:
                 self.mask_dimensions_label.setText("Incorrect image path!")
                 self.mask_dimensions_label.setStyleSheet("color: red;")
-                image_state = False
                 self.export_as_frame.setVisible(False)
                 # mask image
                 self.mask_image_thumbnail.setVisible(False)
 
-        if not self.mask_path.text():
+        if not self.mask_path:
             self.mask_dimensions_label.setText(f"")
             # mask image
             self.mask_image_thumbnail.setText(f"")
@@ -398,7 +407,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## ENABLE WORDCLOUD BUTTON##
     def enable_WordCloud_Generator_Button(self):
-        if image_state == True and self.destination_path.text() and self.word_input.toPlainText() != "":
+        if self.mask_path and self.destination_path and self.word_input.toPlainText() != "":
             # self.generate_wordcloud_button.setEnabled(True)
             self.generate_wordcloud_button.setVisible(True)
             self.export_as_frame.setVisible(True)
