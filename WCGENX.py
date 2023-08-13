@@ -148,6 +148,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # @ PARAMETERS
         # Open Mask Image
         mask_image = np.array(Image.open((self.mask_path)))
+        try:
+            mask_image[(mask_image[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+        except:
+            mask_image = np.array(Image.open((self.mask_path)))
+
         wordcloud = WordCloud(
             mask=mask_image,
             # width=width,

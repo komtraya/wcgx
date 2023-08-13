@@ -121,10 +121,16 @@ class Ui_MainWindow(object):
         font1.setPointSize(10)
         font1.setBold(True)
         self.mask_select_button.setFont(font1)
-        self.mask_select_button.setStyleSheet(u"background-color: #7754c8;\n"
+        self.mask_select_button.setStyleSheet(u"QPushButton{\n"
+"background-color: #7754c8;\n"
 "color:#3cf3b6;\n"
 "border-radius:10px;\n"
-"border:2px solid red; ")
+"border:2px solid red; \n"
+"}\n"
+"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}")
 
         self.verticalLayout_4.addWidget(self.mask_select_button)
 
@@ -136,10 +142,17 @@ class Ui_MainWindow(object):
         self.select_destination_button.setEnabled(True)
         self.select_destination_button.setMinimumSize(QSize(150, 50))
         self.select_destination_button.setFont(font1)
-        self.select_destination_button.setStyleSheet(u"background-color: #7754c8;\n"
+        self.select_destination_button.setStyleSheet(u"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}\n"
+"QPushButton{\n"
+"background-color: #7754c8;\n"
 "color:#3cf3b6;\n"
 "border-radius:10px;\n"
-"border:2px solid red; ")
+"border:2px solid red; \n"
+"}\n"
+"")
 
         self.horizontalLayout.addWidget(self.select_destination_button)
 
@@ -150,9 +163,15 @@ class Ui_MainWindow(object):
         font2 = QFont()
         font2.setPointSize(14)
         self.open_destination_folder.setFont(font2)
-        self.open_destination_folder.setStyleSheet(u"color: rgb(0, 170, 0);\n"
+        self.open_destination_folder.setStyleSheet(u"QPushButton{\n"
+"color: rgb(0, 170, 0);\n"
 "background-color: #7754c8;\n"
-"border-radius:5px;")
+"border-radius:5px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"	 padding-left: 2px;\n"
+"     padding-top: 2px;\n"
+"}")
 
         self.horizontalLayout.addWidget(self.open_destination_folder, 0, Qt.AlignVCenter)
 
@@ -370,7 +389,7 @@ class Ui_MainWindow(object):
         self.min_font_size_slider.setMinimum(1)
         self.min_font_size_slider.setMaximum(100)
         self.min_font_size_slider.setPageStep(1)
-        self.min_font_size_slider.setValue(10)
+        self.min_font_size_slider.setValue(1)
         self.min_font_size_slider.setOrientation(Qt.Vertical)
 
         self.horizontalLayout_6.addWidget(self.min_font_size_slider)
@@ -972,9 +991,15 @@ class Ui_MainWindow(object):
         font13.setPointSize(11)
         font13.setBold(True)
         self.custom_font_directory_selection.setFont(font13)
-        self.custom_font_directory_selection.setStyleSheet(u"background-color: #7754c8;\n"
+        self.custom_font_directory_selection.setStyleSheet(u"QPushButton{\n"
+"background-color: #7754c8;\n"
 "color:#3cf3b6;\n"
-"border-radius:10px;")
+"border-radius:10px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}")
 
         self.verticalLayout_3.addWidget(self.custom_font_directory_selection, 0, Qt.AlignHCenter)
 
@@ -1614,8 +1639,10 @@ class Ui_MainWindow(object):
 "padding: 50px;\n"
 "}\n"
 "QPushButton:pressed{\n"
-"background-color:rgb(0,255,0);\n"
+"background-color:green;\n"
 "border: 10px solid rgb(50, 50, 50);\n"
+"padding-left: 50px;\n"
+"padding-bottom:20px\n"
 "}")
         self.generate_wordcloud_button.setText(u"")
         icon1 = QIcon()

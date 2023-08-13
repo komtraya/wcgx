@@ -1,3 +1,4 @@
+.gitignore
 Tests-NotRelated/
 assets/
 __pycache__/
