@@ -138,22 +138,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.rcp_maximize_blue.clicked.connect(self.rcp_maximize_blue_function)
         self.rcp_minimize_blue.clicked.connect(self.rcp_minimize_blue_function)
         ## WordCloud Button ##
-        self.generate_wordcloud_button.clicked.connect(self.check_export_format_before_generate_WordCloud)
+        self.generate_wordcloud_button.clicked.connect(self.generate_WordCloud)
 
         # # # # # Create a WordCloud object with the mask # # # # #
         ## ENABLE SPECIAL CHARACTERS:
         self.custom_regexp = r"\w+(?:\.\w+)*"
-        # Call the color conditions function, to establish colormap, or if a custom function will be used
-        # self.colormap_conditions()
-        self.aaa = None
-
-    def check_export_format_before_generate_WordCloud(self):
-        if self.export_format_options.currentText() == "PNG":
-            self.generate_WordCloud()
-        elif self.export_format_options.currentText() == "SVG":
-            self.generate_WordCloud_svg()
-        else:
-            self.generate_WordCloud_both()
 
     def generate_WordCloud(self):
         # @ PARAMETERS
@@ -187,105 +176,44 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # @ generate wc
         wordcloud.generate(self.word_input.toPlainText())
 
-        #####################
+        ###########
         # @ Export Image @ #
+        ##PNG
+        if self.export_format_options.currentText() == "PNG":
+            # Convert the word cloud image to a numpy array
+            wordcloud_image = np.array(wordcloud)
 
-        # Convert the word cloud image to a numpy array
-        wordcloud_image = np.array(wordcloud)
+            # Create a PIL Image object from the numpy array
+            wordcloud_image = Image.fromarray(wordcloud_image)
 
-        # Create a PIL Image object from the numpy array
-        wordcloud_image = Image.fromarray(wordcloud_image)
+            # Export the PIL Image object as a PNG image file
+            output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+            wordcloud_image.save(output_image_path)
+        ## SVG
+        elif self.export_format_options.currentText() == "SVG":
+            # Generate the SVG representation of the word cloud
+            svg_code = wordcloud.to_svg()
+            # Export the SVG code to a file
+            output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+            with open(f"{output_image_path_1}", "w", encoding="utf-8") as f:
+                f.write(svg_code)
+        ## BOTH
+        else:
+            # Generate the SVG representation of the word cloud
+            svg_code = wordcloud.to_svg()
+            # Export the SVG code to a file
+            output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+            with open(f"{output_image_path}", "w", encoding="utf-8") as f:
+                f.write(svg_code)
 
-        # Export the PIL Image object as a PNG image file
-        output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
-        wordcloud_image.save(output_image_path)
+            # Convert the word cloud image to a numpy array
+            wordcloud_image = np.array(wordcloud)
+            # Create a PIL Image object from the numpy array
+            wordcloud_image = Image.fromarray(wordcloud_image)
 
-    def generate_WordCloud_svg(self):
-        # @ PARAMETERS
-        # Open Mask Image
-        mask_image = np.array(Image.open((self.mask_path)))
-        wordcloud = WordCloud(
-            mask=mask_image,
-            # width=width,
-            # height=height,
-            regexp=self.custom_regexp,
-            background_color=None,
-            scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
-            contour_color=0,
-            margin=self.margin_slider.value(),
-            font_path=self.font_list.currentItem().data(1001),
-            repeat=self.repeat_checkbox.isChecked(),
-            collocation_threshold=self.collocations_thresh_slider.value(),
-            collocations=self.collocations_checkbox.isChecked(),
-            mode="RGBA",
-            prefer_horizontal=self.prefer_horizontal_slider.value() / 10,
-            color_func=self.color_function_conditions(),
-            colormap=self.colormap_conditions(),
-            max_font_size=self.max_font_size_slider.value(),
-            min_font_size=self.min_font_size_slider.value(),
-            font_step=self.font_step_slider.value(),
-            stopwords=set(),
-            min_word_length=0,
-            include_numbers=self.include_number_checkbox.isChecked(),
-            # relative_scaling=0,
-        )
-        # @ generate wc
-        wordcloud.generate(self.word_input.toPlainText())
-
-        # Generate the SVG representation of the word cloud
-        svg_code = wordcloud.to_svg()
-        # Export the SVG code to a file
-        output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
-        with open(f"{output_image_path_1}", "w", encoding="utf-8") as f:
-            f.write(svg_code)
-
-    def generate_WordCloud_both(self):
-        # @ PARAMETERS
-        # Open Mask Image
-        mask_image = np.array(Image.open((self.mask_path)))
-        wordcloud = WordCloud(
-            mask=mask_image,
-            # width=width,
-            # height=height,
-            regexp=self.custom_regexp,
-            background_color=None,
-            scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
-            contour_color=0,
-            margin=self.margin_slider.value(),
-            font_path=self.font_list.currentItem().data(1001),
-            repeat=self.repeat_checkbox.isChecked(),
-            collocation_threshold=self.collocations_thresh_slider.value(),
-            collocations=self.collocations_checkbox.isChecked(),
-            mode="RGBA",
-            prefer_horizontal=self.prefer_horizontal_slider.value() / 10,
-            color_func=self.color_function_conditions(),
-            colormap=self.colormap_conditions(),
-            max_font_size=self.max_font_size_slider.value(),
-            min_font_size=self.min_font_size_slider.value(),
-            font_step=self.font_step_slider.value(),
-            stopwords=set(),
-            min_word_length=0,
-            include_numbers=self.include_number_checkbox.isChecked(),
-            # relative_scaling=0,
-        )
-        # @ generate wc
-        wordcloud.generate(self.word_input.toPlainText())
-
-        # Generate the SVG representation of the word cloud
-        svg_code = wordcloud.to_svg()
-        # Export the SVG code to a file
-        output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
-        with open(f"{output_image_path}", "w", encoding="utf-8") as f:
-            f.write(svg_code)
-
-        # Convert the word cloud image to a numpy array
-        wordcloud_image = np.array(wordcloud)
-        # Create a PIL Image object from the numpy array
-        wordcloud_image = Image.fromarray(wordcloud_image)
-
-        # Export the PIL Image object as a PNG image file
-        output_image_path_2 = rf"{self.destination_path}\{self.font_name}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
-        wordcloud_image.save(output_image_path_2)
+            # Export the PIL Image object as a PNG image file
+            output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+            wordcloud_image.save(output_image_path_2)
 
     ### !!!!! FUNCTIONS !!!!! ###
     ## FONT HANDLING ##
@@ -302,10 +230,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         if self.mask_path:
             self.update_image_dimensions()
-            self.mask_select_button.setStyleSheet("background-color: #7754c8; color:#ff740a;border-radius:10px;")
+            self.mask_select_button.setStyleSheet("background-color: #7754c8; color: #3cf3b6; border-radius:10px;")
         else:
             self.update_image_dimensions()
-            self.mask_select_button.setStyleSheet("border:2px solid red; background-color: #7754c8; color:#ff740a;border-radius:10px;")
+            self.mask_select_button.setStyleSheet("border:2px solid red; background-color: #7754c8; color: #3cf3b6; border-radius:10px;")
 
     # @ CHECK FIELDS FOR CHANGES @ #
 
@@ -328,9 +256,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # If there was a destination set, but the second time the selection was cancelled, make sure the button does not disappear
         if not self.destination_path:
             self.open_destination_folder.setVisible(False)
-            self.select_destination_button.setStyleSheet("border:2px solid red;background-color: #7754c8; color:#ff740a;border-radius:10px;")
+            self.select_destination_button.setStyleSheet("border:2px solid red; background-color: #7754c8; color: #3cf3b6; border-radius:10px;")
         else:
-            self.select_destination_button.setStyleSheet("background-color: #7754c8; color:#ff740a;border-radius:10px;")
+            self.select_destination_button.setStyleSheet("background-color: #7754c8; color: #3cf3b6 ;border-radius:10px;")
             self.open_destination_folder.setVisible(True)
 
     def open_destination_folder_function(self):

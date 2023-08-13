@@ -6,3 +6,6 @@ compiler.spec
 ui/__pycache__/
 ui/main-old.ui
 WCGXicon1.ico
+build/
+dist/
+dist-history/
