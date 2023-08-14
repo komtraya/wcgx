@@ -12,14 +12,13 @@ from PySide6.QtGui import QFont, QFontDatabase, QPixmap
 
 # from PySide6 import QtGui as gui
 from ui.output import Ui_MainWindow
-from PySide6.QtWidgets import QFileDialog
-from PySide6.QtWidgets import QListWidgetItem
+from PySide6.QtWidgets import QFileDialog, QListWidgetItem, QPushButton
+
 from PIL import Image
 
 userPath = os.path.expanduser("~")
 
 
-# from PySide6.QtGui import QFontInfo
 ##### ----- Resource Fix #####
 def resource_path(relative_path):
     """Get absolute path to resource, works for dev and for PyInstaller"""
@@ -66,7 +65,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         # Connect dropdown list to function
         self.colormaps_dropdown.currentTextChanged.connect(self.check_dropdown_selected_item)
-
+        ## Connect Delete and Stash Buttons to functions
+        # Stash
+        self.stash_last_generated_button.setVisible(False)
+        self.stash_last_generated_button.clicked.connect(self.stash_generated_files)
+        # Delete
+        self.delete_last_generated_button.setVisible(False)
+        self.delete_last_generated_button.clicked.connect(self.delete_last_generated)
         ## MASK IMAGE SELECTION
         # Connect the "Select Mask" button's clicked signal to the custom slot
         self.mask_select_button.clicked.connect(self.mask_select_button_clicked)
@@ -78,7 +83,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.collocations_checkbox.clicked.connect(self.update_info_labels)
         self.include_number_checkbox.clicked.connect(self.update_info_labels)
         ## EXPORT DESTINATION SELECTION
-
         # Connect the button click to the slot function
         self.select_destination_button.clicked.connect(self.select_destination_button_clicked)
 
@@ -124,25 +128,15 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Connect the slider to the function that updates the label to reflect changes from the start
         self.font_step_slider_changed(self.font_step_slider.value())
 
-        ## REPEAT ON/OFF
-        # self.repeat_checkbox.isChecked.connect(self.state_of_repeat_checkbox)
-        ## PRESET BUTTONS FOR RANDOM COLORS FUNCTION ##
+        ## PRESET BUTTONS FOR RANDOM COLORS - connect to function ##
+        self.randomColorsPresetsGroup.buttonClicked.connect(self.random_colors_presets_function)
 
-        self.rcp_bright.clicked.connect(self.rcp_bright_function)
-        self.rcp_dark.clicked.connect(self.rcp_dark_function)
-        self.rcp_reset.clicked.connect(self.rcp_reset_function)
-        self.rcp_maximize_red.clicked.connect(self.rcp_maximize_red_function)
-        self.rcp_minimize_red.clicked.connect(self.rcp_minimize_red_function)
-        self.rcp_maximize_green.clicked.connect(self.rcp_maximize_green_function)
-        self.rcp_minimize_green.clicked.connect(self.rcp_minimize_green_function)
-        self.rcp_maximize_blue.clicked.connect(self.rcp_maximize_blue_function)
-        self.rcp_minimize_blue.clicked.connect(self.rcp_minimize_blue_function)
         ## WordCloud Button ##
         self.generate_wordcloud_button.clicked.connect(self.generate_WordCloud)
+        ## Connect font slider presets to function
+        self.fontSizePresetsGroup.buttonClicked.connect(self.font_size_slider_presets)
 
-        # # # # # Create a WordCloud object with the mask # # # # #
-        ## ENABLE SPECIAL CHARACTERS:
-        self.custom_regexp = r"\w+(?:\.\w+)*"
+        # # # # # Create WordCloud object and Export Image(s) # # # # #
 
     def generate_WordCloud(self):
         # @ PARAMETERS
@@ -157,7 +151,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             mask=mask_image,
             # width=width,
             # height=height,
-            regexp=self.custom_regexp,
+            regexp=self.custom_regexp(),
             background_color=None,
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
             contour_color=0,
@@ -192,23 +186,24 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             wordcloud_image = Image.fromarray(wordcloud_image)
 
             # Export the PIL Image object as a PNG image file
-            output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
-            wordcloud_image.save(output_image_path)
+            self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+            wordcloud_image.save(self.output_image_path)
+            os.startfile(self.output_image_path)  # Open file after generating it
         ## SVG
         elif self.export_format_options.currentText() == "SVG":
             # Generate the SVG representation of the word cloud
             svg_code = wordcloud.to_svg()
             # Export the SVG code to a file
-            output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
-            with open(f"{output_image_path_1}", "w", encoding="utf-8") as f:
+            self.output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+            with open(f"{self.output_image_path_1}", "w", encoding="utf-8") as f:
                 f.write(svg_code)
         ## BOTH
         else:
             # Generate the SVG representation of the word cloud
             svg_code = wordcloud.to_svg()
             # Export the SVG code to a file
-            output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
-            with open(f"{output_image_path}", "w", encoding="utf-8") as f:
+            self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+            with open(f"{self.output_image_path}", "w", encoding="utf-8") as f:
                 f.write(svg_code)
 
             # Convert the word cloud image to a numpy array
@@ -217,28 +212,36 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             wordcloud_image = Image.fromarray(wordcloud_image)
 
             # Export the PIL Image object as a PNG image file
-            output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
-            wordcloud_image.save(output_image_path_2)
+            self.output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+            wordcloud_image.save(self.output_image_path_2)
+            os.startfile(self.output_image_path_2)  # Open the PNG file after generating both formats
+        self.stash_last_generated_button.setVisible(True)  # Display Stash button
+        self.delete_last_generated_button.setVisible(True)  # Delete Stash button
 
     ### !!!!! FUNCTIONS !!!!! ###
     ## FONT HANDLING ##
 
     def mask_select_button_clicked(self):
         options = QFileDialog.Options()
-        file_name, _ = QFileDialog.getOpenFileName(self, "Open PNG Image", "", "PNG Files (*.png);;All Files (*)", options=options)
+        file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "PNG Files (*.png);;All Files (*)", options=options)
         if file_name:
             self.mask_path = file_name
-            self.enable_WordCloud_Generator_Button()
-        else:
-            self.mask_path = None
             self.enable_WordCloud_Generator_Button()
 
         if self.mask_path:
             self.update_image_dimensions()
-            self.mask_select_button.setStyleSheet("background-color: #7754c8; color: #3cf3b6; border-radius:10px;")
+            self.mask_select_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{background-color: #7754c8; color: #E6E6FA; border-radius:10px;}"""
+            )
         else:
             self.update_image_dimensions()
-            self.mask_select_button.setStyleSheet("border:2px solid red; background-color: #7754c8; color: #3cf3b6; border-radius:10px;")
+            self.mask_select_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{border:2px solid red; background-color: #7754c8; color: #E6E6FA; border-radius:10px;}"""
+            )
 
     # @ CHECK FIELDS FOR CHANGES @ #
 
@@ -261,9 +264,17 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # If there was a destination set, but the second time the selection was cancelled, make sure the button does not disappear
         if not self.destination_path:
             self.open_destination_folder.setVisible(False)
-            self.select_destination_button.setStyleSheet("border:2px solid red; background-color: #7754c8; color: #3cf3b6; border-radius:10px;")
+            self.select_destination_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{border:2px solid red; background-color: #7754c8; color: #E6E6FA; border-radius:10px;}"""
+            )
         else:
-            self.select_destination_button.setStyleSheet("background-color: #7754c8; color: #3cf3b6 ;border-radius:10px;")
+            self.select_destination_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{background-color: #7754c8; color: #E6E6FA ;border-radius:10px;}"""
+            )
             self.open_destination_folder.setVisible(True)
 
     def open_destination_folder_function(self):
@@ -311,7 +322,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## IMAGE DIMENSIONS INFO
     def update_image_dimensions(self):
-        global image_state
+        # global image_state
         global width
         global height
         if self.mask_path:
@@ -408,53 +419,46 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         return font_files
 
     ## RANDOM COLOR PRESETS FUNCTIONS ##
-    def rcp_bright_function(self):
-        self.red_max.setValue(250)
-        self.green_max.setValue(250)
-        self.blue_max.setValue(250)
-        self.red_min.setValue(150)
-        self.green_min.setValue(150)
-        self.blue_min.setValue(150)
-
-    def rcp_dark_function(self):
-        self.red_max.setValue(140)
-        self.green_max.setValue(140)
-        self.blue_max.setValue(140)
-        self.red_min.setValue(40)
-        self.green_min.setValue(40)
-        self.blue_min.setValue(40)
-
-    def rcp_reset_function(self):
-        self.red_max.setValue(255)
-        self.green_max.setValue(255)
-        self.blue_max.setValue(255)
-        self.red_min.setValue(0)
-        self.green_min.setValue(0)
-        self.blue_min.setValue(0)
-
-    def rcp_maximize_red_function(self):
-        self.red_max.setValue(255)
-        self.red_min.setValue(255)
-
-    def rcp_minimize_red_function(self):
-        self.red_max.setValue(0)
-        self.red_min.setValue(0)
-
-    def rcp_maximize_green_function(self):
-        self.green_max.setValue(255)
-        self.green_min.setValue(255)
-
-    def rcp_minimize_green_function(self):
-        self.green_max.setValue(0)
-        self.green_min.setValue(0)
-
-    def rcp_maximize_blue_function(self):
-        self.blue_max.setValue(255)
-        self.blue_min.setValue(255)
-
-    def rcp_minimize_blue_function(self):
-        self.blue_max.setValue(0)
-        self.blue_min.setValue(0)
+    def random_colors_presets_function(self, button):
+        if button == self.rcp_bright:
+            self.red_max.setValue(250)
+            self.green_max.setValue(250)
+            self.blue_max.setValue(250)
+            self.red_min.setValue(150)
+            self.green_min.setValue(150)
+            self.blue_min.setValue(150)
+        if button == self.rcp_dark:
+            self.red_max.setValue(140)
+            self.green_max.setValue(140)
+            self.blue_max.setValue(140)
+            self.red_min.setValue(40)
+            self.green_min.setValue(40)
+            self.blue_min.setValue(40)
+        if button == self.rcp_reset:
+            self.red_max.setValue(255)
+            self.green_max.setValue(255)
+            self.blue_max.setValue(255)
+            self.red_min.setValue(0)
+            self.green_min.setValue(0)
+            self.blue_min.setValue(0)
+        if button == self.rcp_maximize_red:
+            self.red_max.setValue(255)
+            self.red_min.setValue(255)
+        if button == self.rcp_minimize_red:
+            self.red_max.setValue(0)
+            self.red_min.setValue(0)
+        if button == self.rcp_maximize_green:
+            self.green_max.setValue(255)
+            self.green_min.setValue(255)
+        if button == self.rcp_minimize_green:
+            self.green_max.setValue(0)
+            self.green_min.setValue(0)
+        if button == self.rcp_maximize_blue:
+            self.blue_max.setValue(255)
+            self.blue_min.setValue(255)
+        if button == self.rcp_minimize_blue:
+            self.blue_max.setValue(0)
+            self.blue_min.setValue(0)
 
     ## ColorMap and Color Function Conditions ##
     def colormap_conditions(self):
@@ -473,7 +477,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def color_function_conditions(self):
         if self.colormaps_dropdown.currentText() == "Default":
-            self.colormap = "tab20b"
+            self.colormap = "tab20c"
             self.color_function = None
             return self.color_function
         elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors":
@@ -518,7 +522,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.parameters_window.setCurrentIndex(4)
         # elif self.parameters_list.currentItem().text() == "StopWords":
         #     self.parameters_window.setCurrentIndex(5)
-        elif self.parameters_list.currentItem().text() == "Include Numbers":
+        elif self.parameters_list.currentItem().text() == "Character Inclusions":
             self.parameters_window.setCurrentIndex(9)
         elif self.parameters_list.currentItem().text() == "Margin between words":
             self.parameters_window.setCurrentIndex(3)
@@ -535,6 +539,110 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # self.min_font_size_info_label.setText(f"{self.min_font_size_slider.value()}")
         # self.max_font_size_info_label.setText(f"{self.max_font_size_slider.value()}")
         # self.fontstep_info_label.setText(f"{self.font_step_slider.value()}")
+
+    ## GENERATED FILE HANDLING FUNCTIONS ##
+    # Generate a random string anf place it before a file name's extension
+    def random_string_generator(self, filename, length=5):
+        character_set = "abcdefghkmnopqrstuwxz01234578"  # set of characters to use for generating random string
+        name, ext = os.path.splitext(rf"{filename}")
+        random_string = "".join(random.choice(character_set) for _ in range(length))
+        new_filename = f"{name}_{random_string}{ext}"
+        os.rename(rf"{filename}", os.path.join(new_filename))
+        return new_filename
+
+    # Rename the file and stash it in a separate folder
+    def stash_generated_files(self):
+        os.chdir(self.destination_path)
+        # Name of the folder to store stashed files in:
+        stash_folder_name = "Keep"
+        # Check if the folder already exists
+        if not os.path.exists(stash_folder_name):
+            os.mkdir(stash_folder_name)  # Create the folder if it doesn't exist
+        if self.export_format_options.currentText() == "PNG":
+            output_full_path = rf"{self.output_image_path}"
+            new_image_name = self.random_string_generator(output_full_path)
+            # transfer newly renamed file to stash folder
+            stashed_file_location = rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            os.rename(new_image_name, stashed_file_location)
+        elif self.export_format_options.currentText() == "BOTH":
+            output_full_path = rf"{self.output_image_path_2}"
+            new_image_name = self.random_string_generator(output_full_path)
+            # ----- # Take the initially generated random string and rename other file format
+            png_name, png_ext = os.path.splitext(rf"{new_image_name}")
+            svg_name, svg_ext = os.path.splitext(rf"{self.output_image_path}")
+            output_full_path_svg = rf"{png_name}{svg_ext}"
+            os.rename(self.output_image_path, output_full_path_svg)  # rename the actual file on disk
+            # transfer newly renamed file to stash folder
+            stashed_file_location = rf"{os.path.join(stash_folder_name, os.path.basename(output_full_path_svg))}"
+            os.rename(rf"{output_full_path_svg}", rf"{stashed_file_location}")
+            # transfer PNG to stash folder
+            stashed_file_location_PNG = rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            os.rename(new_image_name, stashed_file_location_PNG)
+        else:
+            output_full_path = rf"{self.output_image_path_1}"
+            new_image_name = self.random_string_generator(output_full_path)
+            # transfer newly renamed file to stash folder
+            stashed_file_location = rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            os.rename(new_image_name, stashed_file_location)
+
+        self.stash_last_generated_button.setVisible(False)  # Hide button after stashing
+        self.delete_last_generated_button.setVisible(False)  # Hide Delete button
+
+    def delete_last_generated(self):
+        if self.export_format_options.currentText() == "PNG":
+            os.remove(self.output_image_path)
+        elif self.export_format_options.currentText() == "BOTH":
+            os.remove(self.output_image_path_2)
+            os.remove(self.output_image_path)
+        else:
+            os.remove(self.output_image_path_1)
+        self.delete_last_generated_button.setVisible(False)  # Hide button after deleting
+        self.stash_last_generated_button.setVisible(False)  # Hide Stash button
+
+    ## Font Size Sliders - Preset Buttons
+    def font_size_slider_presets(self, button):
+        if button == self.MinFSp10:
+            self.min_font_size_slider.setValue(10)
+        if button == self.MinFSp21:
+            self.min_font_size_slider.setValue(21)
+        if button == self.MinFSp31:
+            self.min_font_size_slider.setValue(31)
+        if button == self.MinFSp49:
+            self.min_font_size_slider.setValue(49)
+        if button == self.MaxFSp150:
+            self.max_font_size_slider.setValue(150)
+        if button == self.MaxFSp250:
+            self.max_font_size_slider.setValue(250)
+        if button == self.MaxFSp50:
+            self.max_font_size_slider.setValue(50)
+        if button == self.MaxFSp73:
+            self.max_font_size_slider.setValue(73)
+
+    def custom_regexp(self):
+        # Any + Numbers
+        if self.regxp_any_character_checkbox.isChecked() and self.include_number_checkbox.isChecked():
+            regxp = r"\S"  # treats all special characters as a single word
+        # Any - Numbers
+        elif self.regxp_any_character_checkbox.isChecked() and not self.include_number_checkbox.isChecked():
+            regxp = r"[^0-9\s]+"  # includes all special characters, except numbers
+        # Any + Punctuation
+        elif self.regxp_any_character_checkbox.isChecked() and self.connected_punctuation_checkbox.isChecked():
+            regxp = r"\S"  # treats all special characters as a single word
+        # Any - Punctuation
+        elif self.regxp_any_character_checkbox.isChecked() and not self.connected_punctuation_checkbox.isChecked():
+            regxp = r"\S"  # treats all special characters as a single word
+        # Punctuation - Numbers - Any
+        elif self.connected_punctuation_checkbox.isChecked() and not self.include_number_checkbox.isChecked() and not self.regxp_any_character_checkbox.isChecked():
+            regxp = r"\w+(?:\.\w+)*"  # Includes "." punctuation, but only if attached to a word Ex.: x.com
+        # Punctuation + Numbers - Any
+        elif self.connected_punctuation_checkbox.isChecked() and self.include_number_checkbox.isChecked() and not self.regxp_any_character_checkbox.isChecked():
+            regxp = r"[\w\p{P}']+(\.\w+(?:\.\w+)*)*|\d+"  # Includes any punctuation if part of a word and any number as stand-alone word
+        # Numbers - Punctuation - Any
+        elif self.include_number_checkbox.isChecked() and not self.connected_punctuation_checkbox.isChecked() and not self.regxp_any_character_checkbox.isChecked():
+            regxp = r"\b(?:[a-zA-Z]+\d+\w*|\d+\w*)\b"
+        return regxp
+        # regxp = r"\w+(?:\.\w+)*" # Includes "." punctuation, but only if attached to a word Ex.: x.com
+        # this still needs to be adjusted, as not all regex combinations are correct!
 
 
 if __name__ == "__main__":
