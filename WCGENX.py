@@ -2,36 +2,38 @@ import numpy as np
 import random
 import sys
 import os
+import json
 from wordcloud import WordCloud
-
-
-# from PySide6 import QtCore as core
-from PySide6 import QtWidgets as widget
-
-from PySide6.QtGui import QFont, QFontDatabase, QPixmap
-
-# from PySide6 import QtGui as gui
-from ui.output import Ui_MainWindow
-from PySide6.QtWidgets import QFileDialog, QListWidgetItem, QPushButton
-
 from PIL import Image
+from PySide6 import QtWidgets as widget
+from PySide6.QtGui import QFont, QFontDatabase, QPixmap
+from PySide6.QtWidgets import QFileDialog, QListWidgetItem
+
+from ui.ui import Ui_MainWindow
+
 
 userPath = os.path.expanduser("~")
 
 
 ##### ----- Resource Fix #####
-def resource_path(relative_path):
-    """Get absolute path to resource, works for dev and for PyInstaller"""
+def resource_path(rel_path):
+    """Get absolute path to resource - PyInstaller"""
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
         base_path = sys._MEIPASS
     except Exception:
         base_path = os.path.abspath(".")
 
-    return os.path.join(base_path, relative_path)
+    return os.path.join(base_path, rel_path)
 
 
 ##### ----- Resource Fix #####
+
+
+## Read emojis.json for processing ##
+emojis_json = resource_path(r"emojis.json")
+with open(emojis_json, "r", encoding="utf-8") as json_file:
+    emoji_data = json.load(json_file)
 
 
 class WCGX(widget.QMainWindow, Ui_MainWindow):
@@ -39,6 +41,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
 
+        self.parametersButtonGroup.buttonClicked.connect(self.change_tab_based_on_selected_item)
+        ##  Emoji handling ##
+        self.populateEmojiList()
+        self.emoji_list.itemClicked.connect(self.insertEmojiOnClick)
+        self.emoji_filter_list.currentTextChanged.connect(self.populateEmojiList)
         ## Modifications/data-setup for the start of the app
         # Make sure text input is not empty
         self.word_input.textChanged.connect(self.text_input_Changed)
@@ -54,14 +61,15 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.custom_font_directory_selection.clicked.connect(self.select_custom_fonts_folder)
 
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
-        self.generate_wordcloud_button.setVisible(False)
-        self.export_as_frame.setVisible(False)
+        # self.generate_wordcloud_button.setVisible(False)
+        # self.export_as_frame.setVisible(False)
         # Open destination folder if it's selected
+        self.enable_WordCloud_Generator_Button()
         self.open_destination_folder.setVisible(False)
         self.open_destination_folder.clicked.connect(self.open_destination_folder_function)
 
         # Hide random colors frame
-        self.RandomColorGroupBox.setVisible(False)
+        self.RandomColorFrame.setVisible(False)
 
         # Connect dropdown list to function
         self.colormaps_dropdown.currentTextChanged.connect(self.check_dropdown_selected_item)
@@ -76,21 +84,19 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Connect the "Select Mask" button's clicked signal to the custom slot
         self.mask_select_button.clicked.connect(self.mask_select_button_clicked)
         # Connect the "Path Changed" signal of the mask_path to the custom slot (Update path)
-        # self.mask_path.textChanged.connect(self.mask_path_Changed)
         ## INFO LABELS UPDATE
         self.update_info_labels()
         self.repeat_checkbox.clicked.connect(self.update_info_labels)
         self.collocations_checkbox.clicked.connect(self.update_info_labels)
         self.include_number_checkbox.clicked.connect(self.update_info_labels)
+        self.regxp_any_character_checkbox.clicked.connect(self.update_info_labels)
+        self.connected_punctuation_checkbox.clicked.connect(self.update_info_labels)
         ## EXPORT DESTINATION SELECTION
         # Connect the button click to the slot function
         self.select_destination_button.clicked.connect(self.select_destination_button_clicked)
 
         # ## FONT HANDLING
         # self.font_path = None
-
-        ## Browsing through the list of parameters
-        self.parameters_list.currentItemChanged.connect(self.change_tab_based_on_selected_item)
 
         ## Margin.current
         # Connect the slider to the function that updates the label to reflect changes
@@ -170,7 +176,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             stopwords=set(),
             min_word_length=0,
             include_numbers=self.include_number_checkbox.isChecked(),
-            # relative_scaling=0,
         )
         # @ generate wc
         wordcloud.generate(self.word_input.toPlainText())
@@ -233,14 +238,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.mask_select_button.setStyleSheet(
                 """
             QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{background-color: #7754c8; color: #E6E6FA; border-radius:10px;}"""
+            QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
             )
         else:
             self.update_image_dimensions()
             self.mask_select_button.setStyleSheet(
                 """
             QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{border:2px solid red; background-color: #7754c8; color: #E6E6FA; border-radius:10px;}"""
+            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
             )
 
     # @ CHECK FIELDS FOR CHANGES @ #
@@ -248,10 +253,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     # Check text input field for changes
     def text_input_Changed(self):
         self.enable_WordCloud_Generator_Button()
-        if self.word_input.toPlainText():
-            self.word_input.setStyleSheet("border:2px solid green;")
-        else:
-            self.word_input.setStyleSheet("border:1px solid red;")
 
     def select_destination_button_clicked(self):
         options = QFileDialog.Options()
@@ -267,13 +268,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.select_destination_button.setStyleSheet(
                 """
             QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{border:2px solid red; background-color: #7754c8; color: #E6E6FA; border-radius:10px;}"""
+            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
             )
         else:
             self.select_destination_button.setStyleSheet(
                 """
             QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{background-color: #7754c8; color: #E6E6FA ;border-radius:10px;}"""
+            QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA ;border-radius:10px;}"""
             )
             self.open_destination_folder.setVisible(True)
 
@@ -352,13 +353,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     ## ENABLE WORDCLOUD BUTTON##
     def enable_WordCloud_Generator_Button(self):
         if self.mask_path and self.destination_path and self.word_input.toPlainText() != "":
-            # self.generate_wordcloud_button.setEnabled(True)
-            self.generate_wordcloud_button.setVisible(True)
-            self.export_as_frame.setVisible(True)
+            self.WC_GeneratorFrame.setVisible(True)
         else:
-            # self.generate_wordcloud_button.setEnabled(False)
-            self.generate_wordcloud_button.setVisible(False)
-            self.export_as_frame.setVisible(False)
+            self.WC_GeneratorFrame.setVisible(False)
 
     def change_color(self, color):
         # Set the background color to red when the button is clicked
@@ -374,6 +371,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             if font_families:
                 selected_font = QFont(font_families[0], 15)  # Use the first font family
                 self.word_input.setFont(selected_font)
+
         except:
             pass
 
@@ -421,26 +419,34 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     ## RANDOM COLOR PRESETS FUNCTIONS ##
     def random_colors_presets_function(self, button):
         if button == self.rcp_bright:
-            self.red_max.setValue(250)
-            self.green_max.setValue(250)
-            self.blue_max.setValue(250)
-            self.red_min.setValue(150)
-            self.green_min.setValue(150)
-            self.blue_min.setValue(150)
+            self.red_max.setValue(255)
+            self.green_max.setValue(255)
+            self.blue_max.setValue(255)
+            self.red_min.setValue(175)
+            self.green_min.setValue(175)
+            self.blue_min.setValue(175)
+        if button == self.rcp_gray:
+            self.red_max.setValue(125)
+            self.green_max.setValue(125)
+            self.blue_max.setValue(125)
+            self.red_min.setValue(125)
+            self.green_min.setValue(125)
+            self.blue_min.setValue(125)
+
         if button == self.rcp_dark:
-            self.red_max.setValue(140)
-            self.green_max.setValue(140)
-            self.blue_max.setValue(140)
-            self.red_min.setValue(40)
-            self.green_min.setValue(40)
-            self.blue_min.setValue(40)
+            self.red_max.setValue(150)
+            self.green_max.setValue(150)
+            self.blue_max.setValue(150)
+            self.red_min.setValue(50)
+            self.green_min.setValue(50)
+            self.blue_min.setValue(50)
         if button == self.rcp_reset:
             self.red_max.setValue(255)
             self.green_max.setValue(255)
             self.blue_max.setValue(255)
-            self.red_min.setValue(0)
-            self.green_min.setValue(0)
-            self.blue_min.setValue(0)
+            self.red_min.setValue(20)
+            self.green_min.setValue(20)
+            self.blue_min.setValue(20)
         if button == self.rcp_maximize_red:
             self.red_max.setValue(255)
             self.red_min.setValue(255)
@@ -491,12 +497,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def check_dropdown_selected_item(self):
         if self.colormaps_dropdown.currentText() == "Random Colors":
-            # self.RandomColorsFrame.setVisible(True)
-            self.RandomColorGroupBox.setVisible(True)
-            # self.Presets_all_rcpg.setVisible(True)
+            self.RandomColorFrame.setVisible(True)
         else:
-            # self.RandomColorsFrame.setVisible(False)
-            self.RandomColorGroupBox.setVisible(False)
+            self.RandomColorFrame.setVisible(False)
 
     def random_color_func(self, *args, **kwargs):
         # Generate a random color for each trigram
@@ -507,38 +510,31 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         )
         return f"rgb({r}, {g}, {b})"
 
-    def change_tab_based_on_selected_item(self):
-        if self.parameters_list.currentItem().text() == "Scale":
+    def change_tab_based_on_selected_item(self, button):
+        if button == self.scaleSettings_btn:
             self.parameters_window.setCurrentIndex(5)
-        elif self.parameters_list.currentItem().text() == "Collocations":
+        elif button == self.collocationSettings_btn or button == self.collocationSettings_btn2:
             self.parameters_window.setCurrentIndex(7)
-        elif self.parameters_list.currentItem().text() == "Collocations Threshold":
-            self.parameters_window.setCurrentIndex(8)
-        elif self.parameters_list.currentItem().text() == "Min/Max Font-size":
+        elif button == self.fontSizeSettings_btn or button == self.fontSizeSettings_btn2:
             self.parameters_window.setCurrentIndex(1)
-        elif self.parameters_list.currentItem().text() == "Repeat Words":
+        elif button == self.repeatWords_btn:
             self.parameters_window.setCurrentIndex(0)
-        elif self.parameters_list.currentItem().text() == "Prefer-Horizontal":
+        elif button == self.textOrientationSettings_btn:
             self.parameters_window.setCurrentIndex(4)
-        # elif self.parameters_list.currentItem().text() == "StopWords":
-        #     self.parameters_window.setCurrentIndex(5)
-        elif self.parameters_list.currentItem().text() == "Character Inclusions":
-            self.parameters_window.setCurrentIndex(9)
-        elif self.parameters_list.currentItem().text() == "Margin between words":
+        elif button == self.charInclusion_btn:
+            self.parameters_window.setCurrentIndex(8)
+        elif button == self.marginSettings_btn:
             self.parameters_window.setCurrentIndex(3)
-        elif self.parameters_list.currentItem().text() == "Font Step":
+        elif button == self.fontStepSettings_btn:
             self.parameters_window.setCurrentIndex(2)
 
     def update_info_labels(self):
         self.repeat_info_label.setText(f"{self.repeat_checkbox.isChecked()}")
         self.collocations_info_label.setText(f"{self.collocations_checkbox.isChecked()}")
-        self.include_numbers_info_label.setText(f"{self.include_number_checkbox.isChecked()}")
-        ###
-        # self.collocations_thresh_info_label.setText(f"{self.collocations_thresh_slider.value()}")
-        # self.margin_info_label.setText(f"{self.margin_slider.value()}")
-        # self.min_font_size_info_label.setText(f"{self.min_font_size_slider.value()}")
-        # self.max_font_size_info_label.setText(f"{self.max_font_size_slider.value()}")
-        # self.fontstep_info_label.setText(f"{self.font_step_slider.value()}")
+        if self.regxp_any_character_checkbox.isChecked() or self.include_number_checkbox.isChecked():
+            self.include_numbers_info_label.setText(f"True")
+        else:
+            self.include_numbers_info_label.setText(f"False")
 
     ## GENERATED FILE HANDLING FUNCTIONS ##
     # Generate a random string anf place it before a file name's extension
@@ -617,6 +613,29 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.max_font_size_slider.setValue(50)
         if button == self.MaxFSp73:
             self.max_font_size_slider.setValue(73)
+
+    def populateEmojiList(self):
+        self.emoji_list.clear()
+        emoji_edition_filter = ["13.0", "13.1", "14.0", "15.0"]
+        selected_emoji_group = self.emoji_filter_list.currentText()
+
+        for emoji, data in emoji_data.items():
+            unicode_edition = data["unicode_version"]
+            emoji_group = data["group"]
+
+            if unicode_edition not in emoji_edition_filter:
+                if self.emoji_filter_list.currentText() == "All":
+                    item = QListWidgetItem(emoji)
+                    self.emoji_list.addItem(item)
+                elif emoji_group == selected_emoji_group:
+                    self.emoji_list.addItem(emoji)
+
+    def insertEmojiOnClick(self, item):
+        current_text = self.word_input.toPlainText()
+        if current_text != "":
+            self.word_input.setText(f"{current_text} {item.text()}")
+        else:
+            self.word_input.setText(f"{current_text}{item.text()}")
 
     def custom_regexp(self):
         # Any + Numbers
