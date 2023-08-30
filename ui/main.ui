@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1731</width>
-    <height>972</height>
+    <width>1868</width>
+    <height>1125</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,2113 +60,6 @@ border-radius:10px;
     <property name="bottomMargin">
      <number>0</number>
     </property>
-    <item row="0" column="0" rowspan="2" alignment="Qt::AlignHCenter">
-     <widget class="QFrame" name="SummaryFrame">
-      <property name="minimumSize">
-       <size>
-        <width>301</width>
-        <height>401</height>
-       </size>
-      </property>
-      <property name="font">
-       <font>
-        <family>Inter</family>
-        <pointsize>9</pointsize>
-        <italic>false</italic>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QFrame{
-background-color:rgba(200,0,200,50);
-}
-QFrame QLabel{
-font: 700 10pt &quot;Inter&quot;;
-background:none;
-color:white;
-}</string>
-      </property>
-      <property name="frameShape">
-       <enum>QFrame::StyledPanel</enum>
-      </property>
-      <property name="frameShadow">
-       <enum>QFrame::Raised</enum>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_32">
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="parameters_summary_label_2">
-         <property name="styleSheet">
-          <string notr="true">font: 700 14pt &quot;Inter&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Parameters</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-         <property name="indent">
-          <number>-1</number>
-         </property>
-         <property name="openExternalLinks">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_19">
-         <item>
-          <widget class="QPushButton" name="repeatWords_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Repeat Words:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="repeat_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_36">
-         <item>
-          <widget class="QPushButton" name="marginSettings_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Margin:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="margin_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_37">
-         <item>
-          <widget class="QPushButton" name="fontSizeSettings_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Min. Font Size:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="min_font_size_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_38">
-         <item>
-          <widget class="QPushButton" name="fontSizeSettings_btn2">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Max. Font Size:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="max_font_size_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_39">
-         <item>
-          <widget class="QPushButton" name="textOrientationSettings_btn">
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Orientation:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="prefer_horizontal_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_40">
-         <item>
-          <widget class="QPushButton" name="fontStepSettings_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Font Step:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="fontstep_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_41">
-         <item>
-          <widget class="QPushButton" name="collocationSettings_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>CLC:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="collocations_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_42">
-         <item>
-          <widget class="QPushButton" name="collocationSettings_btn2">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>CLC Thresh:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="collocations_thresh_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_43">
-         <item>
-          <widget class="QPushButton" name="charInclusion_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Include Numbers:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="include_numbers_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_44">
-         <item>
-          <widget class="QPushButton" name="scaleSettings_btn">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background:rgba(0,0,0,0);
-color:#e6e6e6;</string>
-           </property>
-           <property name="text">
-            <string>Scale:</string>
-           </property>
-           <attribute name="buttonGroup">
-            <string notr="true">parametersButtonGroup</string>
-           </attribute>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="scale_multiplier_info_label">
-           <property name="font">
-            <font>
-             <family>Inter</family>
-             <pointsize>10</pointsize>
-             <italic>false</italic>
-             <bold>true</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>result here</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_23">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QFrame" name="color_presets_group">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Inter</family>
-           <pointsize>9</pointsize>
-           <italic>false</italic>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background:none;</string>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_18">
-          <property name="spacing">
-           <number>5</number>
-          </property>
-          <property name="leftMargin">
-           <number>5</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>5</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-           <widget class="QFrame" name="cp_title_dropdown">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>100</height>
-             </size>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_19">
-             <property name="spacing">
-              <number>15</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>10</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="label_color_presets">
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>10</pointsize>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Color Presets</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QComboBox" name="colormaps_dropdown">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>200</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>250</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>9</pointsize>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">/* Style the QComboBox */
-QComboBox {
-    background-color: #141414; /* Background color of the entire combo box */
-    border: 1px solid #e6e6e6; /* Border around the combo box */
-    padding: 4px; /* Padding inside the combo box */
-    color:#e6e6e6; /* Current text color*/
-}
-/* Style the QComboBox's drop-down list */
-QComboBox QAbstractItemView {
-    background-color: #141414; /* Background color of the drop-down list */
-    border: 1px solid #e6e6e6; /* Border around the drop-down list */
-    padding: 10px; /* Padding inside the drop-down list */
-	color:#e6e6e6;
-}
-
-/* Style individual items within the QComboBox's drop-down list */
-QComboBox QAbstractItemView::item {
-    background-color: #141414; /* Background color of each item in the list */
-    padding: 4px; /* Padding inside each item */
-	color: #e6e6e6;
-}
-
-/* Style the selected item within the drop-down list */
-QComboBox QAbstractItemView::item:selected {
-    background-color: rgba(0,200,0,150); /* Background color of the selected item */
-    color: #e6e6e6; /* Text color of the selected item */
-}
-
-/* Style the drop-down list scroll bar (if it appears) */
-QComboBox QScrollBar:vertical {
-    width: 20px; /* Width of the vertical scrollbar */
-    background: #e6e6e6; /* Background color of the scrollbar */
-}
-/* Style the drop-down list scroll bar handle (thumb) */
-QComboBox QScrollBar::handle:vertical {
-    background: #141414; /* Background color of the scrollbar handle */
-    border-radius:5px;
-}</string>
-               </property>
-               <property name="currentIndex">
-                <number>0</number>
-               </property>
-               <item>
-                <property name="text">
-                 <string>Default</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Reds</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Greens</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Blues</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Greys</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Purples</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Oranges</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>plasma</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Accent</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Random Colors</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Paired</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Dark2</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Spectral</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Pastel1</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Pastel2</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Wistia</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Set1</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Set2</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Set3</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>winter</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>spring</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>summer</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>autumn</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>inferno</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>magma</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>twilight</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>twilight_shifted</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>hot</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>afmhot</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>cool</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>coolwarm</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>cubehelix</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>gray</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>bone</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>tab10</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>tab20</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>prism</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>ocean</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>terrain</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>rainbow</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>turbo</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QFrame" name="RandomColorFrame">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_13">
-             <item row="0" column="0" alignment="Qt::AlignHCenter">
-              <widget class="QFrame" name="rColorRangeContainer">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>256</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_20">
-                <property name="spacing">
-                 <number>1</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item alignment="Qt::AlignHCenter">
-                 <widget class="QFrame" name="color_range_preset_buttons_frame">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                   <size>
-                    <width>100</width>
-                    <height>50</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>266</width>
-                    <height>28</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">font: 700 14pt &quot;Inter&quot;;</string>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_25">
-                   <property name="spacing">
-                    <number>20</number>
-                   </property>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_11">
-                     <property name="spacing">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QPushButton" name="rcp_minimize_red">
-                       <property name="font">
-                        <font>
-                         <family>Inter</family>
-                         <pointsize>14</pointsize>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Min Red &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color: rgb(250, 0, 0);
-</string>
-                       </property>
-                       <property name="text">
-                        <string>▼</string>
-                       </property>
-                       <attribute name="buttonGroup">
-                        <string notr="true">randomColorsPresetsGroup</string>
-                       </attribute>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="rcp_maximize_red">
-                       <property name="font">
-                        <font>
-                         <family>Inter</family>
-                         <pointsize>14</pointsize>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Max Red &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color: rgb(250, 0, 0);</string>
-                       </property>
-                       <property name="text">
-                        <string>▲</string>
-                       </property>
-                       <attribute name="buttonGroup">
-                        <string notr="true">randomColorsPresetsGroup</string>
-                       </attribute>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_31">
-                     <property name="spacing">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QPushButton" name="rcp_minimize_green">
-                       <property name="font">
-                        <font>
-                         <family>Inter</family>
-                         <pointsize>14</pointsize>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Min Green &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color: rgb(0, 250, 0);</string>
-                       </property>
-                       <property name="text">
-                        <string>▼</string>
-                       </property>
-                       <attribute name="buttonGroup">
-                        <string notr="true">randomColorsPresetsGroup</string>
-                       </attribute>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="rcp_maximize_green">
-                       <property name="font">
-                        <font>
-                         <family>Inter</family>
-                         <pointsize>14</pointsize>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Max Green &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color: rgb(0, 250, 0);</string>
-                       </property>
-                       <property name="text">
-                        <string>▲</string>
-                       </property>
-                       <attribute name="buttonGroup">
-                        <string notr="true">randomColorsPresetsGroup</string>
-                       </attribute>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                   <item>
-                    <layout class="QHBoxLayout" name="horizontalLayout_32">
-                     <property name="spacing">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QPushButton" name="rcp_maximize_blue">
-                       <property name="font">
-                        <font>
-                         <family>Inter</family>
-                         <pointsize>14</pointsize>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Max Blue &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color: rgb(0, 0, 250);</string>
-                       </property>
-                       <property name="text">
-                        <string>▲</string>
-                       </property>
-                       <attribute name="buttonGroup">
-                        <string notr="true">randomColorsPresetsGroup</string>
-                       </attribute>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="rcp_minimize_blue">
-                       <property name="font">
-                        <font>
-                         <family>Inter</family>
-                         <pointsize>14</pointsize>
-                         <italic>false</italic>
-                         <bold>true</bold>
-                        </font>
-                       </property>
-                       <property name="toolTip">
-                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Min Blue &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">color: rgb(0, 0, 250);</string>
-                       </property>
-                       <property name="text">
-                        <string>▼</string>
-                       </property>
-                       <attribute name="buttonGroup">
-                        <string notr="true">randomColorsPresetsGroup</string>
-                       </attribute>
-                      </widget>
-                     </item>
-                    </layout>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item alignment="Qt::AlignHCenter">
-                 <widget class="QGroupBox" name="ColorsMinGP">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>71</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Min</string>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_14">
-                   <item alignment="Qt::AlignHCenter">
-                    <widget class="QSpinBox" name="red_min">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(200, 0, 0);
-color: rgb(255, 255, 255);</string>
-                     </property>
-                     <property name="accelerated">
-                      <bool>true</bool>
-                     </property>
-                     <property name="minimum">
-                      <number>0</number>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="value">
-                      <number>20</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QSpinBox" name="green_min">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(0, 200, 0);
-color: rgb(25, 25, 25);</string>
-                     </property>
-                     <property name="accelerated">
-                      <bool>true</bool>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="value">
-                      <number>20</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QSpinBox" name="blue_min">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(0, 0, 200);
-color: rgb(255, 255, 255);</string>
-                     </property>
-                     <property name="accelerated">
-                      <bool>true</bool>
-                     </property>
-                     <property name="correctionMode">
-                      <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="stepType">
-                      <enum>QAbstractSpinBox::DefaultStepType</enum>
-                     </property>
-                     <property name="value">
-                      <number>20</number>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item alignment="Qt::AlignHCenter">
-                 <widget class="QFrame" name="rcpresets3">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <layout class="QGridLayout" name="gridLayout_7">
-                   <item row="0" column="2">
-                    <widget class="QPushButton" name="rcp_dark">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Dark color range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Dark</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                   <item row="0" column="4">
-                    <widget class="QPushButton" name="rcp_reset">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Reset</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QPushButton" name="rcp_bright">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Bright color range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Bright</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QPushButton" name="rcp_gray">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Gray</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
-                 <widget class="QGroupBox" name="ColorsMaxGP">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>71</height>
-                   </size>
-                  </property>
-                  <property name="title">
-                   <string>Max</string>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_15">
-                   <item alignment="Qt::AlignHCenter">
-                    <widget class="QSpinBox" name="red_max">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(200, 0, 0);
-color: rgb(255, 255, 255);</string>
-                     </property>
-                     <property name="accelerated">
-                      <bool>true</bool>
-                     </property>
-                     <property name="minimum">
-                      <number>0</number>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="value">
-                      <number>150</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item alignment="Qt::AlignHCenter">
-                    <widget class="QSpinBox" name="green_max">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(0, 200, 0);
-color: rgb(25, 25, 25);</string>
-                     </property>
-                     <property name="accelerated">
-                      <bool>true</bool>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="value">
-                      <number>250</number>
-                     </property>
-                    </widget>
-                   </item>
-                   <item alignment="Qt::AlignHCenter">
-                    <widget class="QSpinBox" name="blue_max">
-                     <property name="minimumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>60</width>
-                       <height>30</height>
-                      </size>
-                     </property>
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">background-color: rgb(0, 0, 200);
-color: rgb(255, 255, 255);</string>
-                     </property>
-                     <property name="accelerated">
-                      <bool>true</bool>
-                     </property>
-                     <property name="maximum">
-                      <number>255</number>
-                     </property>
-                     <property name="value">
-                      <number>150</number>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QFrame" name="frame_18">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>1</number>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_22">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-               </layout>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <widget class="QFrame" name="WC_GeneratorFrame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>300</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
-       <item>
-        <widget class="QFrame" name="file_handling_frame">
-         <layout class="QGridLayout" name="gridLayout_12">
-          <item row="0" column="0">
-           <spacer name="verticalSpacer_18">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="2" column="0">
-           <widget class="QPushButton" name="stash_last_generated_button">
-            <property name="minimumSize">
-             <size>
-              <width>40</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Stash the last generated image(s)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: green; /* or any other color you want */
-}
-QPushButton:pressed{
-	 padding-left: 3px;
-     padding-top: 3px;
-}</string>
-            </property>
-            <property name="text">
-             <string>Stash</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <spacer name="verticalSpacer_19">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="delete_last_generated_button">
-            <property name="minimumSize">
-             <size>
-              <width>40</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>40</width>
-              <height>40</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Delete the last generated image(s)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    background-color: red; /* or any other color you want */
-}
-QPushButton:pressed{
-	 padding-left: 3px;
-     padding-top: 3px;
-}</string>
-            </property>
-            <property name="text">
-             <string>Del</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="btnContainerFrame">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="spacing">
-           <number>10</number>
-          </property>
-          <property name="leftMargin">
-           <number>10</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QGroupBox" name="export_as_frame">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>75</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="title">
-             <string/>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_26">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>10</number>
-             </property>
-             <item alignment="Qt::AlignHCenter">
-              <widget class="QLabel" name="exportAs_label">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>9</pointsize>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="text">
-                <string>Export As</string>
-               </property>
-              </widget>
-             </item>
-             <item alignment="Qt::AlignHCenter">
-              <widget class="QComboBox" name="export_format_options">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>9</pointsize>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Select output file format &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">/* Style the QComboBox */
-QComboBox {
-    background-color: #141414; /* Background color of the entire combo box */
-    border: 1px solid #e6e6e6; /* Border around the combo box */
-    padding: 10px; /* Padding inside the combo box */
-    color:#e6e6e6; /* Current text color*/
-}
-/* Style the QComboBox's drop-down list */
-QComboBox QAbstractItemView {
-    background-color: #141414; /* Background color of the drop-down list */
-    border: 1px solid #e6e6e6; /* Border around the drop-down list */
-    padding: 10px; /* Padding inside the drop-down list */
-	color:#e6e6e6;
-}
-/* Style individual items within the QComboBox's drop-down list */
-QComboBox QAbstractItemView::item {
-    background-color: #141414; /* Background color of each item in the list */
-    padding: 1px; /* Padding inside each item */
-	color: #e6e6e6;
-}
-/* Style the selected item within the drop-down list */
-QComboBox QAbstractItemView::item:selected {
-    background-color: rgba(0,200,0,200); /* Background color of the selected item */
-    color: #e6e6e6; /* Text color of the selected item */
-}
-/* Style the drop-down list scroll bar (if it appears) */
-QComboBox QScrollBar:vertical {
-    width: 0px; /* Width of the vertical scrollbar */
-    background: #e6e6e6; /* Background color of the scrollbar */
-}
-/* Style the drop-down list scroll bar handle (thumb) */
-QComboBox QScrollBar::handle:vertical {
-    background: #141414; /* Background color of the scrollbar handle */
-}</string>
-               </property>
-               <property name="duplicatesEnabled">
-                <bool>false</bool>
-               </property>
-               <property name="frame">
-                <bool>true</bool>
-               </property>
-               <item>
-                <property name="text">
-                 <string>PNG</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>SVG</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>BOTH</string>
-                </property>
-               </item>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="generate_wordcloud_button">
-            <property name="enabled">
-             <bool>true</bool>
-            </property>
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>700</width>
-              <height>150</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Generate WordCloud &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-            </property>
-            <property name="toolTipDuration">
-             <number>-1</number>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton{
-color: rgb(200,200,200);
-background-color: rgb(50, 50, 50);
-border: 10px solid green;
-border-radius: 50px;
-padding: 50px;
-}
-QPushButton:pressed{
-background-color:green;
-border: 10px solid rgb(50, 50, 50);
-padding-left: 50px;
-padding-bottom:20px
-}</string>
-            </property>
-            <property name="text">
-             <string notr="true"/>
-            </property>
-            <property name="icon">
-             <iconset resource="Resources.qrc">
-              <normaloff>:/Media/LogoAssetForButton.png</normaloff>:/Media/LogoAssetForButton.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>100</width>
-              <height>100</height>
-             </size>
-            </property>
-            <property name="shortcut">
-             <string/>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="checked">
-             <bool>false</bool>
-            </property>
-            <property name="autoRepeat">
-             <bool>false</bool>
-            </property>
-            <property name="autoExclusive">
-             <bool>false</bool>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="2">
-     <widget class="QFrame" name="TitleAndMaskFrame">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <layout class="QGridLayout" name="kaka">
-       <item row="0" column="1">
-        <widget class="QFrame" name="mask_container">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QLabel" name="mask_image_thumbnail">
-            <property name="minimumSize">
-             <size>
-              <width>200</width>
-              <height>200</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>200</width>
-              <height>200</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::NoFrame</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="text">
-             <string>MASK IMAGE WILL BE PLACED HERE</string>
-            </property>
-            <property name="scaledContents">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QLabel" name="mask_dimensions_label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>300</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-              <underline>false</underline>
-              <stylestrategy>PreferDefault</stylestrategy>
-             </font>
-            </property>
-            <property name="cursor">
-             <cursorShape>ArrowCursor</cursorShape>
-            </property>
-            <property name="text">
-             <string>mask_dimensions_label</string>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QFrame" name="SelectButtonsFrame">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <item>
-              <widget class="QPushButton" name="mask_select_button">
-               <property name="minimumSize">
-                <size>
-                 <width>150</width>
-                 <height>50</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>150</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Inter</family>
-                 <pointsize>9</pointsize>
-                 <italic>false</italic>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Select Mask image &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">QPushButton{
-border:2px solid red; 
-}
-</string>
-               </property>
-               <property name="text">
-                <string>Select Mask</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_2">
-               <item>
-                <widget class="QPushButton" name="select_destination_button">
-                 <property name="enabled">
-                  <bool>true</bool>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>150</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Inter</family>
-                   <pointsize>9</pointsize>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Select destination for generated PNG file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton{
-border:2px solid red; 
-}
-</string>
-                 </property>
-                 <property name="text">
-                  <string>Select Destination</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="open_destination_folder">
-                 <property name="minimumSize">
-                  <size>
-                   <width>50</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>40</width>
-                   <height>50</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Inter</family>
-                   <pointsize>9</pointsize>
-                   <italic>false</italic>
-                   <bold>true</bold>
-                  </font>
-                 </property>
-                 <property name="toolTip">
-                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Open destination folder &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton{
-color: rgb(0, 170, 0);
-border-radius:5px;
-}</string>
-                 </property>
-                 <property name="text">
-                  <string>▲</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="verticalSpacer_7">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="1">
      <widget class="QFrame" name="TitleFrame">
       <property name="sizePolicy">
@@ -2179,7 +72,7 @@ border-radius:5px;
        <item row="0" column="0">
         <widget class="QFrame" name="WordInputAndParametersFrame">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -2191,7 +84,7 @@ color: #141414;
 font: 700 11pt &quot;Inter&quot;;
 }</string>
          </property>
-         <layout class="QGridLayout" name="gridLayout_3" rowminimumheight="0,0,1">
+         <layout class="QGridLayout" name="gridLayout_3">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -2201,66 +94,6 @@ font: 700 11pt &quot;Inter&quot;;
           <property name="verticalSpacing">
            <number>10</number>
           </property>
-          <item row="2" column="0">
-           <widget class="QTextEdit" name="word_input">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>14</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QTextEdit{
-/*border:2px solid red;*/
-color:#141414;
-}</string>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Plain</enum>
-            </property>
-            <property name="lineWidth">
-             <number>1</number>
-            </property>
-            <property name="tabChangesFocus">
-             <bool>false</bool>
-            </property>
-            <property name="undoRedoEnabled">
-             <bool>true</bool>
-            </property>
-            <property name="placeholderText">
-             <string>WordCloud text goes here. Different words will be identified based on space. Ex: word1 word2</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="generated_text_label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Generated Text:</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QTabWidget" name="parameters_window">
             <property name="enabled">
@@ -4284,7 +2117,7 @@ Ignored if using generate_from_frequencies.</string>
                      <bool>true</bool>
                     </property>
                     <property name="checked">
-                     <bool>false</bool>
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -4487,118 +2320,220 @@ Ignored if using generate_from_frequencies.</string>
             </widget>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QSplitter" name="ParametersSplitterFrame_2">
+          <item row="1" column="0">
+           <widget class="QLabel" name="generated_text_label">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>9</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
             </property>
-            <widget class="QWidget" name="layoutWidget_4">
-             <layout class="QVBoxLayout" name="wi_cp_Frame_4"/>
-            </widget>
-            <widget class="QFrame" name="generated_text_frame_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>250</width>
-               <height>500</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>250</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <widget class="QPushButton" name="custom_font_directory_selection">
-              <property name="geometry">
-               <rect>
-                <x>54</x>
-                <y>9</y>
-                <width>141</width>
-                <height>40</height>
-               </rect>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>50</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>200</width>
-                <height>40</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Inter</family>
-                <pointsize>9</pointsize>
-                <italic>false</italic>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <property name="text">
-               <string>  Change Fonts Folder  </string>
-              </property>
-             </widget>
-             <widget class="QListWidget" name="font_list">
-              <property name="geometry">
-               <rect>
-                <x>9</x>
-                <y>65</y>
-                <width>232</width>
-                <height>500</height>
-               </rect>
-              </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>500</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Inter</family>
-                <pointsize>11</pointsize>
-                <italic>false</italic>
-                <bold>true</bold>
-               </font>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">QListWidget{
+            <property name="text">
+             <string>Generated Text:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QFrame" name="fonts_Frame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QFrame" name="font_selection_buttonsFrame">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QPushButton" name="load_system_fonts_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>121</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Inter</family>
+                    <pointsize>9</pointsize>
+                    <italic>false</italic>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color:#212121;
+color:#e6e6e6;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Load System Fonts</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="custom_font_directory_selection">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>134</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Inter</family>
+                    <pointsize>9</pointsize>
+                    <italic>false</italic>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Select Custom Folder</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="load_emoji_fonts_btn">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>107</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>Inter</family>
+                    <pointsize>9</pointsize>
+                    <italic>false</italic>
+                    <bold>true</bold>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{
+background-color:#212121;
+color:#e6e6e6;
+}</string>
+                  </property>
+                  <property name="text">
+                   <string>Load Emoji Fonts</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QListWidget" name="font_list">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>500</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>11</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QListWidget{
 border:2px solid gray;
 color: #141414;
 }</string>
-              </property>
-              <property name="autoScrollMargin">
-               <number>20</number>
-              </property>
-              <property name="tabKeyNavigation">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </widget>
+               </property>
+               <property name="autoScrollMargin">
+                <number>20</number>
+               </property>
+               <property name="tabKeyNavigation">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="QTextEdit" name="word_input">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>14</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QTextEdit{
+/*border:2px solid red;*/
+color:#141414;
+}</string>
+            </property>
+            <property name="frameShadow">
+             <enum>QFrame::Plain</enum>
+            </property>
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <property name="tabChangesFocus">
+             <bool>false</bool>
+            </property>
+            <property name="undoRedoEnabled">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>WordCloud text goes here. Different words will be identified based on space. Ex: word1 word2</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -4607,70 +2542,2060 @@ color: #141414;
       </layout>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QFrame" name="EmojiFull_Frame">
+    <item row="1" column="1">
+     <widget class="QFrame" name="WC_GeneratorFrame">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_9">
-       <property name="leftMargin">
-        <number>20</number>
-       </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>300</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
        <item>
-        <widget class="QFrame" name="FilterListFrame1_2">
+        <widget class="QFrame" name="file_handling_frame">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
-          <item>
-           <widget class="QLabel" name="emojiFilter_label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+         <layout class="QGridLayout" name="gridLayout_12">
+          <item row="0" column="0">
+           <spacer name="verticalSpacer_18">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="2" column="0">
+           <widget class="QPushButton" name="stash_last_generated_button">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
             </property>
             <property name="font">
              <font>
               <family>Inter</family>
-              <pointsize>11</pointsize>
+              <pointsize>9</pointsize>
+              <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Stash the last generated image(s)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: green; /* or any other color you want */
+}
+QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}</string>
+            </property>
             <property name="text">
-             <string>Filter:</string>
+             <string>Stash</string>
             </property>
            </widget>
           </item>
-          <item>
-           <widget class="QComboBox" name="emoji_filter_list">
+          <item row="3" column="0">
+           <spacer name="verticalSpacer_19">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="delete_last_generated_button">
+            <property name="minimumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>40</width>
+              <height>40</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>9</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Delete the last generated image(s)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+    background-color: red; /* or any other color you want */
+}
+QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}</string>
+            </property>
+            <property name="text">
+             <string>Del</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="btnContainerFrame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QGroupBox" name="export_as_frame">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
             <property name="minimumSize">
              <size>
-              <width>211</width>
-              <height>41</height>
+              <width>100</width>
+              <height>75</height>
              </size>
             </property>
             <property name="font">
              <font>
               <family>Inter</family>
-              <pointsize>11</pointsize>
+              <pointsize>9</pointsize>
+              <italic>false</italic>
               <bold>true</bold>
              </font>
             </property>
+            <property name="title">
+             <string/>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_26">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>10</number>
+             </property>
+             <item alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="exportAs_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Export As</string>
+               </property>
+              </widget>
+             </item>
+             <item alignment="Qt::AlignHCenter">
+              <widget class="QComboBox" name="export_format_options">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Select output file format &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">/* Style the QComboBox */
+QComboBox {
+    background-color: #141414; /* Background color of the entire combo box */
+    border: 1px solid #e6e6e6; /* Border around the combo box */
+    padding: 10px; /* Padding inside the combo box */
+    color:#e6e6e6; /* Current text color*/
+}
+/* Style the QComboBox's drop-down list */
+QComboBox QAbstractItemView {
+    background-color: #141414; /* Background color of the drop-down list */
+    border: 1px solid #e6e6e6; /* Border around the drop-down list */
+    padding: 10px; /* Padding inside the drop-down list */
+	color:#e6e6e6;
+}
+/* Style individual items within the QComboBox's drop-down list */
+QComboBox QAbstractItemView::item {
+    background-color: #141414; /* Background color of each item in the list */
+    padding: 1px; /* Padding inside each item */
+	color: #e6e6e6;
+}
+/* Style the selected item within the drop-down list */
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0,200,0,200); /* Background color of the selected item */
+    color: #e6e6e6; /* Text color of the selected item */
+}
+/* Style the drop-down list scroll bar (if it appears) */
+QComboBox QScrollBar:vertical {
+    width: 0px; /* Width of the vertical scrollbar */
+    background: #e6e6e6; /* Background color of the scrollbar */
+}
+/* Style the drop-down list scroll bar handle (thumb) */
+QComboBox QScrollBar::handle:vertical {
+    background: #141414; /* Background color of the scrollbar handle */
+}</string>
+               </property>
+               <property name="duplicatesEnabled">
+                <bool>false</bool>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+               <item>
+                <property name="text">
+                 <string>PNG</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>SVG</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>BOTH</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="generate_wordcloud_button">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>150</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>9</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:12px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Generate WordCloud &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="toolTipDuration">
+             <number>-1</number>
+            </property>
             <property name="styleSheet">
-             <string notr="true">/* Style the QComboBox */
+             <string notr="true">QPushButton{
+color: rgb(200,200,200);
+background-color: rgb(50, 50, 50);
+border: 10px solid green;
+border-radius: 50px;
+padding: 50px;
+}
+QPushButton:pressed{
+background-color:green;
+border: 10px solid rgb(50, 50, 50);
+padding-left: 50px;
+padding-bottom:20px
+}</string>
+            </property>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/LogoAssetForButton.png</normaloff>:/Media/LogoAssetForButton.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>100</width>
+              <height>100</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string/>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+            <property name="autoRepeat">
+             <bool>false</bool>
+            </property>
+            <property name="autoExclusive">
+             <bool>false</bool>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0" rowspan="2" alignment="Qt::AlignHCenter">
+     <widget class="QFrame" name="SummaryFrame">
+      <property name="minimumSize">
+       <size>
+        <width>301</width>
+        <height>401</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <family>Inter</family>
+        <pointsize>9</pointsize>
+        <italic>false</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame{
+background-color:rgba(200,0,200,50);
+}
+QFrame QLabel{
+font: 700 10pt &quot;Inter&quot;;
+background:none;
+color:white;
+}</string>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_32">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="parameters_summary_label_2">
+         <property name="styleSheet">
+          <string notr="true">font: 700 14pt &quot;Inter&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Parameters</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="indent">
+          <number>-1</number>
+         </property>
+         <property name="openExternalLinks">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_19">
+         <item>
+          <widget class="QPushButton" name="repeatWords_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Repeat Words:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="repeat_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_36">
+         <item>
+          <widget class="QPushButton" name="marginSettings_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Margin:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="margin_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_37">
+         <item>
+          <widget class="QPushButton" name="fontSizeSettings_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Min. Font Size:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="min_font_size_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_38">
+         <item>
+          <widget class="QPushButton" name="fontSizeSettings_btn2">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Max. Font Size:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="max_font_size_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_39">
+         <item>
+          <widget class="QPushButton" name="textOrientationSettings_btn">
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Orientation:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="prefer_horizontal_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_40">
+         <item>
+          <widget class="QPushButton" name="fontStepSettings_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Font Step:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="fontstep_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_41">
+         <item>
+          <widget class="QPushButton" name="collocationSettings_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>CLC:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="collocations_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_42">
+         <item>
+          <widget class="QPushButton" name="collocationSettings_btn2">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>CLC Thresh:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="collocations_thresh_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_43">
+         <item>
+          <widget class="QPushButton" name="charInclusion_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Include Numbers:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="include_numbers_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_44">
+         <item>
+          <widget class="QPushButton" name="scaleSettings_btn">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background:rgba(0,0,0,0);
+color:#e6e6e6;</string>
+           </property>
+           <property name="text">
+            <string>Scale:</string>
+           </property>
+           <attribute name="buttonGroup">
+            <string notr="true">parametersButtonGroup</string>
+           </attribute>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="scale_multiplier_info_label">
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>10</pointsize>
+             <italic>false</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>result here</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_23">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QFrame" name="color_presets_group">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Inter</family>
+           <pointsize>9</pointsize>
+           <italic>false</italic>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background:none;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_18">
+          <property name="spacing">
+           <number>5</number>
+          </property>
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+           <widget class="QFrame" name="cp_title_dropdown">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>100</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_19">
+             <property name="spacing">
+              <number>15</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item alignment="Qt::AlignHCenter">
+              <widget class="QLabel" name="label_color_presets">
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>10</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Color Presets</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="colormaps_dropdown">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>200</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>250</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">/* Style the QComboBox */
+QComboBox {
+    background-color: #141414; /* Background color of the entire combo box */
+    border: 1px solid #e6e6e6; /* Border around the combo box */
+    padding: 4px; /* Padding inside the combo box */
+    color:#e6e6e6; /* Current text color*/
+}
+/* Style the QComboBox's drop-down list */
+QComboBox QAbstractItemView {
+    background-color: #141414; /* Background color of the drop-down list */
+    border: 1px solid #e6e6e6; /* Border around the drop-down list */
+    padding: 10px; /* Padding inside the drop-down list */
+	color:#e6e6e6;
+}
+
+/* Style individual items within the QComboBox's drop-down list */
+QComboBox QAbstractItemView::item {
+    background-color: #141414; /* Background color of each item in the list */
+    padding: 4px; /* Padding inside each item */
+	color: #e6e6e6;
+}
+
+/* Style the selected item within the drop-down list */
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0,200,0,150); /* Background color of the selected item */
+    color: #e6e6e6; /* Text color of the selected item */
+}
+
+/* Style the drop-down list scroll bar (if it appears) */
+QComboBox QScrollBar:vertical {
+    width: 20px; /* Width of the vertical scrollbar */
+    background: #e6e6e6; /* Background color of the scrollbar */
+}
+/* Style the drop-down list scroll bar handle (thumb) */
+QComboBox QScrollBar::handle:vertical {
+    background: #141414; /* Background color of the scrollbar handle */
+    border-radius:5px;
+}</string>
+               </property>
+               <property name="currentIndex">
+                <number>0</number>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Default</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Accent</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Reds</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Dark2</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Paired</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Set1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Set2</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Set3</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Random Colors</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Greens</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Blues</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Greys</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Purples</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Oranges</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>plasma</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Spectral</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Pastel1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Pastel2</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Wistia</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>winter</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>spring</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>summer</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>autumn</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>inferno</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>magma</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>twilight</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>twilight_shifted</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>hot</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>afmhot</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>cool</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>coolwarm</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>cubehelix</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>gray</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>bone</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>tab10</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>tab20</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>prism</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>ocean</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>terrain</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>rainbow</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>turbo</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>gist_ncar_r</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QFrame" name="RandomColorFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_13">
+             <item row="0" column="0" alignment="Qt::AlignHCenter">
+              <widget class="QFrame" name="rColorRangeContainer">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>256</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_20">
+                <property name="spacing">
+                 <number>1</number>
+                </property>
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item alignment="Qt::AlignHCenter">
+                 <widget class="QFrame" name="color_range_preset_buttons_frame">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>50</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>266</width>
+                    <height>28</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">font: 700 14pt &quot;Inter&quot;;</string>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_25">
+                   <property name="spacing">
+                    <number>20</number>
+                   </property>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_11">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QPushButton" name="rcp_minimize_red">
+                       <property name="font">
+                        <font>
+                         <family>Inter</family>
+                         <pointsize>14</pointsize>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Min Red &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">color: rgb(250, 0, 0);
+</string>
+                       </property>
+                       <property name="text">
+                        <string>▼</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">randomColorsPresetsGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="rcp_maximize_red">
+                       <property name="font">
+                        <font>
+                         <family>Inter</family>
+                         <pointsize>14</pointsize>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Max Red &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">color: rgb(250, 0, 0);</string>
+                       </property>
+                       <property name="text">
+                        <string>▲</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">randomColorsPresetsGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_31">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QPushButton" name="rcp_minimize_green">
+                       <property name="font">
+                        <font>
+                         <family>Inter</family>
+                         <pointsize>14</pointsize>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Min Green &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">color: rgb(0, 250, 0);</string>
+                       </property>
+                       <property name="text">
+                        <string>▼</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">randomColorsPresetsGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="rcp_maximize_green">
+                       <property name="font">
+                        <font>
+                         <family>Inter</family>
+                         <pointsize>14</pointsize>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Max Green &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">color: rgb(0, 250, 0);</string>
+                       </property>
+                       <property name="text">
+                        <string>▲</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">randomColorsPresetsGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_32">
+                     <property name="spacing">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <widget class="QPushButton" name="rcp_maximize_blue">
+                       <property name="font">
+                        <font>
+                         <family>Inter</family>
+                         <pointsize>14</pointsize>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Max Blue &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">color: rgb(0, 0, 250);</string>
+                       </property>
+                       <property name="text">
+                        <string>▲</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">randomColorsPresetsGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="rcp_minimize_blue">
+                       <property name="font">
+                        <font>
+                         <family>Inter</family>
+                         <pointsize>14</pointsize>
+                         <italic>false</italic>
+                         <bold>true</bold>
+                        </font>
+                       </property>
+                       <property name="toolTip">
+                        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Min Blue &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">color: rgb(0, 0, 250);</string>
+                       </property>
+                       <property name="text">
+                        <string>▼</string>
+                       </property>
+                       <attribute name="buttonGroup">
+                        <string notr="true">randomColorsPresetsGroup</string>
+                       </attribute>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignHCenter">
+                 <widget class="QGroupBox" name="ColorsMinGP">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>71</height>
+                   </size>
+                  </property>
+                  <property name="title">
+                   <string>Min</string>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_14">
+                   <item alignment="Qt::AlignHCenter">
+                    <widget class="QSpinBox" name="red_min">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(200, 0, 0);
+color: rgb(255, 255, 255);</string>
+                     </property>
+                     <property name="accelerated">
+                      <bool>true</bool>
+                     </property>
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="value">
+                      <number>20</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="green_min">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(0, 200, 0);
+color: rgb(25, 25, 25);</string>
+                     </property>
+                     <property name="accelerated">
+                      <bool>true</bool>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="value">
+                      <number>20</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QSpinBox" name="blue_min">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(0, 0, 200);
+color: rgb(255, 255, 255);</string>
+                     </property>
+                     <property name="accelerated">
+                      <bool>true</bool>
+                     </property>
+                     <property name="correctionMode">
+                      <enum>QAbstractSpinBox::CorrectToPreviousValue</enum>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="stepType">
+                      <enum>QAbstractSpinBox::DefaultStepType</enum>
+                     </property>
+                     <property name="value">
+                      <number>20</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignHCenter">
+                 <widget class="QFrame" name="rcpresets3">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <layout class="QGridLayout" name="gridLayout_7">
+                   <item row="0" column="2">
+                    <widget class="QPushButton" name="rcp_dark">
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Dark color range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>Dark</string>
+                     </property>
+                     <attribute name="buttonGroup">
+                      <string notr="true">randomColorsPresetsGroup</string>
+                     </attribute>
+                    </widget>
+                   </item>
+                   <item row="0" column="4">
+                    <widget class="QPushButton" name="rcp_reset">
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>Reset</string>
+                     </property>
+                     <attribute name="buttonGroup">
+                      <string notr="true">randomColorsPresetsGroup</string>
+                     </attribute>
+                    </widget>
+                   </item>
+                   <item row="0" column="0">
+                    <widget class="QPushButton" name="rcp_bright">
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Bright color range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>Bright</string>
+                     </property>
+                     <attribute name="buttonGroup">
+                      <string notr="true">randomColorsPresetsGroup</string>
+                     </attribute>
+                    </widget>
+                   </item>
+                   <item row="0" column="1">
+                    <widget class="QPushButton" name="rcp_gray">
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="toolTip">
+                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                     </property>
+                     <property name="text">
+                      <string>Gray</string>
+                     </property>
+                     <attribute name="buttonGroup">
+                      <string notr="true">randomColorsPresetsGroup</string>
+                     </attribute>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+                 <widget class="QGroupBox" name="ColorsMaxGP">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>71</height>
+                   </size>
+                  </property>
+                  <property name="title">
+                   <string>Max</string>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_15">
+                   <item alignment="Qt::AlignHCenter">
+                    <widget class="QSpinBox" name="red_max">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(200, 0, 0);
+color: rgb(255, 255, 255);</string>
+                     </property>
+                     <property name="accelerated">
+                      <bool>true</bool>
+                     </property>
+                     <property name="minimum">
+                      <number>0</number>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="value">
+                      <number>150</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignHCenter">
+                    <widget class="QSpinBox" name="green_max">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(0, 200, 0);
+color: rgb(25, 25, 25);</string>
+                     </property>
+                     <property name="accelerated">
+                      <bool>true</bool>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="value">
+                      <number>250</number>
+                     </property>
+                    </widget>
+                   </item>
+                   <item alignment="Qt::AlignHCenter">
+                    <widget class="QSpinBox" name="blue_max">
+                     <property name="minimumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>60</width>
+                       <height>30</height>
+                      </size>
+                     </property>
+                     <property name="font">
+                      <font>
+                       <family>Inter</family>
+                       <pointsize>9</pointsize>
+                       <italic>false</italic>
+                       <bold>true</bold>
+                      </font>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: rgb(0, 0, 200);
+color: rgb(255, 255, 255);</string>
+                     </property>
+                     <property name="accelerated">
+                      <bool>true</bool>
+                     </property>
+                     <property name="maximum">
+                      <number>255</number>
+                     </property>
+                     <property name="value">
+                      <number>150</number>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QFrame" name="frame_18">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Plain</enum>
+               </property>
+               <property name="lineWidth">
+                <number>1</number>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_22">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QFrame" name="MaskandEmojisFrame">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QGridLayout" name="kaka">
+       <item row="1" column="1">
+        <widget class="QFrame" name="EmojiFull_Frame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Inter</family>
+           <bold>true</bold>
+          </font>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <property name="leftMargin">
+           <number>20</number>
+          </property>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QFrame" name="load_emojis_Frame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <widget class="QPushButton" name="unicode_Emojis_btn">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Select destination for generated PNG file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Unicode Emojis</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="font_Awesome_Icons_btn">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Select destination for generated PNG file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Font Awesome Icons</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QFrame" name="FilterListFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <item>
+              <widget class="QLabel" name="emojiFilter_label">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>11</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="text">
+                <string>Filter:</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="emoji_filter_list">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>211</width>
+                 <height>41</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>11</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">/* Style the QComboBox */
 QComboBox {
     background-color: #141414; /* Background color of the entire combo box */
     border: 1px solid #e6e6e6; /* Border around the combo box */
@@ -4704,92 +4629,79 @@ QComboBox QScrollBar:vertical {
 QComboBox QScrollBar::handle:vertical {
     background: #141414; /* Background color of the scrollbar handle */
 }</string>
-            </property>
-            <item>
-             <property name="text">
-              <string>All</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Objects</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Smileys &amp; Emotion</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Travel &amp; Places</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Animals &amp; Nature</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Activities</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Food &amp; Drink</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Flags</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>People &amp; Body</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Symbols</string>
-             </property>
-            </item>
+               </property>
+               <item>
+                <property name="text">
+                 <string>All</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Objects</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Smileys &amp; Emotion</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Travel &amp; Places</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Animals &amp; Nature</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Activities</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Food &amp; Drink</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Flags</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>People &amp; Body</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Symbols</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="font_recommendation_lbl">
-         <property name="font">
-          <font>
-           <family>Inter</family>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Recommended Font for Emojis: Segue UI Emoji (Seguiemj)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="emoji_list">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI Emoji</family>
-           <pointsize>28</pointsize>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QListWidget::item:selected {
+          <item>
+           <widget class="QListWidget" name="emoji_list">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="font">
+             <font>
+              <family>Segoe UI Emoji</family>
+              <pointsize>28</pointsize>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QListWidget::item:selected {
     background: rgba(0,200,0,200);
 }
 QListWidget::item:hover {
@@ -4800,54 +4712,252 @@ background:rgba(20,20,20,200);
 border-radius:0px;
 border:1px solid #e6e6e6;
 }</string>
-         </property>
-         <property name="verticalScrollBarPolicy">
-          <enum>Qt::ScrollBarAsNeeded</enum>
-         </property>
-         <property name="autoScroll">
-          <bool>false</bool>
-         </property>
-         <property name="autoScrollMargin">
-          <number>20</number>
-         </property>
-         <property name="textElideMode">
-          <enum>Qt::ElideNone</enum>
-         </property>
-         <property name="verticalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="horizontalScrollMode">
-          <enum>QAbstractItemView::ScrollPerPixel</enum>
-         </property>
-         <property name="movement">
-          <enum>QListView::Snap</enum>
-         </property>
-         <property name="resizeMode">
-          <enum>QListView::Adjust</enum>
-         </property>
-         <property name="layoutMode">
-          <enum>QListView::SinglePass</enum>
-         </property>
-         <property name="viewMode">
-          <enum>QListView::IconMode</enum>
-         </property>
-         <property name="uniformItemSizes">
-          <bool>true</bool>
-         </property>
+            </property>
+            <property name="verticalScrollBarPolicy">
+             <enum>Qt::ScrollBarAsNeeded</enum>
+            </property>
+            <property name="autoScroll">
+             <bool>false</bool>
+            </property>
+            <property name="autoScrollMargin">
+             <number>20</number>
+            </property>
+            <property name="textElideMode">
+             <enum>Qt::ElideNone</enum>
+            </property>
+            <property name="verticalScrollMode">
+             <enum>QAbstractItemView::ScrollPerPixel</enum>
+            </property>
+            <property name="horizontalScrollMode">
+             <enum>QAbstractItemView::ScrollPerPixel</enum>
+            </property>
+            <property name="movement">
+             <enum>QListView::Snap</enum>
+            </property>
+            <property name="isWrapping" stdset="0">
+             <bool>true</bool>
+            </property>
+            <property name="resizeMode">
+             <enum>QListView::Adjust</enum>
+            </property>
+            <property name="layoutMode">
+             <enum>QListView::SinglePass</enum>
+            </property>
+            <property name="spacing">
+             <number>1</number>
+            </property>
+            <property name="viewMode">
+             <enum>QListView::IconMode</enum>
+            </property>
+            <property name="uniformItemSizes">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="0" column="1" alignment="Qt::AlignRight">
+        <widget class="QFrame" name="mask_container">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
+         <property name="styleSheet">
+          <string notr="true"/>
          </property>
-        </spacer>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="mask_image_thumbnail">
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
+            <property name="lineWidth">
+             <number>1</number>
+            </property>
+            <property name="text">
+             <string>MASK IMAGE WILL BE PLACED HERE</string>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="mask_dimensions_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>300</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>9</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+              <underline>false</underline>
+              <stylestrategy>PreferDefault</stylestrategy>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
+            </property>
+            <property name="text">
+             <string>mask_dimensions_label</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QFrame" name="SelectButtonsFrame">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <item>
+              <widget class="QPushButton" name="mask_select_button">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Select Mask image &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+border:2px solid red; 
+}
+</string>
+               </property>
+               <property name="text">
+                <string>Select Mask</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QPushButton" name="select_destination_button">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>150</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>150</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>9</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Select destination for generated PNG file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+border:2px solid red; 
+}
+</string>
+                 </property>
+                 <property name="text">
+                  <string>Select Destination</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="open_destination_folder">
+                 <property name="minimumSize">
+                  <size>
+                   <width>50</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>40</width>
+                   <height>50</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>9</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Open destination folder &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+color: rgb(0, 170, 0);
+border-radius:5px;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string>▲</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -4860,8 +4970,8 @@ border:1px solid #e6e6e6;
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="parametersButtonGroup"/>
   <buttongroup name="randomColorsPresetsGroup"/>
+  <buttongroup name="parametersButtonGroup"/>
   <buttongroup name="fontSizePresetsGroup"/>
  </buttongroups>
 </ui>

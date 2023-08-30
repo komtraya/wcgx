@@ -5,14 +5,16 @@ import os
 import json
 from wordcloud import WordCloud
 from PIL import Image
+from PIL.ImageQt import ImageQt
 from PySide6 import QtWidgets as widget
-from PySide6.QtGui import QFont, QFontDatabase, QPixmap
+from PySide6.QtGui import QFont, QFontDatabase, QPixmap, QImage, QPainter
 from PySide6.QtWidgets import QFileDialog, QListWidgetItem
-
+from PySide6.QtSvg import QSvgRenderer
 from ui.ui import Ui_MainWindow
 
 
 userPath = os.path.expanduser("~")
+system_c = os.getenv("SystemDrive")
 
 
 ##### ----- Resource Fix #####
@@ -29,21 +31,37 @@ def resource_path(rel_path):
 
 ##### ----- Resource Fix #####
 
-
 ## Read emojis.json for processing ##
-emojis_json = resource_path(r"emojis.json")
+emojis_json = resource_path("emojis.json")
+# Load the JSON file containing Unicode Emojis metadata
 with open(emojis_json, "r", encoding="utf-8") as json_file:
     emoji_data = json.load(json_file)
+
+##### Read fontAwesomeIcons.json for processing #####
+fontAwesomeIcons_json = resource_path("fontAwesomeIcons.json")
+# Load the JSON file containing FontAwesome icon metadata
+with open(fontAwesomeIcons_json, "r", encoding="utf-8") as fontAwesome_icons:
+    fontAwesome_data = json.load(fontAwesome_icons)
+
+emoji_fonts_path = resource_path("emojiFonts")
+system_fonts_path = os.path.join(system_c, "Windows", "Fonts")
 
 
 class WCGX(widget.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        ## Future color preset implementation(list needs sorting)
+        # import matplotlib.cm as cm
+        # for palette_names in cm.cmap_d:
+        #     self.colormaps_dropdown.addItem(palette_names)
+        #     print(palette_names)
 
         self.parametersButtonGroup.buttonClicked.connect(self.change_tab_based_on_selected_item)
         ##  Emoji handling ##
         self.populateEmojiList()
+        self.unicode_Emojis_btn.clicked.connect(self.unicodeEmojiList_fnc)
+        self.font_Awesome_Icons_btn.clicked.connect(self.fontAwesomeIconsList_fnc)
         self.emoji_list.itemClicked.connect(self.insertEmojiOnClick)
         self.emoji_filter_list.currentTextChanged.connect(self.populateEmojiList)
         ## Modifications/data-setup for the start of the app
@@ -54,11 +72,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.mask_image_thumbnail.setVisible(False)
         self.mask_dimensions_label.setText("")
         ### scan fonts set by default (windows path) and populate the list
-        self.fonts_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"  # default font directory on start of the app
+        self.fonts_directory = system_fonts_path  # default font directory on start of the app
         self.scan_fonts(self.fonts_directory)  # This scans the default directory for fonts
         self.font_list.currentItemChanged.connect(self.apply_selected_font)  # This enables clicks, as well as keyboard arrows to browse through the list
 
         self.custom_font_directory_selection.clicked.connect(self.select_custom_fonts_folder)
+        self.load_emoji_fonts_btn.clicked.connect(self.load_emoji_fonts_fnc)
+        self.load_system_fonts_btn.clicked.connect(self.load_system_fonts_fnc)
 
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
         # self.generate_wordcloud_button.setVisible(False)
@@ -146,21 +166,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def generate_WordCloud(self):
         # @ PARAMETERS
-        # Open Mask Image
-        mask_image = np.array(Image.open((self.mask_path)))
-        try:
-            mask_image[(mask_image[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
-        except:
-            mask_image = np.array(Image.open((self.mask_path)))
-
         wordcloud = WordCloud(
-            mask=mask_image,
+            mask=self.mask_image,
             # width=width,
             # height=height,
             regexp=self.custom_regexp(),
             background_color=None,
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
-            contour_color=0,
             margin=self.margin_slider.value(),
             font_path=self.font_list.currentItem().data(1001),
             repeat=self.repeat_checkbox.isChecked(),
@@ -176,11 +188,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             stopwords=set(),
             min_word_length=0,
             include_numbers=self.include_number_checkbox.isChecked(),
+            # random_state=, # Generated WC will be the same color, until random_state int is different
         )
         # @ generate wc
         wordcloud.generate(self.word_input.toPlainText())
 
-        ###########
         # @ Export Image @ #
         ##PNG
         if self.export_format_options.currentText() == "PNG":
@@ -228,18 +240,61 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def mask_select_button_clicked(self):
         options = QFileDialog.Options()
-        file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "PNG Files (*.png);;All Files (*)", options=options)
+        file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "Image Files (*.png;*.svg;*.jpg;*.jpeg)", options=options)
         if file_name:
             self.mask_path = file_name
             self.enable_WordCloud_Generator_Button()
 
         if self.mask_path:
-            self.update_image_dimensions()
-            self.mask_select_button.setStyleSheet(
-                """
-            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
-            )
+            if self.mask_path.endswith(".png".lower()) or self.mask_path.endswith(".jpg".lower()) or self.mask_path.endswith(".jpeg".lower()):
+                # Open Mask Image
+                self.mask_image = np.array(Image.open((self.mask_path)))
+                try:
+                    self.mask_image[(self.mask_image[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                except:
+                    self.mask_image = np.array(Image.open((self.mask_path)))
+                self.update_image_dimensions()
+                self.mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
+            elif self.mask_path.endswith(".svg".lower()):
+                # Create a QSvgRenderer for the SVG file
+                svg_filename = self.mask_path
+                svg_renderer = QSvgRenderer(svg_filename)
+
+                # Get the dimensions of the SVG
+                svg_size = svg_renderer.defaultSize()
+
+                # Create a QImage with an appropriate format (ARGB32 is a common choice)
+                mask_test = QImage(svg_size, QImage.Format_ARGB32)
+                mask_test.fill(0)  # Fill with transparent (0 alpha)
+
+                # Create a QPainter to render the SVG onto the QImage
+                painter = QPainter(mask_test)
+
+                # Render the SVG onto the QImage
+                svg_renderer.render(painter)
+
+                # Clean up
+                painter.end()
+                # Convert QImage to Pillow Image
+                pil_image = Image.fromqpixmap(mask_test)
+
+                # Transform Pillow Image to NumPy array
+                mask_array = np.array(pil_image)
+                try:
+                    mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    self.mask_image = mask_array
+                except:
+                    self.mask_image = mask_array
+                self.update_image_dimensions()
+                self.mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
         else:
             self.update_image_dimensions()
             self.mask_select_button.setStyleSheet(
@@ -327,22 +382,58 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         global width
         global height
         if self.mask_path:
-            try:
-                with Image.open(self.mask_path) as img:
-                    width, height = img.size
+            if self.mask_path.endswith(".png".lower()) or self.mask_path.endswith(".jpg".lower()) or self.mask_path.endswith(".jpeg".lower()):
+                try:
+                    with Image.open(self.mask_path) as img:
+                        width, height = img.size
+                        self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+                        self.mask_dimensions_label.setStyleSheet("color: green;")
+                        resizeMax = 200, 10000  # Height will be calculated based on original width, so that aspect ratio is maintained
+                        img.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
+                        resized_thumb = ImageQt(img)
+                        pixmap = QPixmap.fromImage(resized_thumb)
+                        self.mask_image_thumbnail.setPixmap(pixmap)
+                    self.mask_image_thumbnail.setVisible(True)
+                except:
+                    self.mask_dimensions_label.setText("Incorrect image path!")
+                    self.mask_dimensions_label.setStyleSheet("color: red;")
+                    self.export_as_frame.setVisible(False)
+                    self.mask_image_thumbnail.setVisible(False)
+            elif self.mask_path.endswith(".svg".lower()):
+                try:
+                    # Create a QSvgRenderer for the SVG file
+                    svg_filename = self.mask_path
+                    svg_renderer = QSvgRenderer(svg_filename)
+
+                    # Get the dimensions of the SVG
+                    svg_size = svg_renderer.defaultSize()
+                    width = str(svg_size.width())
+                    height = str(svg_size.height())
                     self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
                     self.mask_dimensions_label.setStyleSheet("color: green;")
-                    # mask image
-                    self.mask_image_thumbnail.setVisible(True)
-                    pixmap = QPixmap(self.mask_path)
-                    self.mask_image_thumbnail.setPixmap(pixmap)
+                    # # Create a QImage with an appropriate format (ARGB32 is a common choice)
+                    mask_test = QImage(svg_size, QImage.Format_ARGB32)
+                    mask_test.fill(0)  # Fill with transparent (0 alpha)
+                    # Create a QPainter to render the SVG onto the QImage
+                    painter = QPainter(mask_test)
+                    # Render the SVG onto the QImage
+                    svg_renderer.render(painter)
+                    # Clean up
+                    painter.end()
+                    # Convert QImage to Pillow Image
+                    pil_image = Image.fromqpixmap(mask_test)
+                    resizeMax = 200, 10000  # Height will be calculated based on original width, so that aspect ratio is maintained
+                    pil_image.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
+                    resized_thumb = ImageQt(pil_image)
+                    pixmap = QPixmap.fromImage(resized_thumb)
 
-            except:
-                self.mask_dimensions_label.setText("Incorrect image path!")
-                self.mask_dimensions_label.setStyleSheet("color: red;")
-                self.export_as_frame.setVisible(False)
-                # mask image
-                self.mask_image_thumbnail.setVisible(False)
+                    self.mask_image_thumbnail.setPixmap(pixmap)
+                    self.mask_image_thumbnail.setVisible(True)
+                except:
+                    self.mask_dimensions_label.setText("Incorrect image path!")
+                    self.mask_dimensions_label.setStyleSheet("color: red;")
+                    self.export_as_frame.setVisible(False)
+                    self.mask_image_thumbnail.setVisible(False)
 
         if not self.mask_path:
             self.mask_dimensions_label.setText(f"")
@@ -377,6 +468,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     # Scan font firectory and populate list with font names
     def scan_fonts(self, fontDirectory):
+        self.font_list.clear()
         font_files = self.get_font_files(fontDirectory)
 
         for font_path in font_files:
@@ -399,7 +491,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def select_custom_fonts_folder(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ShowDirsOnly
-        initial_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"
+        # initial_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"
+        initial_directory = system_fonts_path
         selected_directory = QFileDialog.getExistingDirectory(self, "Select Fonts Directory", initial_directory, options=options)
 
         if selected_directory:
@@ -415,6 +508,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 if file.lower().endswith((".ttf", ".otf")):
                     font_files.append(os.path.join(root, file))
         return font_files
+
+    def load_emoji_fonts_fnc(self):
+        self.scan_fonts(emoji_fonts_path)
+
+    def load_system_fonts_fnc(self):
+        self.scan_fonts(system_fonts_path)
 
     ## RANDOM COLOR PRESETS FUNCTIONS ##
     def random_colors_presets_function(self, button):
@@ -469,9 +568,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     ## ColorMap and Color Function Conditions ##
     def colormap_conditions(self):
         if self.colormaps_dropdown.currentText() == "Default":
-            self.colormap = "tab20b"
+            self.colormap = "gist_ncar"
             self.color_function = None
-            # return self.colormap
+            return self.colormap
         elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors":
             self.colormap = self.colormaps_dropdown.currentText()
             self.color_function = None
@@ -483,7 +582,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def color_function_conditions(self):
         if self.colormaps_dropdown.currentText() == "Default":
-            self.colormap = "tab20c"
+            self.colormap = "gist_ncar"
             self.color_function = None
             return self.color_function
         elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors":
@@ -613,6 +712,46 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.max_font_size_slider.setValue(50)
         if button == self.MaxFSp73:
             self.max_font_size_slider.setValue(73)
+
+    def fontAwesomeIconsList_fnc(self):
+        self.emoji_list.clear()
+        fontAwesome_font_path = resource_path("emojiFonts/Font Awesome 6 Free-Solid-900.otf")  # Replace with the actual file path
+        font_id = QFontDatabase.addApplicationFont(fontAwesome_font_path)
+        font_family_fontAwesome = QFontDatabase.applicationFontFamilies(font_id)[0]
+        q_font_fontAwesome = QFont(font_family_fontAwesome, 28)
+        self.emoji_list.setFont(q_font_fontAwesome)
+        for icon_key, icon_info in fontAwesome_data.items():
+            if "styles" in icon_info and "solid" in icon_info["styles"]:
+                icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
+                search_terms = ", ".join(icon_info["search"]["terms"])  # Join search terms with commas
+                item_text = f"{icon_unicode} {search_terms}"
+                item = QListWidgetItem(icon_unicode)
+                self.emoji_list.addItem(item)
+        self.FilterListFrame.setVisible(False)
+
+    def unicodeEmojiList_fnc(self):
+        self.emoji_list.clear()
+        # Set the font family for the listWidget
+        unicode_font_path = resource_path("emojiFonts/Segue UI Emoji.ttf")  # Replace with the actual file path
+        font_id = QFontDatabase.addApplicationFont(unicode_font_path)
+        font_family_unicode = QFontDatabase.applicationFontFamilies(font_id)[0]
+        q_font_unicode = QFont(font_family_unicode, 28)
+        self.emoji_list.setFont(q_font_unicode)
+        # Populate the list with the filtered emojis from the json
+        emoji_edition_filter = ["13.0", "13.1", "14.0", "15.0"]
+        selected_emoji_group = self.emoji_filter_list.currentText()
+
+        for emoji, data in emoji_data.items():
+            unicode_edition = data["unicode_version"]
+            emoji_group = data["group"]
+
+            if unicode_edition not in emoji_edition_filter:
+                if self.emoji_filter_list.currentText() == "All":
+                    item = QListWidgetItem(emoji)
+                    self.emoji_list.addItem(item)
+                elif emoji_group == selected_emoji_group:
+                    self.emoji_list.addItem(emoji)
+        self.FilterListFrame.setVisible(True)
 
     def populateEmojiList(self):
         self.emoji_list.clear()
