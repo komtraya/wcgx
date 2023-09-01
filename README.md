@@ -2,12 +2,12 @@
 
 ## G2K:
 
-    - *Words will be printed on black/color*
-    - *White color is ignored*
-    - *App treats transparency in mask image as white, so it will be ignored*
-    - Special characters are supported - depends on font used
-    - StopWords are disabled for now
-    - *Export Formats: PNG, SVG*
+  - Words will be printed on black/color
+  - White color is ignored
+  - App treats transparency in mask image as white, so it will be ignored
+  - Special characters are supported - depends on font used
+  - StopWords are disabled for now
+  - Export Formats: PNG, SVG
 
 ### Roadmap:
 

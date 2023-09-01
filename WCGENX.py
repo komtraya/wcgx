@@ -44,7 +44,8 @@ with open(fontAwesomeIcons_json, "r", encoding="utf-8") as fontAwesome_icons:
     fontAwesome_data = json.load(fontAwesome_icons)
 
 emoji_fonts_path = resource_path("emojiFonts")
-system_fonts_path = os.path.join(system_c, "Windows", "Fonts")
+# system_fonts_path = os.path.join(system_c, "Windows", "Fonts")
+system_fonts_path = os.path.join(userPath, "AppData", "Local", "Microsoft", "Windows", "Fonts")
 
 
 class WCGX(widget.QMainWindow, Ui_MainWindow):
@@ -64,6 +65,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.font_Awesome_Icons_btn.clicked.connect(self.fontAwesomeIconsList_fnc)
         self.emoji_list.itemClicked.connect(self.insertEmojiOnClick)
         self.emoji_filter_list.currentTextChanged.connect(self.populateEmojiList)
+        self.fontAwesome_filter_input.textChanged.connect(self.fontAwesomeIconsList_fnc)
         ## Modifications/data-setup for the start of the app
         # Make sure text input is not empty
         self.word_input.textChanged.connect(self.text_input_Changed)
@@ -81,9 +83,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.load_system_fonts_btn.clicked.connect(self.load_system_fonts_fnc)
 
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
-        # self.generate_wordcloud_button.setVisible(False)
-        # self.export_as_frame.setVisible(False)
-        # Open destination folder if it's selected
         self.enable_WordCloud_Generator_Button()
         self.open_destination_folder.setVisible(False)
         self.open_destination_folder.clicked.connect(self.open_destination_folder_function)
@@ -101,22 +100,15 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.delete_last_generated_button.setVisible(False)
         self.delete_last_generated_button.clicked.connect(self.delete_last_generated)
         ## MASK IMAGE SELECTION
-        # Connect the "Select Mask" button's clicked signal to the custom slot
+        # Connect the "Select Mask" button's clicked signal to it's function
         self.mask_select_button.clicked.connect(self.mask_select_button_clicked)
-        # Connect the "Path Changed" signal of the mask_path to the custom slot (Update path)
         ## INFO LABELS UPDATE
         self.update_info_labels()
         self.repeat_checkbox.clicked.connect(self.update_info_labels)
         self.collocations_checkbox.clicked.connect(self.update_info_labels)
-        self.include_number_checkbox.clicked.connect(self.update_info_labels)
-        self.regxp_any_character_checkbox.clicked.connect(self.update_info_labels)
-        self.connected_punctuation_checkbox.clicked.connect(self.update_info_labels)
         ## EXPORT DESTINATION SELECTION
         # Connect the button click to the slot function
         self.select_destination_button.clicked.connect(self.select_destination_button_clicked)
-
-        # ## FONT HANDLING
-        # self.font_path = None
 
         ## Margin.current
         # Connect the slider to the function that updates the label to reflect changes
@@ -135,11 +127,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         ## Maximum Font Size Slider
         self.max_font_size_slider.valueChanged.connect(self.max_font_size_slider_changed)
-        # Call the slot initially to set the initial value of the label
+        # Call the slot initially to set the initial font_size label
         self.max_font_size_slider_changed(self.max_font_size_slider.value())
 
         ## Prefer Horizontal Slider
-        # self.prefer_horizontal_slider.setValue(7)
         self.prefer_horizontal_slider.valueChanged.connect(self.prefer_horizontal_slider_changed)
         # Call the slot initially to set the initial value of the label
         self.prefer_horizontal_slider_changed(self.prefer_horizontal_slider.value())
@@ -187,7 +178,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             font_step=self.font_step_slider.value(),
             stopwords=set(),
             min_word_length=0,
-            include_numbers=self.include_number_checkbox.isChecked(),
+            include_numbers=True,
             # random_state=, # Generated WC will be the same color, until random_state int is different
         )
         # @ generate wc
@@ -235,9 +226,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.stash_last_generated_button.setVisible(True)  # Display Stash button
         self.delete_last_generated_button.setVisible(True)  # Delete Stash button
 
-    ### !!!!! FUNCTIONS !!!!! ###
-    ## FONT HANDLING ##
-
     def mask_select_button_clicked(self):
         options = QFileDialog.Options()
         file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "Image Files (*.png;*.svg;*.jpg;*.jpeg)", options=options)
@@ -246,7 +234,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.enable_WordCloud_Generator_Button()
 
         if self.mask_path:
-            if self.mask_path.endswith(".png".lower()) or self.mask_path.endswith(".jpg".lower()) or self.mask_path.endswith(".jpeg".lower()):
+            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
                 # Open Mask Image
                 self.mask_image = np.array(Image.open((self.mask_path)))
                 try:
@@ -259,7 +247,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
                 QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
                 )
-            elif self.mask_path.endswith(".svg".lower()):
+            elif self.mask_path.lower().endswith(".svg"):
                 # Create a QSvgRenderer for the SVG file
                 svg_filename = self.mask_path
                 svg_renderer = QSvgRenderer(svg_filename)
@@ -343,8 +331,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def scale_slider_changed(self, value: int):
         # Update corresponding label
-        self.label_scale_slider.setText(f"{value}")
-        self.scale_multiplier_info_label.setText(f"{value}x")
+        self.label_scale_slider.setText(f"{value}x")
 
     def prefer_horizontal_slider_changed(self, value: int):
         # Update the QLabel's text with the current value of the slider
@@ -382,7 +369,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         global width
         global height
         if self.mask_path:
-            if self.mask_path.endswith(".png".lower()) or self.mask_path.endswith(".jpg".lower()) or self.mask_path.endswith(".jpeg".lower()):
+            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
                 try:
                     with Image.open(self.mask_path) as img:
                         width, height = img.size
@@ -399,7 +386,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     self.mask_dimensions_label.setStyleSheet("color: red;")
                     self.export_as_frame.setVisible(False)
                     self.mask_image_thumbnail.setVisible(False)
-            elif self.mask_path.endswith(".svg".lower()):
+            elif self.mask_path.lower().endswith(".svg"):
                 try:
                     # Create a QSvgRenderer for the SVG file
                     svg_filename = self.mask_path
@@ -462,7 +449,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             if font_families:
                 selected_font = QFont(font_families[0], 15)  # Use the first font family
                 self.word_input.setFont(selected_font)
-
         except:
             pass
 
@@ -491,7 +477,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def select_custom_fonts_folder(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ShowDirsOnly
-        # initial_directory = rf"{userPath}\AppData\Local\Microsoft\Windows\Fonts"
         initial_directory = system_fonts_path
         selected_directory = QFileDialog.getExistingDirectory(self, "Select Fonts Directory", initial_directory, options=options)
 
@@ -610,30 +595,28 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         return f"rgb({r}, {g}, {b})"
 
     def change_tab_based_on_selected_item(self, button):
-        if button == self.scaleSettings_btn:
-            self.parameters_window.setCurrentIndex(5)
-        elif button == self.collocationSettings_btn or button == self.collocationSettings_btn2:
-            self.parameters_window.setCurrentIndex(7)
+        ## Collocations
+        if button == self.collocationSettings_btn or button == self.collocationSettings_btn2:
+            self.parameters_window.setCurrentIndex(6)
+        ## Font Size
         elif button == self.fontSizeSettings_btn or button == self.fontSizeSettings_btn2:
             self.parameters_window.setCurrentIndex(1)
+        ## Repeat
         elif button == self.repeatWords_btn:
             self.parameters_window.setCurrentIndex(0)
+        ## Orientation odds
         elif button == self.textOrientationSettings_btn:
             self.parameters_window.setCurrentIndex(4)
-        elif button == self.charInclusion_btn:
-            self.parameters_window.setCurrentIndex(8)
+        ## Margin
         elif button == self.marginSettings_btn:
             self.parameters_window.setCurrentIndex(3)
+        ## Font Step
         elif button == self.fontStepSettings_btn:
             self.parameters_window.setCurrentIndex(2)
 
     def update_info_labels(self):
         self.repeat_info_label.setText(f"{self.repeat_checkbox.isChecked()}")
         self.collocations_info_label.setText(f"{self.collocations_checkbox.isChecked()}")
-        if self.regxp_any_character_checkbox.isChecked() or self.include_number_checkbox.isChecked():
-            self.include_numbers_info_label.setText(f"True")
-        else:
-            self.include_numbers_info_label.setText(f"False")
 
     ## GENERATED FILE HANDLING FUNCTIONS ##
     # Generate a random string anf place it before a file name's extension
@@ -714,28 +697,32 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.max_font_size_slider.setValue(73)
 
     def fontAwesomeIconsList_fnc(self):
+        icon_filter_text = self.fontAwesome_filter_input.toPlainText().lower()
         self.emoji_list.clear()
-        fontAwesome_font_path = resource_path("emojiFonts/Font Awesome 6 Free-Solid-900.otf")  # Replace with the actual file path
+        fontAwesome_font_path = resource_path("emojiFonts/Font Awesome 6 Free-Solid-900.otf")
         font_id = QFontDatabase.addApplicationFont(fontAwesome_font_path)
         font_family_fontAwesome = QFontDatabase.applicationFontFamilies(font_id)[0]
-        q_font_fontAwesome = QFont(font_family_fontAwesome, 28)
+        q_font_fontAwesome = QFont(font_family_fontAwesome, 50)
         self.emoji_list.setFont(q_font_fontAwesome)
         for icon_key, icon_info in fontAwesome_data.items():
             if "styles" in icon_info and "solid" in icon_info["styles"]:
-                icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
-                search_terms = ", ".join(icon_info["search"]["terms"])  # Join search terms with commas
-                item_text = f"{icon_unicode} {search_terms}"
-                item = QListWidgetItem(icon_unicode)
-                self.emoji_list.addItem(item)
+                search_terms = icon_info["search"]["terms"]
+                if not icon_filter_text or any(icon_filter_text in term.lower() for term in search_terms):
+                    icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
+                    item_text = f"{icon_unicode} {', '.join(search_terms)}"
+                    item = QListWidgetItem(" " + icon_unicode + " ")
+                    self.emoji_list.addItem(item)
+
         self.FilterListFrame.setVisible(False)
+        self.FontAwesome_FilterFrame.setVisible(True)
 
     def unicodeEmojiList_fnc(self):
         self.emoji_list.clear()
         # Set the font family for the listWidget
-        unicode_font_path = resource_path("emojiFonts/Segue UI Emoji.ttf")  # Replace with the actual file path
+        unicode_font_path = resource_path("emojiFonts/Segue UI Emoji.ttf")
         font_id = QFontDatabase.addApplicationFont(unicode_font_path)
         font_family_unicode = QFontDatabase.applicationFontFamilies(font_id)[0]
-        q_font_unicode = QFont(font_family_unicode, 28)
+        q_font_unicode = QFont(font_family_unicode, 50)
         self.emoji_list.setFont(q_font_unicode)
         # Populate the list with the filtered emojis from the json
         emoji_edition_filter = ["13.0", "13.1", "14.0", "15.0"]
@@ -744,7 +731,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         for emoji, data in emoji_data.items():
             unicode_edition = data["unicode_version"]
             emoji_group = data["group"]
-
             if unicode_edition not in emoji_edition_filter:
                 if self.emoji_filter_list.currentText() == "All":
                     item = QListWidgetItem(emoji)
@@ -752,9 +738,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 elif emoji_group == selected_emoji_group:
                     self.emoji_list.addItem(emoji)
         self.FilterListFrame.setVisible(True)
+        self.FontAwesome_FilterFrame.setVisible(False)
 
     def populateEmojiList(self):
         self.emoji_list.clear()
+        self.FontAwesome_FilterFrame.setVisible(False)
         emoji_edition_filter = ["13.0", "13.1", "14.0", "15.0"]
         selected_emoji_group = self.emoji_filter_list.currentText()
 
@@ -777,30 +765,22 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.word_input.setText(f"{current_text}{item.text()}")
 
     def custom_regexp(self):
-        # Any + Numbers
-        if self.regxp_any_character_checkbox.isChecked() and self.include_number_checkbox.isChecked():
-            regxp = r"\S"  # treats all special characters as a single word
-        # Any - Numbers
-        elif self.regxp_any_character_checkbox.isChecked() and not self.include_number_checkbox.isChecked():
-            regxp = r"[^0-9\s]+"  # includes all special characters, except numbers
-        # Any + Punctuation
-        elif self.regxp_any_character_checkbox.isChecked() and self.connected_punctuation_checkbox.isChecked():
-            regxp = r"\S"  # treats all special characters as a single word
-        # Any - Punctuation
-        elif self.regxp_any_character_checkbox.isChecked() and not self.connected_punctuation_checkbox.isChecked():
-            regxp = r"\S"  # treats all special characters as a single word
-        # Punctuation - Numbers - Any
-        elif self.connected_punctuation_checkbox.isChecked() and not self.include_number_checkbox.isChecked() and not self.regxp_any_character_checkbox.isChecked():
-            regxp = r"\w+(?:\.\w+)*"  # Includes "." punctuation, but only if attached to a word Ex.: x.com
-        # Punctuation + Numbers - Any
-        elif self.connected_punctuation_checkbox.isChecked() and self.include_number_checkbox.isChecked() and not self.regxp_any_character_checkbox.isChecked():
-            regxp = r"[\w\p{P}']+(\.\w+(?:\.\w+)*)*|\d+"  # Includes any punctuation if part of a word and any number as stand-alone word
-        # Numbers - Punctuation - Any
-        elif self.include_number_checkbox.isChecked() and not self.connected_punctuation_checkbox.isChecked() and not self.regxp_any_character_checkbox.isChecked():
-            regxp = r"\b(?:[a-zA-Z]+\d+\w*|\d+\w*)\b"
+        ## Heterogeneous - GOOD ?
+        if self.heterogeneous_checkbox.isChecked():
+            regxp = r".+"  # - Any character can be a word or part of a word
+
+        ## AlphaNumeric - GOOD
+        elif self.binary_checkbox.isChecked():
+            regxp = r"\b(?:[a-zA-Z]+\d+\w*|\d+\w*)\b"  # - Numbers as a word, or alphanumeric words!
+
+        ## URL - Good, except for emojis as part of word
+        elif self.url_checkbox.isChecked():
+            regxp = r"\b[\w\d/.'-]+\b"  # - Includes any punctuation, or character if part of a word, including numbers
+
+        ## Disorder - GOOD
+        elif self.disorder_checkbox.isChecked():
+            regxp = r"\S"  # - treats characters as a word(all letters will be placed randomly, not as part of the word)
         return regxp
-        # regxp = r"\w+(?:\.\w+)*" # Includes "." punctuation, but only if attached to a word Ex.: x.com
-        # this still needs to be adjusted, as not all regex combinations are correct!
 
 
 if __name__ == "__main__":
