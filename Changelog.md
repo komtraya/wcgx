@@ -1,3 +1,11 @@
+**0.5.2**
+
+- **NEW**: Random state parameter
+- **NEW**: Color Preset - "Gradient"
+- **FIX**: System/user fonts should now load correctly
+- **QoL**: Tooltip (search terms) for Font Awesome icons
+
+
 **0.5.0**
 
 - **NEW**: Filter for Font Awesome icons

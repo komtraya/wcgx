@@ -8,13 +8,17 @@ from PIL import Image
 from PIL.ImageQt import ImageQt
 from PySide6 import QtWidgets as widget
 from PySide6.QtGui import QFont, QFontDatabase, QPixmap, QImage, QPainter
-from PySide6.QtWidgets import QFileDialog, QListWidgetItem
+from PySide6.QtWidgets import QFileDialog, QListWidgetItem, QColorDialog
 from PySide6.QtSvg import QSvgRenderer
-from ui.ui import Ui_MainWindow
+from ui.main import Ui_MainWindow
+from ui.gradient import Ui_GradientWindow
+from ui.error import Ui_Error
+
+from PySide6.QtCore import QStandardPaths
 
 
-userPath = os.path.expanduser("~")
-system_c = os.getenv("SystemDrive")
+# import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 
 
 ##### ----- Resource Fix #####
@@ -44,14 +48,29 @@ with open(fontAwesomeIcons_json, "r", encoding="utf-8") as fontAwesome_icons:
     fontAwesome_data = json.load(fontAwesome_icons)
 
 emoji_fonts_path = resource_path("emojiFonts")
-# system_fonts_path = os.path.join(system_c, "Windows", "Fonts")
-system_fonts_path = os.path.join(userPath, "AppData", "Local", "Microsoft", "Windows", "Fonts")
+
+
+class ErrorWindow(widget.QMainWindow, Ui_Error):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+
+class GradientWindow(widget.QWidget, Ui_GradientWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
 
 
 class WCGX(widget.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.error = ErrorWindow()
+        self.gradient_window = GradientWindow()
+        self.error.close_btn.clicked.connect(lambda: self.error.close())
+        ##### ---------- #####
+
         ## Future color preset implementation(list needs sorting)
         # import matplotlib.cm as cm
         # for palette_names in cm.cmap_d:
@@ -73,14 +92,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.mask_path = None
         self.mask_image_thumbnail.setVisible(False)
         self.mask_dimensions_label.setText("")
-        ### scan fonts set by default (windows path) and populate the list
-        self.fonts_directory = system_fonts_path  # default font directory on start of the app
-        self.scan_fonts(self.fonts_directory)  # This scans the default directory for fonts
-        self.font_list.currentItemChanged.connect(self.apply_selected_font)  # This enables clicks, as well as keyboard arrows to browse through the list
+        ### scan user fonts(appData) and populate font list
+        self.scan_appData_fonts()
+        self.font_list.currentItemChanged.connect(self.apply_selected_font)
 
         self.custom_font_directory_selection.clicked.connect(self.select_custom_fonts_folder)
         self.load_emoji_fonts_btn.clicked.connect(self.load_emoji_fonts_fnc)
         self.load_system_fonts_btn.clicked.connect(self.load_system_fonts_fnc)
+        self.load_appData_fonts_btn.clicked.connect(self.load_appData_fonts_fnc)
 
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
         self.enable_WordCloud_Generator_Button()
@@ -144,7 +163,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.font_step_slider.valueChanged.connect(self.font_step_slider_changed)
         # Connect the slider to the function that updates the label to reflect changes from the start
         self.font_step_slider_changed(self.font_step_slider.value())
-
+        ## Random Seed Slider
+        self.random_seed_slider.valueChanged.connect(self.random_seed_slider_changed)
+        ##Gradient Settings and Color selection Buttons
+        self.gradient_settings_btn.clicked.connect(lambda: self.gradient_window.show())
+        self.gradient_window.select_first_color_btn.clicked.connect(self.select_first_gradient_color_fnc)
+        self.gradient_window.select_second_color_btn.clicked.connect(self.select_second_gradient_color_fnc)
+        self.gradient_window.transparency_slider.valueChanged.connect(self.update_gradient_transparency_indicator_fnc)
+        self.gradient_settings_btn.setVisible(False)
         ## PRESET BUTTONS FOR RANDOM COLORS - connect to function ##
         self.randomColorsPresetsGroup.buttonClicked.connect(self.random_colors_presets_function)
 
@@ -152,6 +178,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.generate_wordcloud_button.clicked.connect(self.generate_WordCloud)
         ## Connect font slider presets to function
         self.fontSizePresetsGroup.buttonClicked.connect(self.font_size_slider_presets)
+
+        ##Close all extra windows along with main window
+        self.closeEvent = lambda close: self.on_close()
 
         # # # # # Create WordCloud object and Export Image(s) # # # # #
 
@@ -179,15 +208,21 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             stopwords=set(),
             min_word_length=0,
             include_numbers=True,
-            # random_state=, # Generated WC will be the same color, until random_state int is different
+            random_state=self.random_state_fnc(),  # Generated WC will be the same color/layout, until random_state int is different
         )
         # @ generate wc
-        wordcloud.generate(self.word_input.toPlainText())
+
+        try:
+            wordcloud.generate(self.word_input.toPlainText())
+        except Exception as e:
+            self.error.error_lbl.setText(f"\n # Error:\n{e}")
+            self.error.show()
+            self.error.adjustSize()
 
         # @ Export Image @ #
         ##PNG
         if self.export_format_options.currentText() == "PNG":
-            # Convert the word cloud image to a numpy array
+            # Transform the word cloud image to a numpy array
             wordcloud_image = np.array(wordcloud)
 
             # Create a PIL Image object from the numpy array
@@ -214,7 +249,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             with open(f"{self.output_image_path}", "w", encoding="utf-8") as f:
                 f.write(svg_code)
 
-            # Convert the word cloud image to a numpy array
+            # Transform the word cloud image to a numpy array
             wordcloud_image = np.array(wordcloud)
             # Create a PIL Image object from the numpy array
             wordcloud_image = Image.fromarray(wordcloud_image)
@@ -267,7 +302,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
                 # Clean up
                 painter.end()
-                # Convert QImage to Pillow Image
+                # Transform QImage to Pillow Image
                 pil_image = Image.fromqpixmap(mask_test)
 
                 # Transform Pillow Image to NumPy array
@@ -325,16 +360,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         os.startfile(rf"{self.destination_path}")
 
     def margin_slider_changed(self, value: int):
-        # Update corresponding label
         self.label_margin_slider.setText(f"{value}")
         self.margin_info_label.setText(f"{value}")
 
     def scale_slider_changed(self, value: int):
-        # Update corresponding label
         self.label_scale_slider.setText(f"{value}x")
 
     def prefer_horizontal_slider_changed(self, value: int):
-        # Update the QLabel's text with the current value of the slider
         if value == 0:
             self.label_text_orientation_slider.setText("0")
             self.prefer_horizontal_info_label.setText("0")
@@ -346,12 +378,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.prefer_horizontal_info_label.setText(f"{(value)/10}")
 
     def min_font_size_slider_changed(self, value: int):
-        # Update the QLabel's text with the current value of the slider
         self.label_min_font_size_slider.setText(f"{(value)}")
         self.min_font_size_info_label.setText(f"{(value)}")
 
     def max_font_size_slider_changed(self, value: int):
-        # Update the QLabel's text with the current value of the slider
         self.label_max_font_size_slider.setText(f"{(value)}")
         self.max_font_size_info_label.setText(f"{(value)}")
 
@@ -363,9 +393,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.font_step_indicator_label.setText(f"{(value)}")
         self.fontstep_info_label.setText(f"{(value)}")
 
+    def random_seed_slider_changed(self):
+        if self.random_seed_slider.value() != 0:
+            self.random_seed_int_lbl.setText(f"{self.random_seed_slider.value()}")
+        else:
+            self.random_seed_int_lbl.setText("Off")
+
     ## IMAGE DIMENSIONS INFO
     def update_image_dimensions(self):
-        # global image_state
         global width
         global height
         if self.mask_path:
@@ -374,6 +409,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     with Image.open(self.mask_path) as img:
                         width, height = img.size
                         self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+                        self.raster_image_size = (width, height)
                         self.mask_dimensions_label.setStyleSheet("color: green;")
                         resizeMax = 200, 10000  # Height will be calculated based on original width, so that aspect ratio is maintained
                         img.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
@@ -397,6 +433,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     width = str(svg_size.width())
                     height = str(svg_size.height())
                     self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+                    self.svg_image_size = (svg_size.width(), svg_size.height())
                     self.mask_dimensions_label.setStyleSheet("color: green;")
                     # # Create a QImage with an appropriate format (ARGB32 is a common choice)
                     mask_test = QImage(svg_size, QImage.Format_ARGB32)
@@ -407,7 +444,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     svg_renderer.render(painter)
                     # Clean up
                     painter.end()
-                    # Convert QImage to Pillow Image
+                    # Transform QImage to Pillow Image
                     pil_image = Image.fromqpixmap(mask_test)
                     resizeMax = 200, 10000  # Height will be calculated based on original width, so that aspect ratio is maintained
                     pil_image.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
@@ -435,9 +472,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         else:
             self.WC_GeneratorFrame.setVisible(False)
 
-    def change_color(self, color):
-        # Set the background color to red when the button is clicked
-        self.name_here.setStyleSheet(f"color: {color};")
+    # def change_color(self, color):
+    # Set the background color to red when the button is clicked
+    # self.name_here.setStyleSheet(f"color: {color};")
 
     ## SELECT FONT and FONT HANDLING
     def apply_selected_font(self, item):
@@ -452,7 +489,48 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         except:
             pass
 
-    # Scan font firectory and populate list with font names
+    def scan_system_fonts(self):
+        self.font_list.clear()
+        # Get the directories where fonts are typically located
+        system_fonts_location = QStandardPaths.standardLocations(QStandardPaths.FontsLocation)
+
+        # Initialize a list to store font file paths
+        font_file_paths = []
+
+        # Loop through the font directories and list font files
+        for font_directory in system_fonts_location:
+            font_files = [os.path.join(font_directory, file) for file in os.listdir(font_directory) if file.endswith((".ttf", ".otf"))]
+            font_file_paths.extend(font_files)
+        for font_path in font_file_paths:
+            font_name = os.path.basename(font_path)
+            font_name_display = font_name.split(".")[0].capitalize()
+            item = QListWidgetItem(font_name_display)
+            item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
+            self.font_list.addItem(item)  # - populate the list with fonts
+            self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+
+    def scan_appData_fonts(self):
+        self.font_list.clear()
+        try:
+            # Get the user-specific AppData folder
+            appdata_fonts_location = QStandardPaths.writableLocation(QStandardPaths.GenericDataLocation)
+            # Construct the path to the user's fonts directory within AppData
+            appdata_fonts_dir = os.path.join(appdata_fonts_location, "Microsoft", "Windows", "Fonts")
+            # Initialize a list to store font file paths
+            font_file_paths = []
+            # List font files within the user's AppData fonts directory
+            font_files = [os.path.join(appdata_fonts_dir, file) for file in os.listdir(appdata_fonts_dir) if file.endswith((".ttf", ".otf"))]
+            font_file_paths.extend(font_files)
+            for font_path in font_file_paths:
+                font_name = os.path.basename(font_path)
+                font_name_display = font_name.split(".")[0].capitalize()
+                item = QListWidgetItem(font_name_display)
+                item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
+                self.font_list.addItem(item)  # - populate the list with fonts
+                self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+        except Exception as e:
+            print(e)
+
     def scan_fonts(self, fontDirectory):
         self.font_list.clear()
         font_files = self.get_font_files(fontDirectory)
@@ -473,12 +551,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         else:
             self.generate_wordcloud_button.setEnabled(True)
 
-    # Allow users to specify custom font directory (using the "Change Fonts Folder"(custom_fonts_directory_selection) button)
+    # Allow users to specify custom font directory
     def select_custom_fonts_folder(self):
         options = QFileDialog.Options()
         options |= QFileDialog.ShowDirsOnly
-        initial_directory = system_fonts_path
-        selected_directory = QFileDialog.getExistingDirectory(self, "Select Fonts Directory", initial_directory, options=options)
+        # initial_directory = userPath  # system_fonts_path
+        selected_directory = QFileDialog.getExistingDirectory(self, "Select Fonts Directory", options=options)
 
         if selected_directory:
             self.fonts_directory = selected_directory
@@ -498,7 +576,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.scan_fonts(emoji_fonts_path)
 
     def load_system_fonts_fnc(self):
-        self.scan_fonts(system_fonts_path)
+        self.scan_system_fonts()
+
+    def load_appData_fonts_fnc(self):
+        self.scan_appData_fonts()
 
     ## RANDOM COLOR PRESETS FUNCTIONS ##
     def random_colors_presets_function(self, button):
@@ -570,7 +651,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.colormap = "gist_ncar"
             self.color_function = None
             return self.color_function
-        elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors":
+        elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors" and self.colormaps_dropdown.currentText() != "Gradient":
             self.colormap = self.colormaps_dropdown.currentText()
             self.color_function = None
             return self.color_function
@@ -578,12 +659,33 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.colormap = None
             self.color_function = self.random_color_func
             return self.color_function
+        elif self.colormaps_dropdown.currentText() == "Gradient":
+            self.colormap = None
+            self.color_function = self.generate_gradient_color
+            return self.color_function
 
     def check_dropdown_selected_item(self):
         if self.colormaps_dropdown.currentText() == "Random Colors":
             self.RandomColorFrame.setVisible(True)
         else:
             self.RandomColorFrame.setVisible(False)
+        if self.colormaps_dropdown.currentText() == "Gradient":
+            self.gradient_settings_btn.setVisible(True)
+        else:
+            self.gradient_settings_btn.setVisible(False)
+
+    def update_gradient_transparency_indicator_fnc(self, int):
+        self.gradient_window.transparency_indicator_lbl.setText(f"{int}")
+
+    def select_first_gradient_color_fnc(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.gradient_window.first_gradient_lbl.setText(color.name())
+
+    def select_second_gradient_color_fnc(self):
+        color = QColorDialog.getColor()
+        if color.isValid():
+            self.gradient_window.second_gradient_lbl.setText(color.name())
 
     def random_color_func(self, *args, **kwargs):
         # Generate a random color for each trigram
@@ -592,7 +694,36 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             random.randint(self.green_min.value(), self.green_max.value()),
             random.randint(self.blue_min.value(), self.blue_max.value()),
         )
-        return f"rgb({r}, {g}, {b})"
+        a = 255
+        return f"rgba({r}, {g}, {b},{a})"
+
+    def generate_gradient_color(self, word, font_size, position, orientation, random_state=None, **kwargs):
+        # Define the top-left and bottom-right colors
+        top_color_hex = self.gradient_window.first_gradient_lbl.text()  # First color
+        bottom_color_hex = self.gradient_window.second_gradient_lbl.text()  # Second color
+        # Transform hex colors to RGB tuples
+        top_color_rgb = mcolors.hex2color(top_color_hex)
+        bottom_color_rgb = mcolors.hex2color(bottom_color_hex)
+        # Calculate the linear interpolation based on word position
+        x, y = position
+        if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+            width, height = self.raster_image_size
+        elif self.mask_path.lower().endswith(".svg"):
+            width, height = self.svg_image_size
+        # push_left = 50.0
+        # gradient_position = (float(x) / width, (1.0 - float(y) - push_left) / height)
+        gradient_position = (0.5 * x / width + 0.5 * y / height, 0.5 * x / width + 0.5 * y / height)  # 45-degrees
+
+        # Interpolate the color (for hex to rgb)
+        r = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[0], bottom_color_rgb[0]]) * 255)
+        g = int(np.interp(gradient_position[1], [0, 1], [top_color_rgb[1], bottom_color_rgb[1]]) * 255)
+        b = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[2], bottom_color_rgb[2]]) * 255)
+        # Interpolate the color [old - for rgb tuples]
+        # r = int(np.interp(gradient_position[0], [0, 1], [top_left_color[0], bottom_right_color[0]]))
+        # g = int(np.interp(gradient_position[1], [0, 1], [top_left_color[1], bottom_right_color[1]]))
+        # b = int(np.interp(gradient_position[0], [0, 1], [top_left_color[2], bottom_right_color[2]]))
+        a = self.gradient_window.transparency_slider.value()
+        return r, g, b, a
 
     def change_tab_based_on_selected_item(self, button):
         ## Collocations
@@ -710,8 +841,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 if not icon_filter_text or any(icon_filter_text in term.lower() for term in search_terms):
                     icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
                     item_text = f"{icon_unicode} {', '.join(search_terms)}"
-                    item = QListWidgetItem(" " + icon_unicode + " ")
+                    item = QListWidgetItem(icon_unicode)
                     self.emoji_list.addItem(item)
+                    item.setToolTip(", ".join(search_terms))
+        self.emoji_list.setSpacing(10)
 
         self.FilterListFrame.setVisible(False)
         self.FontAwesome_FilterFrame.setVisible(True)
@@ -722,7 +855,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         unicode_font_path = resource_path("emojiFonts/Segue UI Emoji.ttf")
         font_id = QFontDatabase.addApplicationFont(unicode_font_path)
         font_family_unicode = QFontDatabase.applicationFontFamilies(font_id)[0]
-        q_font_unicode = QFont(font_family_unicode, 50)
+        q_font_unicode = QFont(font_family_unicode, 40)
         self.emoji_list.setFont(q_font_unicode)
         # Populate the list with the filtered emojis from the json
         emoji_edition_filter = ["13.0", "13.1", "14.0", "15.0"]
@@ -737,6 +870,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     self.emoji_list.addItem(item)
                 elif emoji_group == selected_emoji_group:
                     self.emoji_list.addItem(emoji)
+        self.emoji_list.setSpacing(5)
         self.FilterListFrame.setVisible(True)
         self.FontAwesome_FilterFrame.setVisible(False)
 
@@ -781,6 +915,17 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         elif self.disorder_checkbox.isChecked():
             regxp = r"\S"  # - treats characters as a word(all letters will be placed randomly, not as part of the word)
         return regxp
+
+    def random_state_fnc(self):
+        if self.random_seed_slider.value() == 0:
+            random_state = None
+        else:
+            random_state = self.random_seed_slider.value()
+        return random_state
+
+    def on_close(self):
+        self.gradient_window.close()
+        self.error.close()
 
 
 if __name__ == "__main__":
