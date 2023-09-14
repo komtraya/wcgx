@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1787</width>
-    <height>1278</height>
+    <width>1943</width>
+    <height>1267</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -2700,6 +2700,35 @@ color:#e6e6e6;
               </widget>
              </item>
              <item>
+              <widget class="QPlainTextEdit" name="filter_fonts_input">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>10</pointsize>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color:#141414;</string>
+               </property>
+               <property name="placeholderText">
+                <string>Filter</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <widget class="QListWidget" name="font_list">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
@@ -4938,6 +4967,42 @@ border:2px solid red;
               </widget>
              </item>
              <item>
+              <widget class="QPushButton" name="fa_mask_select_button">
+               <property name="minimumSize">
+                <size>
+                 <width>150</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>150</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Inter</family>
+                 <pointsize>9</pointsize>
+                 <italic>false</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="toolTip">
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Select Mask image &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+border:2px solid red; 
+}
+</string>
+               </property>
+               <property name="text">
+                <string>FontAwesome Mask</string>
+               </property>
+              </widget>
+             </item>
+             <item>
               <layout class="QHBoxLayout" name="horizontalLayout_2">
                <item>
                 <widget class="QPushButton" name="select_destination_button">
@@ -5484,7 +5549,7 @@ QComboBox QScrollBar::handle:vertical {
                 <string notr="true">color:#141414;</string>
                </property>
                <property name="placeholderText">
-                <string>Filter icons</string>
+                <string>Filter</string>
                </property>
               </widget>
              </item>
@@ -5571,9 +5636,9 @@ border:1px solid #e6e6e6;
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="parametersButtonGroup"/>
-  <buttongroup name="characterFilteringOptionsGroup"/>
   <buttongroup name="randomColorsPresetsGroup"/>
   <buttongroup name="fontSizePresetsGroup"/>
+  <buttongroup name="parametersButtonGroup"/>
+  <buttongroup name="characterFilteringOptionsGroup"/>
  </buttongroups>
 </ui>

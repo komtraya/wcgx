@@ -7,15 +7,14 @@ from wordcloud import WordCloud
 from PIL import Image
 from PIL.ImageQt import ImageQt
 from PySide6 import QtWidgets as widget
-from PySide6.QtGui import QFont, QFontDatabase, QPixmap, QImage, QPainter
+from PySide6.QtGui import QFont, QFontDatabase, QPixmap, QImage, QPainter, QColor, QIcon
 from PySide6.QtWidgets import QFileDialog, QListWidgetItem, QColorDialog
 from PySide6.QtSvg import QSvgRenderer
+from PySide6.QtCore import QStandardPaths, QSize
 from ui.main import Ui_MainWindow
 from ui.gradient import Ui_GradientWindow
 from ui.error import Ui_Error
-
-from PySide6.QtCore import QStandardPaths
-
+from ui.gallery import Ui_GalleryWindow
 
 # import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -60,23 +59,79 @@ class GradientWindow(widget.QWidget, Ui_GradientWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.gradient_push_slider.valueChanged.connect(self.gradient_push_slider_changed_fnc)
+
+    def gradient_push_slider_changed_fnc(self, int):
+        self.gradient_push_indicator_lbl.setText(f"{int}")
+
+
+json_file_path = resource_path("fontAwesomeIcons.json")
+
+
+class GalleryWindow(widget.QWidget, Ui_GalleryWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        # Store references to QPixmap, QImage and tooltips separately
+        self.pixmaps = []  # To store QPixmap objects
+        self.images = []  # To store QImage objects
+        self.tooltips = []
+
+        # Create QListWidgetItems for each image and add them to the QListWidget
+        for key, image_data in fontAwesome_data.items():
+            svg_raw = image_data.get("svg", {}).get("solid", {}).get("raw", "")
+            width = image_data.get("svg", {}).get("solid", {}).get("width", 128)
+            height = image_data.get("svg", {}).get("solid", {}).get("height", 128)
+            keywords = image_data.get("search", {}).get("terms", [])
+
+            # Skip empty SVG data
+            if not svg_raw:
+                continue
+
+            # Create a QPixmap from SVG data
+            renderer = QSvgRenderer(svg_raw.encode())
+            pixmap = QPixmap(width, height)
+            pixmap.fill(QColor(0, 0, 0, 0))
+            painter = QPainter(pixmap)
+            renderer.render(painter)
+            painter.end()
+            # Change the color of the rendered pixmap
+            self.change_pixmap_color(pixmap, QColor("#e6e6e6"))
+            image = pixmap.toImage()
+            self.images.append(image)
+            self.pixmaps.append(pixmap)
+            self.tooltips.append(" ".join(keywords).lower())
+        # Store all items for filtering
+        self.all_items = list(range(len(self.pixmaps)))
+        # Set Icon Size
+        self.masks_list.setIconSize(QSize(width, height))
+
+    def change_pixmap_color(self, pixmap, color):
+        painter = QPainter(pixmap)
+        painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+        painter.fillRect(pixmap.rect(), color)
+        painter.end()
 
 
 class WCGX(widget.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.error = ErrorWindow()
+        self.error_window = ErrorWindow()
         self.gradient_window = GradientWindow()
-        self.error.close_btn.clicked.connect(lambda: self.error.close())
+        self.error_window.close_btn.clicked.connect(lambda: self.error_window.close())
         ##### ---------- #####
-
+        self.gallery = GalleryWindow()
         ## Future color preset implementation(list needs sorting)
         # import matplotlib.cm as cm
         # for palette_names in cm.cmap_d:
         #     self.colormaps_dropdown.addItem(palette_names)
         #     print(palette_names)
-
+        ## Gallery
+        self.fa_mask_select_button.clicked.connect(self.start_gallery_window)
+        self.gallery.masks_filter_input.textChanged.connect(self.filter_fa_images)
+        self.gallery.masks_list.itemSelectionChanged.connect(self.update_mask_image)
+        ## Parameters display function connect
         self.parametersButtonGroup.buttonClicked.connect(self.change_tab_based_on_selected_item)
         ##  Emoji handling ##
         self.populateEmojiList()
@@ -100,6 +155,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.load_emoji_fonts_btn.clicked.connect(self.load_emoji_fonts_fnc)
         self.load_system_fonts_btn.clicked.connect(self.load_system_fonts_fnc)
         self.load_appData_fonts_btn.clicked.connect(self.load_appData_fonts_fnc)
+        self.filter_fonts_input.textChanged.connect(self.filter_fonts_fnc)
 
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
         self.enable_WordCloud_Generator_Button()
@@ -120,7 +176,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.delete_last_generated_button.clicked.connect(self.delete_last_generated)
         ## MASK IMAGE SELECTION
         # Connect the "Select Mask" button's clicked signal to it's function
-        self.mask_select_button.clicked.connect(self.mask_select_button_clicked)
+        self.mask_select_button.clicked.connect(self.mask_select_button_fnc)
         ## INFO LABELS UPDATE
         self.update_info_labels()
         self.repeat_checkbox.clicked.connect(self.update_info_labels)
@@ -166,7 +222,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         ## Random Seed Slider
         self.random_seed_slider.valueChanged.connect(self.random_seed_slider_changed)
         ##Gradient Settings and Color selection Buttons
-        self.gradient_settings_btn.clicked.connect(lambda: self.gradient_window.show())
+        self.gradient_settings_btn.clicked.connect(self.show_gradient_window_fnc)
         self.gradient_window.select_first_color_btn.clicked.connect(self.select_first_gradient_color_fnc)
         self.gradient_window.select_second_color_btn.clicked.connect(self.select_second_gradient_color_fnc)
         self.gradient_window.transparency_slider.valueChanged.connect(self.update_gradient_transparency_indicator_fnc)
@@ -181,6 +237,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         ##Close all extra windows along with main window
         self.closeEvent = lambda close: self.on_close()
+        self.gallery.closeEvent = lambda close: self.on_gallery_close()
 
         # # # # # Create WordCloud object and Export Image(s) # # # # #
 
@@ -215,9 +272,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         try:
             wordcloud.generate(self.word_input.toPlainText())
         except Exception as e:
-            self.error.error_lbl.setText(f"\n # Error:\n{e}")
-            self.error.show()
-            self.error.adjustSize()
+            self.error_window.error_lbl.setText(f"\n # Error:\n{e}")
+            self.error_window.show()
+            self.error_window.adjustSize()
 
         # @ Export Image @ #
         ##PNG
@@ -261,7 +318,61 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.stash_last_generated_button.setVisible(True)  # Display Stash button
         self.delete_last_generated_button.setVisible(True)  # Delete Stash button
 
-    def mask_select_button_clicked(self):
+    def fontAwesome_mask_select_button_fnc(self):
+        selected_items = self.gallery.masks_list.selectedItems()
+
+        # Check if any item is selected
+        if selected_items:
+            # Get the index of the selected item
+            selected_index = self.gallery.masks_list.row(selected_items[0])
+
+            # QImage from self.gallery.images
+            selected_qimage = self.gallery.images[selected_index]
+            # QPixmap from self.gallery.images
+            # selected_pixmap = QPixmap.fromImage(selected_qimage)
+        q_image = selected_qimage
+        pil_image = Image.fromqimage(q_image)
+
+        # Get the image dimensions
+        width, height = pil_image.size
+        print(pil_image.size)
+
+        # Update the mask dimensions label
+        self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+        self.fa_image_size = (width, height)
+        self.mask_dimensions_label.setStyleSheet("color: green;")
+
+        # Set the maximum width and maintain the aspect ratio
+        resize_max = (200, 10000)
+        pil_image.thumbnail(resize_max, resample=Image.LANCZOS)
+
+        # Transform the resized Pillow Image to a QImage
+        resized_qimage = ImageQt(pil_image)
+
+        # Transform the QImage to a QPixmap and set it to self.mask_image_thumbnail
+        pixmap = QPixmap.fromImage(resized_qimage)
+        self.mask_image_thumbnail.setPixmap(pixmap)
+
+        self.mask_image_thumbnail.setVisible(True)
+        # Transform Pillow Image to NumPy array
+        mask_array = np.array(pil_image)
+        try:
+            mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+            self.mask_image = mask_array
+        except:
+            self.mask_image = mask_array
+        self.mask_select_button.setStyleSheet(
+            """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+        )
+        self.fa_mask_select_button.setStyleSheet(
+            """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+        )
+
+    def mask_select_button_fnc(self):
         options = QFileDialog.Options()
         file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "Image Files (*.png;*.svg;*.jpg;*.jpeg)", options=options)
         if file_name:
@@ -282,24 +393,24 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
                 QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
                 )
+                self.fa_mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
             elif self.mask_path.lower().endswith(".svg"):
                 # Create a QSvgRenderer for the SVG file
                 svg_filename = self.mask_path
                 svg_renderer = QSvgRenderer(svg_filename)
-
                 # Get the dimensions of the SVG
                 svg_size = svg_renderer.defaultSize()
-
                 # Create a QImage with an appropriate format (ARGB32 is a common choice)
                 mask_test = QImage(svg_size, QImage.Format_ARGB32)
                 mask_test.fill(0)  # Fill with transparent (0 alpha)
-
                 # Create a QPainter to render the SVG onto the QImage
                 painter = QPainter(mask_test)
-
                 # Render the SVG onto the QImage
                 svg_renderer.render(painter)
-
                 # Clean up
                 painter.end()
                 # Transform QImage to Pillow Image
@@ -318,9 +429,83 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
                 QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
                 )
+                self.fa_mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
         else:
             self.update_image_dimensions()
             self.mask_select_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+            )
+            self.fa_mask_select_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+            )
+
+    def mask_fallback_fnc(self):
+        if self.mask_path:
+            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+                # Open Mask Image
+                self.mask_image = np.array(Image.open((self.mask_path)))
+                try:
+                    self.mask_image[(self.mask_image[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                except:
+                    self.mask_image = np.array(Image.open((self.mask_path)))
+                self.update_image_dimensions()
+                self.mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
+            elif self.mask_path.lower().endswith(".svg"):
+                # Create a QSvgRenderer for the SVG file
+                svg_filename = self.mask_path
+                svg_renderer = QSvgRenderer(svg_filename)
+                # Get the dimensions of the SVG
+                svg_size = svg_renderer.defaultSize()
+                # Create a QImage with an appropriate format (ARGB32 is a common choice)
+                mask_test = QImage(svg_size, QImage.Format_ARGB32)
+                mask_test.fill(0)  # Fill with transparent (0 alpha)
+                # Create a QPainter to render the SVG onto the QImage
+                painter = QPainter(mask_test)
+                # Render the SVG onto the QImage
+                svg_renderer.render(painter)
+                # Clean up
+                painter.end()
+                # Transform QImage to Pillow Image
+                pil_image = Image.fromqpixmap(mask_test)
+
+                # Transform Pillow Image to NumPy array
+                mask_array = np.array(pil_image)
+                try:
+                    mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    self.mask_image = mask_array
+                except:
+                    self.mask_image = mask_array
+                self.update_image_dimensions()
+                self.mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
+                self.fa_mask_select_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
+        else:
+            self.update_image_dimensions()
+            self.mask_select_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+            )
+            self.fa_mask_select_button.setStyleSheet(
                 """
             QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
             QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
@@ -355,6 +540,99 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA ;border-radius:10px;}"""
             )
             self.open_destination_folder.setVisible(True)
+
+    def update_mask_image(self):
+        selected_items = self.gallery.masks_list.selectedItems()
+        selected_qimage = None
+        filtered_index = -1
+        if selected_items:
+            selected_index = self.gallery.masks_list.row(selected_items[0])  # Get the index of the selected item
+            if 0 <= selected_index < len(self.gallery.all_items):
+                filtered_index = self.gallery.all_items[selected_index]  # Get the original index from the filtered list
+            if 0 <= filtered_index < len(self.gallery.pixmaps):
+                selected_pixmap = self.gallery.pixmaps[filtered_index]  # Get the selected pixmap
+                selected_qimage = self.gallery.images[filtered_index]  # Get the corresponding QImage
+
+            # Now, you can set self.mask_image with the selected QImage
+            self.gallery.mask_image = selected_qimage
+
+            q_image = selected_qimage
+            if selected_qimage is not None:
+                pil_image = Image.fromqimage(q_image)
+                pil_image_as_mask = Image.fromqimage(q_image)
+
+                # Get the image dimensions
+                width, height = pil_image.size
+
+                # Update the mask dimensions label
+                self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+                self.fa_image_size = (width, height)
+                self.mask_dimensions_label.setStyleSheet("color: green;")
+
+                # Set the maximum width and maintain the aspect ratio
+                resize_max = (200, 10000)
+                pil_image.thumbnail(resize_max, resample=Image.LANCZOS)
+
+                # Transform the resized Pillow Image to a QImage
+                resized_qimage = ImageQt(pil_image)
+
+                # Transform the QImage to a QPixmap and set it to self.mask_image_thumbnail
+                pixmap = QPixmap.fromImage(resized_qimage)
+                self.mask_image_thumbnail.setPixmap(pixmap)
+
+                self.mask_image_thumbnail.setVisible(True)
+                # Transform Pillow Image to NumPy array
+                mask_array = np.array(pil_image_as_mask)
+                try:
+                    mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    self.mask_image = mask_array
+                except:
+                    self.mask_image = mask_array
+
+    def start_gallery_window(self):
+        if self.gallery.isVisible() == False:
+            self.gallery.show()
+            self.populate_masks_list()
+            self.mask_select_button.setStyleSheet(
+                """
+                    QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                    QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+            )
+            self.fa_mask_select_button.setStyleSheet(
+                """
+                    QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                    QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+            )
+        else:
+            self.gallery.showNormal()
+        self.enable_WordCloud_Generator_Button()
+
+    def filter_fa_images(self):
+        keyword = self.gallery.masks_filter_input.toPlainText().lower()
+
+        if not keyword:
+            # Show all items if no keyword is set
+            self.gallery.all_items = list(range(len(self.gallery.pixmaps)))
+        else:
+            # Filter items based on keyword
+            filtered_items = []
+            for index, tooltip in enumerate(self.gallery.tooltips):
+                if keyword in tooltip:
+                    filtered_items.append(index)
+
+            self.gallery.all_items = filtered_items
+
+        # Update the displayed items in masks_list
+        self.populate_masks_list()
+
+    def populate_masks_list(self):
+        self.gallery.masks_list.clear()
+
+        for index in self.gallery.all_items:
+            item = QListWidgetItem(self.gallery.masks_list)
+            item.setIcon(QIcon(self.gallery.pixmaps[index]))
+            item.setToolTip(self.gallery.tooltips[index])
+        self.gallery.masks_list.setCurrentItem(self.gallery.masks_list.item(0))
 
     def open_destination_folder_function(self):
         os.startfile(rf"{self.destination_path}")
@@ -403,6 +681,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def update_image_dimensions(self):
         global width
         global height
+
         if self.mask_path:
             if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
                 try:
@@ -458,7 +737,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     self.mask_dimensions_label.setStyleSheet("color: red;")
                     self.export_as_frame.setVisible(False)
                     self.mask_image_thumbnail.setVisible(False)
-
         if not self.mask_path:
             self.mask_dimensions_label.setText(f"")
             # mask image
@@ -467,7 +745,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## ENABLE WORDCLOUD BUTTON##
     def enable_WordCloud_Generator_Button(self):
-        if self.mask_path and self.destination_path and self.word_input.toPlainText() != "":
+        if self.gallery.isVisible() and self.destination_path and self.word_input.toPlainText() != "":
+            self.WC_GeneratorFrame.setVisible(True)
+        elif self.mask_path and self.destination_path and self.word_input.toPlainText() != "" and self.gallery.isVisible() == False:
             self.WC_GeneratorFrame.setVisible(True)
         else:
             self.WC_GeneratorFrame.setVisible(False)
@@ -508,6 +788,22 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
             self.font_list.addItem(item)  # - populate the list with fonts
             self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+
+    def filter_fonts_fnc(self):
+        filter = self.filter_fonts_input.toPlainText().lower()
+
+        if self.font_list.count() > 0:
+            for index in range(self.font_list.count()):
+                item = self.font_list.item(index)
+                if item is not None:
+                    text = item.text()
+                if filter not in text.lower():
+                    item.setHidden(True)
+                else:
+                    item.setHidden(False)
+
+        if self.font_list.count() > 0:
+            self.font_list.setCurrentItem(self.font_list.item(0))
 
     def scan_appData_fonts(self):
         self.font_list.clear()
@@ -681,11 +977,21 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         color = QColorDialog.getColor()
         if color.isValid():
             self.gradient_window.first_gradient_lbl.setText(color.name())
+            self.gradient_window.select_first_color_btn.setStyleSheet(
+                f"""
+            background-color:{color.name()};
+            """
+            )
 
     def select_second_gradient_color_fnc(self):
         color = QColorDialog.getColor()
         if color.isValid():
             self.gradient_window.second_gradient_lbl.setText(color.name())
+            self.gradient_window.select_second_color_btn.setStyleSheet(
+                f"""
+            background-color:{color.name()};
+            """
+            )
 
     def random_color_func(self, *args, **kwargs):
         # Generate a random color for each trigram
@@ -697,6 +1003,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         a = 255
         return f"rgba({r}, {g}, {b},{a})"
 
+    def gradient_orientation_fnc(self, button):
+        pass
+
     def generate_gradient_color(self, word, font_size, position, orientation, random_state=None, **kwargs):
         # Define the top-left and bottom-right colors
         top_color_hex = self.gradient_window.first_gradient_lbl.text()  # First color
@@ -706,24 +1015,39 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         bottom_color_rgb = mcolors.hex2color(bottom_color_hex)
         # Calculate the linear interpolation based on word position
         x, y = position
-        if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
-            width, height = self.raster_image_size
-        elif self.mask_path.lower().endswith(".svg"):
-            width, height = self.svg_image_size
-        # push_left = 50.0
-        # gradient_position = (float(x) / width, (1.0 - float(y) - push_left) / height)
-        gradient_position = (0.5 * x / width + 0.5 * y / height, 0.5 * x / width + 0.5 * y / height)  # 45-degrees
+        if self.gallery.isVisible():
+            width, height = self.fa_image_size
+        else:
+            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+                width, height = self.raster_image_size
+            elif self.mask_path.lower().endswith(".svg"):
+                width, height = self.svg_image_size
+
+        transition_point = float(self.gradient_window.gradient_push_slider.value()) / 10
+
+        if self.gradient_window.straight_diagonal_checkbox.isChecked():
+            gradient_position = (x / height, y / width)  # - diagonal (left to right)
+        elif self.gradient_window.diagonal45_checkbox.isChecked():
+            gradient_position = ((x + y) / (width + height), (x + y) / (width + height))  # 45-degree diagonal
+
+        # Adjust the x-range to extend the first color further across width and height
+        r = int(np.interp(gradient_position[0], [0, transition_point], [top_color_rgb[0], bottom_color_rgb[0]]) * 255)
+        g = int(np.interp(gradient_position[1], [0, transition_point], [top_color_rgb[1], bottom_color_rgb[1]]) * 255)
+        b = int(np.interp(gradient_position[0], [0, transition_point], [top_color_rgb[2], bottom_color_rgb[2]]) * 255)
 
         # Interpolate the color (for hex to rgb)
-        r = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[0], bottom_color_rgb[0]]) * 255)
-        g = int(np.interp(gradient_position[1], [0, 1], [top_color_rgb[1], bottom_color_rgb[1]]) * 255)
-        b = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[2], bottom_color_rgb[2]]) * 255)
-        # Interpolate the color [old - for rgb tuples]
-        # r = int(np.interp(gradient_position[0], [0, 1], [top_left_color[0], bottom_right_color[0]]))
-        # g = int(np.interp(gradient_position[1], [0, 1], [top_left_color[1], bottom_right_color[1]]))
-        # b = int(np.interp(gradient_position[0], [0, 1], [top_left_color[2], bottom_right_color[2]]))
+        # r = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[0], bottom_color_rgb[0]]) * 255)
+        # g = int(np.interp(gradient_position[1], [0, 1], [top_color_rgb[1], bottom_color_rgb[1]]) * 255)
+        # b = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[2], bottom_color_rgb[2]]) * 255)
+
         a = self.gradient_window.transparency_slider.value()
         return r, g, b, a
+
+    def show_gradient_window_fnc(self):
+        if self.gradient_window.isVisible():
+            self.gradient_window.showNormal()
+        else:
+            self.gradient_window.show()
 
     def change_tab_based_on_selected_item(self, button):
         ## Collocations
@@ -925,7 +1249,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def on_close(self):
         self.gradient_window.close()
-        self.error.close()
+        self.error_window.close()
+        self.gallery.close()
+
+    def on_gallery_close(self):
+        self.mask_fallback_fnc()
 
 
 if __name__ == "__main__":

@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1787, 1278)
+        MainWindow.resize(1943, 1267)
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1198,17 +1198,34 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.load_system_fonts_btn)
 
+        self.filter_fonts_input = QPlainTextEdit(self.fonts_Frame)
+        self.filter_fonts_input.setObjectName(u"filter_fonts_input")
+        sizePolicy11 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy11.setHorizontalStretch(0)
+        sizePolicy11.setVerticalStretch(0)
+        sizePolicy11.setHeightForWidth(self.filter_fonts_input.sizePolicy().hasHeightForWidth())
+        self.filter_fonts_input.setSizePolicy(sizePolicy11)
+        self.filter_fonts_input.setMaximumSize(QSize(16777215, 30))
+        font5 = QFont()
+        font5.setFamilies([u"Inter"])
+        font5.setPointSize(10)
+        font5.setBold(True)
+        self.filter_fonts_input.setFont(font5)
+        self.filter_fonts_input.setStyleSheet(u"color:#141414;")
+
+        self.verticalLayout_3.addWidget(self.filter_fonts_input)
+
         self.font_list = QListWidget(self.fonts_Frame)
         self.font_list.setObjectName(u"font_list")
         sizePolicy8.setHeightForWidth(self.font_list.sizePolicy().hasHeightForWidth())
         self.font_list.setSizePolicy(sizePolicy8)
         self.font_list.setMinimumSize(QSize(0, 500))
-        font5 = QFont()
-        font5.setFamilies([u"Inter"])
-        font5.setPointSize(11)
-        font5.setBold(True)
-        font5.setItalic(False)
-        self.font_list.setFont(font5)
+        font6 = QFont()
+        font6.setFamilies([u"Inter"])
+        font6.setPointSize(11)
+        font6.setBold(True)
+        font6.setItalic(False)
+        self.font_list.setFont(font6)
         self.font_list.setStyleSheet(u"QListWidget{\n"
 "border:2px solid gray;\n"
 "color: #141414;\n"
@@ -1229,21 +1246,21 @@ class Ui_MainWindow(object):
 
         self.WC_GeneratorFrame = QFrame(self.centralwidget)
         self.WC_GeneratorFrame.setObjectName(u"WC_GeneratorFrame")
-        sizePolicy11 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy11.setHorizontalStretch(0)
-        sizePolicy11.setVerticalStretch(0)
-        sizePolicy11.setHeightForWidth(self.WC_GeneratorFrame.sizePolicy().hasHeightForWidth())
-        self.WC_GeneratorFrame.setSizePolicy(sizePolicy11)
+        sizePolicy12 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy12.setHorizontalStretch(0)
+        sizePolicy12.setVerticalStretch(0)
+        sizePolicy12.setHeightForWidth(self.WC_GeneratorFrame.sizePolicy().hasHeightForWidth())
+        self.WC_GeneratorFrame.setSizePolicy(sizePolicy12)
         self.WC_GeneratorFrame.setMinimumSize(QSize(0, 300))
         self.horizontalLayout = QHBoxLayout(self.WC_GeneratorFrame)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.file_handling_frame = QFrame(self.WC_GeneratorFrame)
         self.file_handling_frame.setObjectName(u"file_handling_frame")
-        sizePolicy12 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
-        sizePolicy12.setHorizontalStretch(0)
-        sizePolicy12.setVerticalStretch(0)
-        sizePolicy12.setHeightForWidth(self.file_handling_frame.sizePolicy().hasHeightForWidth())
-        self.file_handling_frame.setSizePolicy(sizePolicy12)
+        sizePolicy13 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)
+        sizePolicy13.setHorizontalStretch(0)
+        sizePolicy13.setVerticalStretch(0)
+        sizePolicy13.setHeightForWidth(self.file_handling_frame.sizePolicy().hasHeightForWidth())
+        self.file_handling_frame.setSizePolicy(sizePolicy13)
         self.gridLayout_12 = QGridLayout(self.file_handling_frame)
         self.gridLayout_12.setObjectName(u"gridLayout_12")
         self.verticalSpacer_18 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
@@ -1308,11 +1325,11 @@ class Ui_MainWindow(object):
         self.verticalLayout_26.setContentsMargins(0, 0, 0, 5)
         self.exportAs_label = QLabel(self.export_as_frame)
         self.exportAs_label.setObjectName(u"exportAs_label")
-        sizePolicy13 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.MinimumExpanding)
-        sizePolicy13.setHorizontalStretch(0)
-        sizePolicy13.setVerticalStretch(0)
-        sizePolicy13.setHeightForWidth(self.exportAs_label.sizePolicy().hasHeightForWidth())
-        self.exportAs_label.setSizePolicy(sizePolicy13)
+        sizePolicy14 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.MinimumExpanding)
+        sizePolicy14.setHorizontalStretch(0)
+        sizePolicy14.setVerticalStretch(0)
+        sizePolicy14.setHeightForWidth(self.exportAs_label.sizePolicy().hasHeightForWidth())
+        self.exportAs_label.setSizePolicy(sizePolicy14)
         self.exportAs_label.setFont(font4)
 
         self.verticalLayout_26.addWidget(self.exportAs_label, 0, Qt.AlignHCenter)
@@ -1531,11 +1548,11 @@ class Ui_MainWindow(object):
         self.parametersButtonGroup.setObjectName(u"parametersButtonGroup")
         self.parametersButtonGroup.addButton(self.repeatWords_btn)
         self.repeatWords_btn.setObjectName(u"repeatWords_btn")
-        font6 = QFont()
-        font6.setFamilies([u"Inter"])
-        font6.setPointSize(11)
-        font6.setBold(True)
-        self.repeatWords_btn.setFont(font6)
+        font7 = QFont()
+        font7.setFamilies([u"Inter"])
+        font7.setPointSize(11)
+        font7.setBold(True)
+        self.repeatWords_btn.setFont(font7)
         self.repeatWords_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1543,12 +1560,12 @@ class Ui_MainWindow(object):
 
         self.repeat_info_label = QLabel(self.SummaryFrame)
         self.repeat_info_label.setObjectName(u"repeat_info_label")
-        font7 = QFont()
-        font7.setFamilies([u"Inter"])
-        font7.setPointSize(10)
-        font7.setBold(True)
-        font7.setItalic(False)
-        self.repeat_info_label.setFont(font7)
+        font8 = QFont()
+        font8.setFamilies([u"Inter"])
+        font8.setPointSize(10)
+        font8.setBold(True)
+        font8.setItalic(False)
+        self.repeat_info_label.setFont(font8)
 
         self.horizontalLayout_19.addWidget(self.repeat_info_label)
 
@@ -1560,7 +1577,7 @@ class Ui_MainWindow(object):
         self.marginSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.marginSettings_btn)
         self.marginSettings_btn.setObjectName(u"marginSettings_btn")
-        self.marginSettings_btn.setFont(font6)
+        self.marginSettings_btn.setFont(font7)
         self.marginSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1568,7 +1585,7 @@ class Ui_MainWindow(object):
 
         self.margin_info_label = QLabel(self.SummaryFrame)
         self.margin_info_label.setObjectName(u"margin_info_label")
-        self.margin_info_label.setFont(font7)
+        self.margin_info_label.setFont(font8)
 
         self.horizontalLayout_36.addWidget(self.margin_info_label)
 
@@ -1580,7 +1597,7 @@ class Ui_MainWindow(object):
         self.fontSizeSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.fontSizeSettings_btn)
         self.fontSizeSettings_btn.setObjectName(u"fontSizeSettings_btn")
-        self.fontSizeSettings_btn.setFont(font6)
+        self.fontSizeSettings_btn.setFont(font7)
         self.fontSizeSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1588,7 +1605,7 @@ class Ui_MainWindow(object):
 
         self.min_font_size_info_label = QLabel(self.SummaryFrame)
         self.min_font_size_info_label.setObjectName(u"min_font_size_info_label")
-        self.min_font_size_info_label.setFont(font7)
+        self.min_font_size_info_label.setFont(font8)
 
         self.horizontalLayout_37.addWidget(self.min_font_size_info_label)
 
@@ -1600,7 +1617,7 @@ class Ui_MainWindow(object):
         self.fontSizeSettings_btn2 = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.fontSizeSettings_btn2)
         self.fontSizeSettings_btn2.setObjectName(u"fontSizeSettings_btn2")
-        self.fontSizeSettings_btn2.setFont(font6)
+        self.fontSizeSettings_btn2.setFont(font7)
         self.fontSizeSettings_btn2.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1608,7 +1625,7 @@ class Ui_MainWindow(object):
 
         self.max_font_size_info_label = QLabel(self.SummaryFrame)
         self.max_font_size_info_label.setObjectName(u"max_font_size_info_label")
-        self.max_font_size_info_label.setFont(font7)
+        self.max_font_size_info_label.setFont(font8)
 
         self.horizontalLayout_38.addWidget(self.max_font_size_info_label)
 
@@ -1620,7 +1637,7 @@ class Ui_MainWindow(object):
         self.textOrientationSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.textOrientationSettings_btn)
         self.textOrientationSettings_btn.setObjectName(u"textOrientationSettings_btn")
-        self.textOrientationSettings_btn.setFont(font6)
+        self.textOrientationSettings_btn.setFont(font7)
         self.textOrientationSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1628,7 +1645,7 @@ class Ui_MainWindow(object):
 
         self.prefer_horizontal_info_label = QLabel(self.SummaryFrame)
         self.prefer_horizontal_info_label.setObjectName(u"prefer_horizontal_info_label")
-        self.prefer_horizontal_info_label.setFont(font7)
+        self.prefer_horizontal_info_label.setFont(font8)
 
         self.horizontalLayout_39.addWidget(self.prefer_horizontal_info_label)
 
@@ -1640,7 +1657,7 @@ class Ui_MainWindow(object):
         self.fontStepSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.fontStepSettings_btn)
         self.fontStepSettings_btn.setObjectName(u"fontStepSettings_btn")
-        self.fontStepSettings_btn.setFont(font6)
+        self.fontStepSettings_btn.setFont(font7)
         self.fontStepSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1648,7 +1665,7 @@ class Ui_MainWindow(object):
 
         self.fontstep_info_label = QLabel(self.SummaryFrame)
         self.fontstep_info_label.setObjectName(u"fontstep_info_label")
-        self.fontstep_info_label.setFont(font7)
+        self.fontstep_info_label.setFont(font8)
 
         self.horizontalLayout_40.addWidget(self.fontstep_info_label)
 
@@ -1660,7 +1677,7 @@ class Ui_MainWindow(object):
         self.collocationSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.collocationSettings_btn)
         self.collocationSettings_btn.setObjectName(u"collocationSettings_btn")
-        self.collocationSettings_btn.setFont(font6)
+        self.collocationSettings_btn.setFont(font7)
         self.collocationSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1668,7 +1685,7 @@ class Ui_MainWindow(object):
 
         self.collocations_info_label = QLabel(self.SummaryFrame)
         self.collocations_info_label.setObjectName(u"collocations_info_label")
-        self.collocations_info_label.setFont(font7)
+        self.collocations_info_label.setFont(font8)
 
         self.horizontalLayout_41.addWidget(self.collocations_info_label)
 
@@ -1680,7 +1697,7 @@ class Ui_MainWindow(object):
         self.collocationSettings_btn2 = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.collocationSettings_btn2)
         self.collocationSettings_btn2.setObjectName(u"collocationSettings_btn2")
-        self.collocationSettings_btn2.setFont(font6)
+        self.collocationSettings_btn2.setFont(font7)
         self.collocationSettings_btn2.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1688,7 +1705,7 @@ class Ui_MainWindow(object):
 
         self.collocations_thresh_info_label = QLabel(self.SummaryFrame)
         self.collocations_thresh_info_label.setObjectName(u"collocations_thresh_info_label")
-        self.collocations_thresh_info_label.setFont(font7)
+        self.collocations_thresh_info_label.setFont(font8)
 
         self.horizontalLayout_42.addWidget(self.collocations_thresh_info_label)
 
@@ -1723,7 +1740,7 @@ class Ui_MainWindow(object):
         self.label_color_presets = QLabel(self.cp_title_dropdown)
         self.label_color_presets.setObjectName(u"label_color_presets")
         self.label_color_presets.setMaximumSize(QSize(150, 30))
-        self.label_color_presets.setFont(font7)
+        self.label_color_presets.setFont(font8)
 
         self.verticalLayout_19.addWidget(self.label_color_presets, 0, Qt.AlignHCenter)
 
@@ -1827,7 +1844,7 @@ class Ui_MainWindow(object):
         sizePolicy10.setHeightForWidth(self.gradient_settings_btn.sizePolicy().hasHeightForWidth())
         self.gradient_settings_btn.setSizePolicy(sizePolicy10)
         self.gradient_settings_btn.setMinimumSize(QSize(107, 30))
-        self.gradient_settings_btn.setFont(font5)
+        self.gradient_settings_btn.setFont(font6)
         self.gradient_settings_btn.setStyleSheet(u"QPushButton{\n"
 "background-color:#212121;\n"
 "color:#e6e6e6;\n"
@@ -1988,8 +2005,8 @@ class Ui_MainWindow(object):
 
         self.rcpresets3 = QFrame(self.rColorRangeContainer)
         self.rcpresets3.setObjectName(u"rcpresets3")
-        sizePolicy13.setHeightForWidth(self.rcpresets3.sizePolicy().hasHeightForWidth())
-        self.rcpresets3.setSizePolicy(sizePolicy13)
+        sizePolicy14.setHeightForWidth(self.rcpresets3.sizePolicy().hasHeightForWidth())
+        self.rcpresets3.setSizePolicy(sizePolicy14)
         self.gridLayout_7 = QGridLayout(self.rcpresets3)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
         self.rcp_dark = QPushButton(self.rcpresets3)
@@ -2025,8 +2042,8 @@ class Ui_MainWindow(object):
 
         self.ColorsMaxGP = QGroupBox(self.rColorRangeContainer)
         self.ColorsMaxGP.setObjectName(u"ColorsMaxGP")
-        sizePolicy12.setHeightForWidth(self.ColorsMaxGP.sizePolicy().hasHeightForWidth())
-        self.ColorsMaxGP.setSizePolicy(sizePolicy12)
+        sizePolicy13.setHeightForWidth(self.ColorsMaxGP.sizePolicy().hasHeightForWidth())
+        self.ColorsMaxGP.setSizePolicy(sizePolicy13)
         self.ColorsMaxGP.setMaximumSize(QSize(16777215, 71))
         self.horizontalLayout_15 = QHBoxLayout(self.ColorsMaxGP)
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
@@ -2131,14 +2148,14 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.mask_dimensions_label.sizePolicy().hasHeightForWidth())
         self.mask_dimensions_label.setSizePolicy(sizePolicy4)
         self.mask_dimensions_label.setMaximumSize(QSize(300, 16777215))
-        font8 = QFont()
-        font8.setFamilies([u"Inter"])
-        font8.setPointSize(9)
-        font8.setBold(True)
-        font8.setItalic(False)
-        font8.setUnderline(False)
-        font8.setStyleStrategy(QFont.PreferDefault)
-        self.mask_dimensions_label.setFont(font8)
+        font9 = QFont()
+        font9.setFamilies([u"Inter"])
+        font9.setPointSize(9)
+        font9.setBold(True)
+        font9.setItalic(False)
+        font9.setUnderline(False)
+        font9.setStyleStrategy(QFont.PreferDefault)
+        self.mask_dimensions_label.setFont(font9)
         self.mask_dimensions_label.setCursor(QCursor(Qt.ArrowCursor))
 
         self.verticalLayout.addWidget(self.mask_dimensions_label, 0, Qt.AlignHCenter)
@@ -2160,6 +2177,18 @@ class Ui_MainWindow(object):
 "")
 
         self.horizontalLayout_3.addWidget(self.mask_select_button)
+
+        self.fa_mask_select_button = QPushButton(self.SelectButtonsFrame)
+        self.fa_mask_select_button.setObjectName(u"fa_mask_select_button")
+        self.fa_mask_select_button.setMinimumSize(QSize(150, 50))
+        self.fa_mask_select_button.setMaximumSize(QSize(150, 16777215))
+        self.fa_mask_select_button.setFont(font4)
+        self.fa_mask_select_button.setStyleSheet(u"QPushButton{\n"
+"border:2px solid red; \n"
+"}\n"
+"")
+
+        self.horizontalLayout_3.addWidget(self.fa_mask_select_button)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -2283,17 +2312,17 @@ class Ui_MainWindow(object):
         self.EmojiFull_Frame.setObjectName(u"EmojiFull_Frame")
         sizePolicy9.setHeightForWidth(self.EmojiFull_Frame.sizePolicy().hasHeightForWidth())
         self.EmojiFull_Frame.setSizePolicy(sizePolicy9)
-        font9 = QFont()
-        font9.setFamilies([u"Inter"])
-        font9.setBold(True)
-        self.EmojiFull_Frame.setFont(font9)
+        font10 = QFont()
+        font10.setFamilies([u"Inter"])
+        font10.setBold(True)
+        self.EmojiFull_Frame.setFont(font10)
         self.verticalLayout_9 = QVBoxLayout(self.EmojiFull_Frame)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(20, -1, -1, -1)
         self.load_emojis_Frame = QFrame(self.EmojiFull_Frame)
         self.load_emojis_Frame.setObjectName(u"load_emojis_Frame")
-        sizePolicy12.setHeightForWidth(self.load_emojis_Frame.sizePolicy().hasHeightForWidth())
-        self.load_emojis_Frame.setSizePolicy(sizePolicy12)
+        sizePolicy13.setHeightForWidth(self.load_emojis_Frame.sizePolicy().hasHeightForWidth())
+        self.load_emojis_Frame.setSizePolicy(sizePolicy13)
         self.horizontalLayout_6 = QHBoxLayout(self.load_emojis_Frame)
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
         self.unicode_Emojis_btn = QPushButton(self.load_emojis_Frame)
@@ -2335,7 +2364,7 @@ class Ui_MainWindow(object):
         self.emojiFilter_label.setObjectName(u"emojiFilter_label")
         sizePolicy4.setHeightForWidth(self.emojiFilter_label.sizePolicy().hasHeightForWidth())
         self.emojiFilter_label.setSizePolicy(sizePolicy4)
-        self.emojiFilter_label.setFont(font6)
+        self.emojiFilter_label.setFont(font7)
 
         self.horizontalLayout_5.addWidget(self.emojiFilter_label)
 
@@ -2354,7 +2383,7 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.emoji_filter_list.sizePolicy().hasHeightForWidth())
         self.emoji_filter_list.setSizePolicy(sizePolicy4)
         self.emoji_filter_list.setMinimumSize(QSize(211, 41))
-        self.emoji_filter_list.setFont(font6)
+        self.emoji_filter_list.setFont(font7)
         self.emoji_filter_list.setStyleSheet(u"/* Style the QComboBox */\n"
 "QComboBox {\n"
 "    background-color: #141414; /* Background color of the entire combo box */\n"
@@ -2404,17 +2433,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
         self.fontAwesome_filter_input = QPlainTextEdit(self.FontAwesome_FilterFrame)
         self.fontAwesome_filter_input.setObjectName(u"fontAwesome_filter_input")
-        sizePolicy14 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy14.setHorizontalStretch(0)
-        sizePolicy14.setVerticalStretch(0)
-        sizePolicy14.setHeightForWidth(self.fontAwesome_filter_input.sizePolicy().hasHeightForWidth())
-        self.fontAwesome_filter_input.setSizePolicy(sizePolicy14)
+        sizePolicy11.setHeightForWidth(self.fontAwesome_filter_input.sizePolicy().hasHeightForWidth())
+        self.fontAwesome_filter_input.setSizePolicy(sizePolicy11)
         self.fontAwesome_filter_input.setMaximumSize(QSize(16777215, 30))
-        font10 = QFont()
-        font10.setFamilies([u"Inter"])
-        font10.setPointSize(10)
-        font10.setBold(True)
-        self.fontAwesome_filter_input.setFont(font10)
+        self.fontAwesome_filter_input.setFont(font5)
         self.fontAwesome_filter_input.setStyleSheet(u"color:#141414;")
 
         self.horizontalLayout_8.addWidget(self.fontAwesome_filter_input)
@@ -2644,6 +2666,7 @@ class Ui_MainWindow(object):
         self.load_emoji_fonts_btn.setText(QCoreApplication.translate("MainWindow", u"Load Emoji Fonts", None))
         self.load_appData_fonts_btn.setText(QCoreApplication.translate("MainWindow", u"Load appData Fonts", None))
         self.load_system_fonts_btn.setText(QCoreApplication.translate("MainWindow", u"Load System Fonts", None))
+        self.filter_fonts_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Filter", None))
 #if QT_CONFIG(tooltip)
         self.stash_last_generated_button.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Stash the last generated image</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
@@ -2797,6 +2820,10 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.mask_select_button.setText(QCoreApplication.translate("MainWindow", u"Select Mask", None))
 #if QT_CONFIG(tooltip)
+        self.fa_mask_select_button.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Select Mask image </span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.fa_mask_select_button.setText(QCoreApplication.translate("MainWindow", u"FontAwesome Mask", None))
+#if QT_CONFIG(tooltip)
         self.select_destination_button.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Select destination for generated PNG file</span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.select_destination_button.setText(QCoreApplication.translate("MainWindow", u"Select Destination", None))
@@ -2835,6 +2862,6 @@ class Ui_MainWindow(object):
         self.emoji_filter_list.setItemText(8, QCoreApplication.translate("MainWindow", u"People & Body", None))
         self.emoji_filter_list.setItemText(9, QCoreApplication.translate("MainWindow", u"Symbols", None))
 
-        self.fontAwesome_filter_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Filter icons", None))
+        self.fontAwesome_filter_input.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Filter", None))
     # retranslateUi
 

@@ -1,3 +1,10 @@
+**0.5.5**
+
+- Font Awesome icons can now be set as mask
+- Fonts filter
+- Additional gradient options
+
+
 **0.5.2**
 
 - **NEW**: Random state parameter
