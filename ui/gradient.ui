@@ -146,7 +146,7 @@ border-radius:10px;
                <enum>Qt::DefaultContextMenu</enum>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exported image size multiplier&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Color transition point&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -324,9 +324,6 @@ border-radius: 5px;
               </property>
               <property name="contextMenuPolicy">
                <enum>Qt::DefaultContextMenu</enum>
-              </property>
-              <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exported image size multiplier&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>

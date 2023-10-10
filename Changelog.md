@@ -1,3 +1,11 @@
+**0.5.6**
+
+- You can now export Font Awesome masks to file (SVG or PNG)
+- When modifying the Export Scale slider, the exact size of the exported wordcloud image will be reflected
+- Tooltips for Unicode Emojis - name of selected emoji
+- You can now filter Unicode Emojis based on name
+- Minor UI adjustments
+
 **0.5.5**
 
 - Font Awesome icons can now be set as mask

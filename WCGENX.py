@@ -72,7 +72,9 @@ class GalleryWindow(widget.QWidget, Ui_GalleryWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.closed = True  # Init this signal, because window closed detection is garbage
         # Store references to QPixmap, QImage and tooltips separately
+        self.svg_raw = []  # Store the raw svg data, so it can be exported to file
         self.pixmaps = []  # To store QPixmap objects
         self.images = []  # To store QImage objects
         self.tooltips = []
@@ -100,6 +102,7 @@ class GalleryWindow(widget.QWidget, Ui_GalleryWindow):
             image = pixmap.toImage()
             self.images.append(image)
             self.pixmaps.append(pixmap)
+            self.svg_raw.append(svg_raw)
             self.tooltips.append(" ".join(keywords).lower())
         # Store all items for filtering
         self.all_items = list(range(len(self.pixmaps)))
@@ -129,8 +132,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         #     print(palette_names)
         ## Gallery
         self.fa_mask_select_button.clicked.connect(self.start_gallery_window)
-        self.gallery.masks_filter_input.textChanged.connect(self.filter_fa_images)
+        self.gallery.fa_filter_input.textChanged.connect(self.filter_fa_images)
         self.gallery.masks_list.itemSelectionChanged.connect(self.update_mask_image)
+        self.gallery.downloadButtonsGroup.buttonClicked.connect(self.download_selected_icon_fnc)
+
         ## Parameters display function connect
         self.parametersButtonGroup.buttonClicked.connect(self.change_tab_based_on_selected_item)
         ##  Emoji handling ##
@@ -139,7 +144,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.font_Awesome_Icons_btn.clicked.connect(self.fontAwesomeIconsList_fnc)
         self.emoji_list.itemClicked.connect(self.insertEmojiOnClick)
         self.emoji_filter_list.currentTextChanged.connect(self.populateEmojiList)
-        self.fontAwesome_filter_input.textChanged.connect(self.fontAwesomeIconsList_fnc)
+        self.fontAwesome_filter_input.textChanged.connect(self.filter_fontAwesome_icons_fnc)
+        self.unicodeEmojis_filter_input.textChanged.connect(self.filter_unicodeEmojis_byName_fnc)
         ## Modifications/data-setup for the start of the app
         # Make sure text input is not empty
         self.word_input.textChanged.connect(self.text_input_Changed)
@@ -318,61 +324,23 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.stash_last_generated_button.setVisible(True)  # Display Stash button
         self.delete_last_generated_button.setVisible(True)  # Delete Stash button
 
-    def fontAwesome_mask_select_button_fnc(self):
-        selected_items = self.gallery.masks_list.selectedItems()
-
-        # Check if any item is selected
-        if selected_items:
-            # Get the index of the selected item
-            selected_index = self.gallery.masks_list.row(selected_items[0])
-
-            # QImage from self.gallery.images
-            selected_qimage = self.gallery.images[selected_index]
-            # QPixmap from self.gallery.images
-            # selected_pixmap = QPixmap.fromImage(selected_qimage)
-        q_image = selected_qimage
-        pil_image = Image.fromqimage(q_image)
-
-        # Get the image dimensions
-        width, height = pil_image.size
-        print(pil_image.size)
-
-        # Update the mask dimensions label
-        self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
-        self.fa_image_size = (width, height)
-        self.mask_dimensions_label.setStyleSheet("color: green;")
-
-        # Set the maximum width and maintain the aspect ratio
-        resize_max = (200, 10000)
-        pil_image.thumbnail(resize_max, resample=Image.LANCZOS)
-
-        # Transform the resized Pillow Image to a QImage
-        resized_qimage = ImageQt(pil_image)
-
-        # Transform the QImage to a QPixmap and set it to self.mask_image_thumbnail
-        pixmap = QPixmap.fromImage(resized_qimage)
-        self.mask_image_thumbnail.setPixmap(pixmap)
-
-        self.mask_image_thumbnail.setVisible(True)
-        # Transform Pillow Image to NumPy array
-        mask_array = np.array(pil_image)
-        try:
-            mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
-            self.mask_image = mask_array
-        except:
-            self.mask_image = mask_array
-        self.mask_select_button.setStyleSheet(
-            """
-                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
-        )
-        self.fa_mask_select_button.setStyleSheet(
-            """
-                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
-        )
+    def download_selected_icon_fnc(self, button):
+        if button == self.gallery.export_fa_png_btn:
+            # Get file name and path using a file dialog
+            export_path, _ = QFileDialog.getSaveFileName(self, "Export Image", "", "PNG (*.png)")
+            if export_path:
+                self.gallery.export_as_png.save(export_path, quality=100)
+        elif button == self.gallery.export_fa_svg_btn:
+            # Get file name and path using a file dialog
+            export_path, _ = QFileDialog.getSaveFileName(self, "Export Image", "", "SVG (*.svg)")
+            if export_path:
+                # Export the SVG data to an SVG file
+                with open(export_path, "w") as file:
+                    file.write(self.gallery.export_as_svg)
 
     def mask_select_button_fnc(self):
+        if self.gallery.isVisible():
+            self.gallery.close()
         options = QFileDialog.Options()
         file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "Image Files (*.png;*.svg;*.jpg;*.jpeg)", options=options)
         if file_name:
@@ -448,7 +416,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             )
 
     def mask_fallback_fnc(self):
-        if self.mask_path:
+        if self.mask_path and self.gallery.closed == True:
             if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
                 # Open Mask Image
                 self.mask_image = np.array(Image.open((self.mask_path)))
@@ -543,7 +511,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def update_mask_image(self):
         selected_items = self.gallery.masks_list.selectedItems()
-        selected_qimage = None
+        selected_qimage = None  # Initialize
         filtered_index = -1
         if selected_items:
             selected_index = self.gallery.masks_list.row(selected_items[0])  # Get the index of the selected item
@@ -552,8 +520,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             if 0 <= filtered_index < len(self.gallery.pixmaps):
                 selected_pixmap = self.gallery.pixmaps[filtered_index]  # Get the selected pixmap
                 selected_qimage = self.gallery.images[filtered_index]  # Get the corresponding QImage
+                selected_svg = self.gallery.svg_raw[filtered_index]  # Get the selected svg file
+                self.gallery.export_as_png = selected_pixmap
+                self.gallery.export_as_svg = selected_svg
 
-            # Now, you can set self.mask_image with the selected QImage
+            # Now you can set self.mask_image the selected QImage
             self.gallery.mask_image = selected_qimage
 
             q_image = selected_qimage
@@ -565,9 +536,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 width, height = pil_image.size
 
                 # Update the mask dimensions label
-                self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
                 self.fa_image_size = (width, height)
-                self.mask_dimensions_label.setStyleSheet("color: green;")
+                self.update_image_dimensions()
 
                 # Set the maximum width and maintain the aspect ratio
                 resize_max = (200, 10000)
@@ -590,9 +560,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     self.mask_image = mask_array
 
     def start_gallery_window(self):
-        if self.gallery.isVisible() == False:
+        if not self.gallery.isVisible():
             self.gallery.show()
-            self.populate_masks_list()
+            self.gallery.closed = False
+            self.populate_masks_list_fa_fnc()
             self.mask_select_button.setStyleSheet(
                 """
                     QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
@@ -608,26 +579,18 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.enable_WordCloud_Generator_Button()
 
     def filter_fa_images(self):
-        keyword = self.gallery.masks_filter_input.toPlainText().lower()
+        filter_text = self.gallery.fa_filter_input.toPlainText()
+        for item_index in range(self.gallery.masks_list.count()):
+            item = self.gallery.masks_list.item(item_index)
+            tooltip = item.toolTip()
+            if filter_text not in tooltip:
+                item.setHidden(True)
+            else:
+                item.setHidden(False)
+        # self.gallery.masks_list.setCurrentItem(self.gallery.masks_list.item(0))
 
-        if not keyword:
-            # Show all items if no keyword is set
-            self.gallery.all_items = list(range(len(self.gallery.pixmaps)))
-        else:
-            # Filter items based on keyword
-            filtered_items = []
-            for index, tooltip in enumerate(self.gallery.tooltips):
-                if keyword in tooltip:
-                    filtered_items.append(index)
-
-            self.gallery.all_items = filtered_items
-
-        # Update the displayed items in masks_list
-        self.populate_masks_list()
-
-    def populate_masks_list(self):
+    def populate_masks_list_fa_fnc(self):
         self.gallery.masks_list.clear()
-
         for index in self.gallery.all_items:
             item = QListWidgetItem(self.gallery.masks_list)
             item.setIcon(QIcon(self.gallery.pixmaps[index]))
@@ -643,6 +606,17 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def scale_slider_changed(self, value: int):
         self.label_scale_slider.setText(f"{value}x")
+
+        if self.mask_path and not self.gallery.isVisible():
+            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+                width, height = self.raster_image_size
+                self.mask_dimensions_label.setText(f"Mask Dimensions: {value * width}x{value * height}")
+            elif self.mask_path.lower().endswith(".svg"):
+                width, height = self.svg_image_size
+                self.mask_dimensions_label.setText(f"Mask Dimensions: {value * width}x{value * height}")
+        elif self.gallery.isVisible():
+            width, height = self.fa_image_size
+            self.mask_dimensions_label.setText(f"Mask Dimensions: {value * width}x{value * height}")
 
     def prefer_horizontal_slider_changed(self, value: int):
         if value == 0:
@@ -681,7 +655,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def update_image_dimensions(self):
         global width
         global height
-
+        self.scale_slider.setValue(1)  # Reset Scale slider
         if self.mask_path:
             if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
                 try:
@@ -737,17 +711,23 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     self.mask_dimensions_label.setStyleSheet("color: red;")
                     self.export_as_frame.setVisible(False)
                     self.mask_image_thumbnail.setVisible(False)
-        if not self.mask_path:
-            self.mask_dimensions_label.setText(f"")
-            # mask image
-            self.mask_image_thumbnail.setText(f"")
-            self.mask_image_thumbnail.setVisible(False)
+            else:
+                self.mask_dimensions_label.setText(f"")
+                self.mask_image_thumbnail.setText(f"")
+                self.mask_image_thumbnail.setVisible(False)
+
+        if self.gallery.isVisible() and not self.gallery.closed:
+            width, height = self.fa_image_size
+            self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+            self.mask_dimensions_label.setStyleSheet("color: green;")
+        # Check if WC button needs to be disabled or not
+        self.enable_WordCloud_Generator_Button()
 
     ## ENABLE WORDCLOUD BUTTON##
     def enable_WordCloud_Generator_Button(self):
-        if self.gallery.isVisible() and self.destination_path and self.word_input.toPlainText() != "":
+        if not self.gallery.closed and self.destination_path and self.word_input.toPlainText() != "":
             self.WC_GeneratorFrame.setVisible(True)
-        elif self.mask_path and self.destination_path and self.word_input.toPlainText() != "" and self.gallery.isVisible() == False:
+        elif self.mask_path and self.destination_path and self.word_input.toPlainText() != "" and self.gallery.closed:
             self.WC_GeneratorFrame.setVisible(True)
         else:
             self.WC_GeneratorFrame.setVisible(False)
@@ -1152,7 +1132,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.max_font_size_slider.setValue(73)
 
     def fontAwesomeIconsList_fnc(self):
-        icon_filter_text = self.fontAwesome_filter_input.toPlainText().lower()
         self.emoji_list.clear()
         fontAwesome_font_path = resource_path("emojiFonts/Font Awesome 6 Free-Solid-900.otf")
         font_id = QFontDatabase.addApplicationFont(fontAwesome_font_path)
@@ -1162,19 +1141,40 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         for icon_key, icon_info in fontAwesome_data.items():
             if "styles" in icon_info and "solid" in icon_info["styles"]:
                 search_terms = icon_info["search"]["terms"]
-                if not icon_filter_text or any(icon_filter_text in term.lower() for term in search_terms):
-                    icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
-                    item_text = f"{icon_unicode} {', '.join(search_terms)}"
-                    item = QListWidgetItem(icon_unicode)
-                    self.emoji_list.addItem(item)
-                    item.setToolTip(", ".join(search_terms))
+                icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
+                # item_text = f"{icon_unicode} {', '.join(search_terms)}"
+                item = QListWidgetItem(icon_unicode)
+                self.emoji_list.addItem(item)
+                item.setToolTip(", ".join(search_terms))
         self.emoji_list.setSpacing(10)
 
         self.FilterListFrame.setVisible(False)
+        self.unicodeEmojis_filter_input.setVisible(False)
         self.FontAwesome_FilterFrame.setVisible(True)
+
+    def filter_fontAwesome_icons_fnc(self):
+        filter_text = self.fontAwesome_filter_input.toPlainText().lower()
+        for item_index in range(self.emoji_list.count()):
+            item = self.emoji_list.item(item_index)
+            tooltip = item.toolTip()
+            if filter_text not in tooltip:
+                item.setHidden(True)
+            else:
+                item.setHidden(False)
+
+    def filter_unicodeEmojis_byName_fnc(self):
+        filter_text = self.unicodeEmojis_filter_input.toPlainText()
+        for item_index in range(self.emoji_list.count()):
+            item = self.emoji_list.item(item_index)
+            tooltip = item.toolTip()
+            if filter_text not in tooltip:
+                item.setHidden(True)
+            else:
+                item.setHidden(False)
 
     def unicodeEmojiList_fnc(self):
         self.emoji_list.clear()
+        self.unicodeEmojis_filter_input.setVisible(True)
         # Set the font family for the listWidget
         unicode_font_path = resource_path("emojiFonts/Segue UI Emoji.ttf")
         font_id = QFontDatabase.addApplicationFont(unicode_font_path)
@@ -1188,12 +1188,18 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         for emoji, data in emoji_data.items():
             unicode_edition = data["unicode_version"]
             emoji_group = data["group"]
+            emoji_name = "".join(data["name"])
             if unicode_edition not in emoji_edition_filter:
                 if self.emoji_filter_list.currentText() == "All":
                     item = QListWidgetItem(emoji)
                     self.emoji_list.addItem(item)
+                    item.setToolTip(emoji_name)
                 elif emoji_group == selected_emoji_group:
+                    item = QListWidgetItem(emoji)
                     self.emoji_list.addItem(emoji)
+                    item.setToolTip(emoji_name)
+
+        # item.setToolTip(", ".join(emoji_name))
         self.emoji_list.setSpacing(5)
         self.FilterListFrame.setVisible(True)
         self.FontAwesome_FilterFrame.setVisible(False)
@@ -1201,19 +1207,24 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def populateEmojiList(self):
         self.emoji_list.clear()
         self.FontAwesome_FilterFrame.setVisible(False)
+        self.unicodeEmojis_filter_input.setVisible(True)
         emoji_edition_filter = ["13.0", "13.1", "14.0", "15.0"]
         selected_emoji_group = self.emoji_filter_list.currentText()
 
         for emoji, data in emoji_data.items():
             unicode_edition = data["unicode_version"]
             emoji_group = data["group"]
+            emoji_name = "".join(data["name"])
 
             if unicode_edition not in emoji_edition_filter:
                 if self.emoji_filter_list.currentText() == "All":
                     item = QListWidgetItem(emoji)
                     self.emoji_list.addItem(item)
+                    item.setToolTip(emoji_name)
                 elif emoji_group == selected_emoji_group:
-                    self.emoji_list.addItem(emoji)
+                    item = QListWidgetItem(emoji)
+                    self.emoji_list.addItem(item)
+                    item.setToolTip(emoji_name)
 
     def insertEmojiOnClick(self, item):
         current_text = self.word_input.toPlainText()
@@ -1253,7 +1264,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.gallery.close()
 
     def on_gallery_close(self):
+        # Initialize a separate flag, to check if window is closed or not, because window closed detection is garbage. window.isHidden() is also garbage.
+        self.gallery.closed = True
+        # Call mask fallback, in case there was already a mask set from file
         self.mask_fallback_fnc()
+        if not self.mask_path:
+            self.mask_dimensions_label.setText(f"")
+            self.mask_image_thumbnail.setText(f"")
+            self.mask_image_thumbnail.setVisible(False)
 
 
 if __name__ == "__main__":

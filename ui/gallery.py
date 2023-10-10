@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLayout,
-    QHBoxLayout, QListView, QListWidget, QListWidgetItem,
-    QPlainTextEdit, QSizePolicy, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QApplication, QButtonGroup, QFrame,
+    QGridLayout, QHBoxLayout, QListView, QListWidget,
+    QListWidgetItem, QPlainTextEdit, QPushButton, QSizePolicy,
+    QVBoxLayout, QWidget)
 import Resources_rc
 
 class Ui_GalleryWindow(object):
@@ -75,25 +76,75 @@ class Ui_GalleryWindow(object):
         self.Masks_FilterFrame.setSizePolicy(sizePolicy1)
         self.horizontalLayout_8 = QHBoxLayout(self.Masks_FilterFrame)
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.masks_filter_input = QPlainTextEdit(self.Masks_FilterFrame)
-        self.masks_filter_input.setObjectName(u"masks_filter_input")
+        self.fa_filter_input = QPlainTextEdit(self.Masks_FilterFrame)
+        self.fa_filter_input.setObjectName(u"fa_filter_input")
         sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
         sizePolicy2.setHorizontalStretch(0)
         sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.masks_filter_input.sizePolicy().hasHeightForWidth())
-        self.masks_filter_input.setSizePolicy(sizePolicy2)
-        self.masks_filter_input.setMaximumSize(QSize(16777215, 30))
+        sizePolicy2.setHeightForWidth(self.fa_filter_input.sizePolicy().hasHeightForWidth())
+        self.fa_filter_input.setSizePolicy(sizePolicy2)
+        self.fa_filter_input.setMaximumSize(QSize(16777215, 30))
         font1 = QFont()
         font1.setFamilies([u"Inter"])
         font1.setPointSize(10)
         font1.setBold(True)
-        self.masks_filter_input.setFont(font1)
-        self.masks_filter_input.setStyleSheet(u"color:#141414;")
+        self.fa_filter_input.setFont(font1)
+        self.fa_filter_input.setStyleSheet(u"color:#141414;")
 
-        self.horizontalLayout_8.addWidget(self.masks_filter_input)
+        self.horizontalLayout_8.addWidget(self.fa_filter_input)
 
 
         self.verticalLayout_9.addWidget(self.Masks_FilterFrame, 0, Qt.AlignHCenter)
+
+        self.downloadImageFA_Frame = QFrame(self.Masks_FullFrame)
+        self.downloadImageFA_Frame.setObjectName(u"downloadImageFA_Frame")
+        sizePolicy1.setHeightForWidth(self.downloadImageFA_Frame.sizePolicy().hasHeightForWidth())
+        self.downloadImageFA_Frame.setSizePolicy(sizePolicy1)
+        self.horizontalLayout_3 = QHBoxLayout(self.downloadImageFA_Frame)
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
+        self.export_fa_png_btn = QPushButton(self.downloadImageFA_Frame)
+        self.downloadButtonsGroup = QButtonGroup(GalleryWindow)
+        self.downloadButtonsGroup.setObjectName(u"downloadButtonsGroup")
+        self.downloadButtonsGroup.addButton(self.export_fa_png_btn)
+        self.export_fa_png_btn.setObjectName(u"export_fa_png_btn")
+        self.export_fa_png_btn.setMinimumSize(QSize(40, 40))
+        self.export_fa_png_btn.setMaximumSize(QSize(40, 40))
+        font2 = QFont()
+        font2.setFamilies([u"Inter"])
+        font2.setPointSize(9)
+        font2.setBold(True)
+        font2.setItalic(False)
+        self.export_fa_png_btn.setFont(font2)
+        self.export_fa_png_btn.setStyleSheet(u"QPushButton {\n"
+"    background-color: #32d026;\n"
+"    color: #212121;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}")
+
+        self.horizontalLayout_3.addWidget(self.export_fa_png_btn)
+
+        self.export_fa_svg_btn = QPushButton(self.downloadImageFA_Frame)
+        self.downloadButtonsGroup.addButton(self.export_fa_svg_btn)
+        self.export_fa_svg_btn.setObjectName(u"export_fa_svg_btn")
+        self.export_fa_svg_btn.setMinimumSize(QSize(40, 40))
+        self.export_fa_svg_btn.setMaximumSize(QSize(40, 40))
+        self.export_fa_svg_btn.setFont(font2)
+        self.export_fa_svg_btn.setStyleSheet(u"QPushButton {\n"
+"    background-color: #32d026;\n"
+"	color: #212121;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}")
+
+        self.horizontalLayout_3.addWidget(self.export_fa_svg_btn)
+
+
+        self.verticalLayout_9.addWidget(self.downloadImageFA_Frame, 0, Qt.AlignHCenter)
 
         self.masks_list = QListWidget(self.Masks_FullFrame)
         self.masks_list.setObjectName(u"masks_list")
@@ -102,11 +153,11 @@ class Ui_GalleryWindow(object):
         sizePolicy3.setVerticalStretch(0)
         sizePolicy3.setHeightForWidth(self.masks_list.sizePolicy().hasHeightForWidth())
         self.masks_list.setSizePolicy(sizePolicy3)
-        font2 = QFont()
-        font2.setFamilies([u"Segoe UI Emoji"])
-        font2.setPointSize(40)
-        font2.setBold(False)
-        self.masks_list.setFont(font2)
+        font3 = QFont()
+        font3.setFamilies([u"Segoe UI Emoji"])
+        font3.setPointSize(40)
+        font3.setBold(False)
+        self.masks_list.setFont(font3)
         self.masks_list.setStyleSheet(u"QListWidget::item:selected {\n"
 "    background: rgba(0,200,0,200);\n"
 "}\n"
@@ -144,6 +195,14 @@ class Ui_GalleryWindow(object):
 
     def retranslateUi(self, GalleryWindow):
         GalleryWindow.setWindowTitle(QCoreApplication.translate("GalleryWindow", u"Mask Gallery", None))
-        self.masks_filter_input.setPlaceholderText(QCoreApplication.translate("GalleryWindow", u"Filter", None))
+        self.fa_filter_input.setPlaceholderText(QCoreApplication.translate("GalleryWindow", u"Filter", None))
+#if QT_CONFIG(tooltip)
+        self.export_fa_png_btn.setToolTip(QCoreApplication.translate("GalleryWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Export selected icon</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.export_fa_png_btn.setText(QCoreApplication.translate("GalleryWindow", u"PNG", None))
+#if QT_CONFIG(tooltip)
+        self.export_fa_svg_btn.setToolTip(QCoreApplication.translate("GalleryWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Export selected icon</span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.export_fa_svg_btn.setText(QCoreApplication.translate("GalleryWindow", u"SVG", None))
     # retranslateUi
 

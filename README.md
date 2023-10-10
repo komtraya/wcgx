@@ -30,7 +30,7 @@ As the curtain rises, an exquisite array of features unfolds before you:
 
 - **Scale Wizardry**: Fine-tune the dimensions of your word cloud, drawing upon the essence of the original mask image, with a multiplier's magic touch, up to a mystical maximum of 10x.
 
-- **Efficiency’s Embrace**: Upon creation, the delete/stash button emerges, an enigmatic choice for your latest word cloud—discard or embrace its wonder. Stashed within a chamber known as "Keep," your masterpieces reside.
+- **Efficiency’s Embrace**: Upon creation, the delete/stash button emerges, an enigmatic choice for your latest word cloud—discard or embrace its wonder. Stashed within a chamber known as "Keep", your masterpieces reside.
 
 ## A Symphony of Color
 In this realm, your word cloud dances upon materials of any hue, except the purest white. It adapts effortlessly to the color tapestries of your imagination.
