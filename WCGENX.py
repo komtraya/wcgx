@@ -8,13 +8,21 @@ from PIL import Image
 from PIL.ImageQt import ImageQt
 from PySide6 import QtWidgets as widget
 from PySide6.QtGui import QFont, QFontDatabase, QPixmap, QImage, QPainter, QColor, QIcon
-from PySide6.QtWidgets import QFileDialog, QListWidgetItem, QColorDialog
+from PySide6.QtWidgets import (
+    QFileDialog,
+    QListWidgetItem,
+    QColorDialog,
+    QPushButton,
+)
 from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtCore import QStandardPaths, QSize
+from PySide6.QtCore import QStandardPaths, QSize, QRectF, Qt
+
 from ui.main import Ui_MainWindow
 from ui.gradient import Ui_GradientWindow
 from ui.error import Ui_Error
+from ui.storeProfile import Ui_StoreProfileWindow
 from ui.gallery import Ui_GalleryWindow
+import sqlite3
 
 # import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -31,8 +39,6 @@ def resource_path(rel_path):
 
     return os.path.join(base_path, rel_path)
 
-
-##### ----- Resource Fix #####
 
 ## Read emojis.json for processing ##
 emojis_json = resource_path("emojis.json")
@@ -55,11 +61,19 @@ class ErrorWindow(widget.QMainWindow, Ui_Error):
         self.setupUi(self)
 
 
+class StoreProfileWindow(widget.QDialog, Ui_StoreProfileWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+
+
 class GradientWindow(widget.QWidget, Ui_GradientWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.gradient_push_slider.valueChanged.connect(self.gradient_push_slider_changed_fnc)
+        self.gradient_push_slider.valueChanged.connect(
+            self.gradient_push_slider_changed_fnc
+        )
 
     def gradient_push_slider_changed_fnc(self, int):
         self.gradient_push_indicator_lbl.setText(f"{int}")
@@ -72,7 +86,9 @@ class GalleryWindow(widget.QWidget, Ui_GalleryWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.closed = True  # Init this signal, because window closed detection is garbage
+        self.closed = (
+            True  # Init this signal, because window closed detection is garbage
+        )
         # Store references to QPixmap, QImage and tooltips separately
         self.svg_raw = []  # Store the raw svg data, so it can be exported to file
         self.pixmaps = []  # To store QPixmap objects
@@ -123,6 +139,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.error_window = ErrorWindow()
         self.gradient_window = GradientWindow()
         self.error_window.close_btn.clicked.connect(lambda: self.error_window.close())
+        self.storeProfile_window = StoreProfileWindow()
         ##### ---------- #####
         self.gallery = GalleryWindow()
         ## Future color preset implementation(list needs sorting)
@@ -130,22 +147,36 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # for palette_names in cm.cmap_d:
         #     self.colormaps_dropdown.addItem(palette_names)
         #     print(palette_names)
+
         ## Gallery
         self.fa_mask_select_button.clicked.connect(self.start_gallery_window)
         self.gallery.fa_filter_input.textChanged.connect(self.filter_fa_images)
         self.gallery.masks_list.itemSelectionChanged.connect(self.update_mask_image)
-        self.gallery.downloadButtonsGroup.buttonClicked.connect(self.download_selected_icon_fnc)
-
+        self.gallery.downloadButtonsGroup.buttonClicked.connect(
+            self.download_selected_icon_fnc
+        )
+        ## Settings
+        self.storeSettingsProfile_btn.clicked.connect(self.storeProfile_fnc)
+        self.storeTextProfile_btn.clicked.connect(self.storeProfile_fnc)
+        self.storeProfile_window.cancel_store_btn.clicked.connect(
+            self.cancelSettingsStorage_fnc
+        )
         ## Parameters display function connect
-        self.parametersButtonGroup.buttonClicked.connect(self.change_tab_based_on_selected_item)
+        self.parametersButtonGroup.buttonClicked.connect(
+            self.change_tab_based_on_selected_item
+        )
         ##  Emoji handling ##
         self.populateEmojiList()
         self.unicode_Emojis_btn.clicked.connect(self.unicodeEmojiList_fnc)
         self.font_Awesome_Icons_btn.clicked.connect(self.fontAwesomeIconsList_fnc)
         self.emoji_list.itemClicked.connect(self.insertEmojiOnClick)
         self.emoji_filter_list.currentTextChanged.connect(self.populateEmojiList)
-        self.fontAwesome_filter_input.textChanged.connect(self.filter_fontAwesome_icons_fnc)
-        self.unicodeEmojis_filter_input.textChanged.connect(self.filter_unicodeEmojis_byName_fnc)
+        self.fontAwesome_filter_input.textChanged.connect(
+            self.filter_fontAwesome_icons_fnc
+        )
+        self.unicodeEmojis_filter_input.textChanged.connect(
+            self.filter_unicodeEmojis_byName_fnc
+        )
         ## Modifications/data-setup for the start of the app
         # Make sure text input is not empty
         self.word_input.textChanged.connect(self.text_input_Changed)
@@ -157,7 +188,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.scan_appData_fonts()
         self.font_list.currentItemChanged.connect(self.apply_selected_font)
 
-        self.custom_font_directory_selection.clicked.connect(self.select_custom_fonts_folder)
+        self.custom_font_directory_selection.clicked.connect(
+            self.select_custom_fonts_folder
+        )
         self.load_emoji_fonts_btn.clicked.connect(self.load_emoji_fonts_fnc)
         self.load_system_fonts_btn.clicked.connect(self.load_system_fonts_fnc)
         self.load_appData_fonts_btn.clicked.connect(self.load_appData_fonts_fnc)
@@ -166,13 +199,17 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         ## HIDE WORDCLOUD BUTTON BY DEFAULT ##
         self.enable_WordCloud_Generator_Button()
         self.open_destination_folder.setVisible(False)
-        self.open_destination_folder.clicked.connect(self.open_destination_folder_function)
+        self.open_destination_folder.clicked.connect(
+            self.open_destination_folder_function
+        )
 
         # Hide random colors frame
         self.RandomColorFrame.setVisible(False)
 
         # Connect dropdown list to function
-        self.colormaps_dropdown.currentTextChanged.connect(self.check_dropdown_selected_item)
+        self.colormaps_dropdown.currentTextChanged.connect(
+            self.check_dropdown_selected_item
+        )
         ## Connect Delete and Stash Buttons to functions
         # Stash
         self.stash_last_generated_button.setVisible(False)
@@ -189,7 +226,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.collocations_checkbox.clicked.connect(self.update_info_labels)
         ## EXPORT DESTINATION SELECTION
         # Connect the button click to the slot function
-        self.select_destination_button.clicked.connect(self.select_destination_button_clicked)
+        self.select_destination_button.clicked.connect(
+            self.select_destination_button_clicked
+        )
 
         ## Margin.current
         # Connect the slider to the function that updates the label to reflect changes
@@ -202,23 +241,31 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # Call the slot initially to update label from start
         self.scale_slider_changed(self.scale_slider.value())
         ## Minimum Font Size Slider
-        self.min_font_size_slider.valueChanged.connect(self.min_font_size_slider_changed)
+        self.min_font_size_slider.valueChanged.connect(
+            self.min_font_size_slider_changed
+        )
         # Call the slot initially to set the initial value of the label
         self.min_font_size_slider_changed(self.min_font_size_slider.value())
 
         ## Maximum Font Size Slider
-        self.max_font_size_slider.valueChanged.connect(self.max_font_size_slider_changed)
+        self.max_font_size_slider.valueChanged.connect(
+            self.max_font_size_slider_changed
+        )
         # Call the slot initially to set the initial font_size label
         self.max_font_size_slider_changed(self.max_font_size_slider.value())
 
         ## Prefer Horizontal Slider
-        self.prefer_horizontal_slider.valueChanged.connect(self.prefer_horizontal_slider_changed)
+        self.prefer_horizontal_slider.valueChanged.connect(
+            self.prefer_horizontal_slider_changed
+        )
         # Call the slot initially to set the initial value of the label
         self.prefer_horizontal_slider_changed(self.prefer_horizontal_slider.value())
 
         ## Collocation Thresh Slider
 
-        self.collocations_thresh_slider.valueChanged.connect(self.collocations_thresh_slider_changed)
+        self.collocations_thresh_slider.valueChanged.connect(
+            self.collocations_thresh_slider_changed
+        )
         # Connect the slider to the function that updates the label to reflect changes from the start
         self.collocations_thresh_slider_changed(self.collocations_thresh_slider.value())
         ## Font Step Slider
@@ -229,12 +276,20 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.random_seed_slider.valueChanged.connect(self.random_seed_slider_changed)
         ##Gradient Settings and Color selection Buttons
         self.gradient_settings_btn.clicked.connect(self.show_gradient_window_fnc)
-        self.gradient_window.select_first_color_btn.clicked.connect(self.select_first_gradient_color_fnc)
-        self.gradient_window.select_second_color_btn.clicked.connect(self.select_second_gradient_color_fnc)
-        self.gradient_window.transparency_slider.valueChanged.connect(self.update_gradient_transparency_indicator_fnc)
+        self.gradient_window.select_first_color_btn.clicked.connect(
+            self.select_first_gradient_color_fnc
+        )
+        self.gradient_window.select_second_color_btn.clicked.connect(
+            self.select_second_gradient_color_fnc
+        )
+        self.gradient_window.transparency_slider.valueChanged.connect(
+            self.update_gradient_transparency_indicator_fnc
+        )
         self.gradient_settings_btn.setVisible(False)
         ## PRESET BUTTONS FOR RANDOM COLORS - connect to function ##
-        self.randomColorsPresetsGroup.buttonClicked.connect(self.random_colors_presets_function)
+        self.randomColorsPresetsGroup.buttonClicked.connect(
+            self.random_colors_presets_function
+        )
 
         ## WordCloud Button ##
         self.generate_wordcloud_button.clicked.connect(self.generate_WordCloud)
@@ -245,8 +300,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.closeEvent = lambda close: self.on_close()
         self.gallery.closeEvent = lambda close: self.on_gallery_close()
 
-        # # # # # Create WordCloud object and Export Image(s) # # # # #
+        ##Settings
+        self.init_SettingsFile_fnc()
+        self.applySettingsProfile_btn.clicked.connect(self.apply_SettingsProfile_fnc)
+        self.applyTextProfile_btn.clicked.connect(self.applyTextProfile_fnc)
 
+    # # # # # Create WordCloud object and Export Image(s) # # # # #
     def generate_WordCloud(self):
         # @ PARAMETERS
         wordcloud = WordCloud(
@@ -320,19 +379,25 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             # Export the PIL Image object as a PNG image file
             self.output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
             wordcloud_image.save(self.output_image_path_2)
-            os.startfile(self.output_image_path_2)  # Open the PNG file after generating both formats
+            os.startfile(
+                self.output_image_path_2
+            )  # Open the PNG file after generating both formats
         self.stash_last_generated_button.setVisible(True)  # Display Stash button
         self.delete_last_generated_button.setVisible(True)  # Delete Stash button
 
     def download_selected_icon_fnc(self, button):
         if button == self.gallery.export_fa_png_btn:
             # Get file name and path using a file dialog
-            export_path, _ = QFileDialog.getSaveFileName(self, "Export Image", "", "PNG (*.png)")
+            export_path, _ = QFileDialog.getSaveFileName(
+                self, "Export Image", "", "PNG (*.png)"
+            )
             if export_path:
                 self.gallery.export_as_png.save(export_path, quality=100)
         elif button == self.gallery.export_fa_svg_btn:
             # Get file name and path using a file dialog
-            export_path, _ = QFileDialog.getSaveFileName(self, "Export Image", "", "SVG (*.svg)")
+            export_path, _ = QFileDialog.getSaveFileName(
+                self, "Export Image", "", "SVG (*.svg)"
+            )
             if export_path:
                 # Export the SVG data to an SVG file
                 with open(export_path, "w") as file:
@@ -342,17 +407,32 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         if self.gallery.isVisible():
             self.gallery.close()
         options = QFileDialog.Options()
-        file_name, _ = QFileDialog.getOpenFileName(self, "Select Mask Image", "", "Image Files (*.png;*.svg;*.jpg;*.jpeg)", options=options)
+        file_name, _ = QFileDialog.getOpenFileName(
+            self,
+            "Select Mask Image",
+            "",
+            "Image Files (*.png;*.svg;*.jpg;*.jpeg)",
+            options=options,
+        )
         if file_name:
             self.mask_path = file_name
             self.enable_WordCloud_Generator_Button()
 
         if self.mask_path:
-            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+            if (
+                self.mask_path.lower().endswith(".png")
+                or self.mask_path.lower().endswith(".jpg")
+                or self.mask_path.lower().endswith(".jpeg")
+            ):
                 # Open Mask Image
                 self.mask_image = np.array(Image.open((self.mask_path)))
                 try:
-                    self.mask_image[(self.mask_image[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    self.mask_image[(self.mask_image[..., 3] == 0)] = [
+                        255,
+                        255,
+                        255,
+                        255,
+                    ]  # Replace transparent with white
                 except:
                     self.mask_image = np.array(Image.open((self.mask_path)))
                 self.update_image_dimensions()
@@ -387,7 +467,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 # Transform Pillow Image to NumPy array
                 mask_array = np.array(pil_image)
                 try:
-                    mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    mask_array[(mask_array[..., 3] == 0)] = [
+                        255,
+                        255,
+                        255,
+                        255,
+                    ]  # Replace transparent with white
                     self.mask_image = mask_array
                 except:
                     self.mask_image = mask_array
@@ -417,11 +502,20 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def mask_fallback_fnc(self):
         if self.mask_path and self.gallery.closed == True:
-            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+            if (
+                self.mask_path.lower().endswith(".png")
+                or self.mask_path.lower().endswith(".jpg")
+                or self.mask_path.lower().endswith(".jpeg")
+            ):
                 # Open Mask Image
                 self.mask_image = np.array(Image.open((self.mask_path)))
                 try:
-                    self.mask_image[(self.mask_image[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    self.mask_image[(self.mask_image[..., 3] == 0)] = [
+                        255,
+                        255,
+                        255,
+                        255,
+                    ]  # Replace transparent with white
                 except:
                     self.mask_image = np.array(Image.open((self.mask_path)))
                 self.update_image_dimensions()
@@ -451,7 +545,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 # Transform Pillow Image to NumPy array
                 mask_array = np.array(pil_image)
                 try:
-                    mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    mask_array[(mask_array[..., 3] == 0)] = [
+                        255,
+                        255,
+                        255,
+                        255,
+                    ]  # Replace transparent with white
                     self.mask_image = mask_array
                 except:
                     self.mask_image = mask_array
@@ -487,7 +586,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def select_destination_button_clicked(self):
         options = QFileDialog.Options()
-        selected_folder = QFileDialog.getExistingDirectory(self, "Select Folder", "", options=options)
+        selected_folder = QFileDialog.getExistingDirectory(
+            self, "Select Folder", "", options=options
+        )
         if selected_folder:
             self.destination_path = selected_folder
             self.enable_WordCloud_Generator_Button()
@@ -514,13 +615,23 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         selected_qimage = None  # Initialize
         filtered_index = -1
         if selected_items:
-            selected_index = self.gallery.masks_list.row(selected_items[0])  # Get the index of the selected item
+            selected_index = self.gallery.masks_list.row(
+                selected_items[0]
+            )  # Get the index of the selected item
             if 0 <= selected_index < len(self.gallery.all_items):
-                filtered_index = self.gallery.all_items[selected_index]  # Get the original index from the filtered list
+                filtered_index = self.gallery.all_items[
+                    selected_index
+                ]  # Get the original index from the filtered list
             if 0 <= filtered_index < len(self.gallery.pixmaps):
-                selected_pixmap = self.gallery.pixmaps[filtered_index]  # Get the selected pixmap
-                selected_qimage = self.gallery.images[filtered_index]  # Get the corresponding QImage
-                selected_svg = self.gallery.svg_raw[filtered_index]  # Get the selected svg file
+                selected_pixmap = self.gallery.pixmaps[
+                    filtered_index
+                ]  # Get the selected pixmap
+                selected_qimage = self.gallery.images[
+                    filtered_index
+                ]  # Get the corresponding QImage
+                selected_svg = self.gallery.svg_raw[
+                    filtered_index
+                ]  # Get the selected svg file
                 self.gallery.export_as_png = selected_pixmap
                 self.gallery.export_as_svg = selected_svg
 
@@ -554,7 +665,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 # Transform Pillow Image to NumPy array
                 mask_array = np.array(pil_image_as_mask)
                 try:
-                    mask_array[(mask_array[..., 3] == 0)] = [255, 255, 255, 255]  # Replace transparent with white
+                    mask_array[(mask_array[..., 3] == 0)] = [
+                        255,
+                        255,
+                        255,
+                        255,
+                    ]  # Replace transparent with white
                     self.mask_image = mask_array
                 except:
                     self.mask_image = mask_array
@@ -608,15 +724,25 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.label_scale_slider.setText(f"{value}x")
 
         if self.mask_path and not self.gallery.isVisible():
-            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+            if (
+                self.mask_path.lower().endswith(".png")
+                or self.mask_path.lower().endswith(".jpg")
+                or self.mask_path.lower().endswith(".jpeg")
+            ):
                 width, height = self.raster_image_size
-                self.mask_dimensions_label.setText(f"Mask Dimensions: {value * width}x{value * height}")
+                self.mask_dimensions_label.setText(
+                    f"Mask Dimensions: {value * width}x{value * height}"
+                )
             elif self.mask_path.lower().endswith(".svg"):
                 width, height = self.svg_image_size
-                self.mask_dimensions_label.setText(f"Mask Dimensions: {value * width}x{value * height}")
+                self.mask_dimensions_label.setText(
+                    f"Mask Dimensions: {value * width}x{value * height}"
+                )
         elif self.gallery.isVisible():
             width, height = self.fa_image_size
-            self.mask_dimensions_label.setText(f"Mask Dimensions: {value * width}x{value * height}")
+            self.mask_dimensions_label.setText(
+                f"Mask Dimensions: {value * width}x{value * height}"
+            )
 
     def prefer_horizontal_slider_changed(self, value: int):
         if value == 0:
@@ -657,14 +783,23 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         global height
         self.scale_slider.setValue(1)  # Reset Scale slider
         if self.mask_path:
-            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+            if (
+                self.mask_path.lower().endswith(".png")
+                or self.mask_path.lower().endswith(".jpg")
+                or self.mask_path.lower().endswith(".jpeg")
+            ):
                 try:
                     with Image.open(self.mask_path) as img:
                         width, height = img.size
-                        self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+                        self.mask_dimensions_label.setText(
+                            f"Mask Dimensions: {width}x{height}"
+                        )
                         self.raster_image_size = (width, height)
                         self.mask_dimensions_label.setStyleSheet("color: green;")
-                        resizeMax = 200, 10000  # Height will be calculated based on original width, so that aspect ratio is maintained
+                        resizeMax = (
+                            200,
+                            10000,
+                        )  # Height will be calculated based on original width, so that aspect ratio is maintained
                         img.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
                         resized_thumb = ImageQt(img)
                         pixmap = QPixmap.fromImage(resized_thumb)
@@ -685,7 +820,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     svg_size = svg_renderer.defaultSize()
                     width = str(svg_size.width())
                     height = str(svg_size.height())
-                    self.mask_dimensions_label.setText(f"Mask Dimensions: {width}x{height}")
+                    self.mask_dimensions_label.setText(
+                        f"Mask Dimensions: {width}x{height}"
+                    )
                     self.svg_image_size = (svg_size.width(), svg_size.height())
                     self.mask_dimensions_label.setStyleSheet("color: green;")
                     # # Create a QImage with an appropriate format (ARGB32 is a common choice)
@@ -699,7 +836,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     painter.end()
                     # Transform QImage to Pillow Image
                     pil_image = Image.fromqpixmap(mask_test)
-                    resizeMax = 200, 10000  # Height will be calculated based on original width, so that aspect ratio is maintained
+                    resizeMax = (
+                        200,
+                        10000,
+                    )  # Height will be calculated based on original width, so that aspect ratio is maintained
                     pil_image.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
                     resized_thumb = ImageQt(pil_image)
                     pixmap = QPixmap.fromImage(resized_thumb)
@@ -725,9 +865,18 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## ENABLE WORDCLOUD BUTTON##
     def enable_WordCloud_Generator_Button(self):
-        if not self.gallery.closed and self.destination_path and self.word_input.toPlainText() != "":
+        if (
+            not self.gallery.closed
+            and self.destination_path
+            and self.word_input.toPlainText() != ""
+        ):
             self.WC_GeneratorFrame.setVisible(True)
-        elif self.mask_path and self.destination_path and self.word_input.toPlainText() != "" and self.gallery.closed:
+        elif (
+            self.mask_path
+            and self.destination_path
+            and self.word_input.toPlainText() != ""
+            and self.gallery.closed
+        ):
             self.WC_GeneratorFrame.setVisible(True)
         else:
             self.WC_GeneratorFrame.setVisible(False)
@@ -752,22 +901,32 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def scan_system_fonts(self):
         self.font_list.clear()
         # Get the directories where fonts are typically located
-        system_fonts_location = QStandardPaths.standardLocations(QStandardPaths.FontsLocation)
+        system_fonts_location = QStandardPaths.standardLocations(
+            QStandardPaths.FontsLocation
+        )
 
         # Initialize a list to store font file paths
         font_file_paths = []
 
         # Loop through the font directories and list font files
         for font_directory in system_fonts_location:
-            font_files = [os.path.join(font_directory, file) for file in os.listdir(font_directory) if file.endswith((".ttf", ".otf"))]
+            font_files = [
+                os.path.join(font_directory, file)
+                for file in os.listdir(font_directory)
+                if file.endswith((".ttf", ".otf"))
+            ]
             font_file_paths.extend(font_files)
         for font_path in font_file_paths:
             font_name = os.path.basename(font_path)
             font_name_display = font_name.split(".")[0].capitalize()
             item = QListWidgetItem(font_name_display)
-            item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
+            item.setData(
+                1001, font_path
+            )  # Using an arbitrary ID (1001) to store font path
             self.font_list.addItem(item)  # - populate the list with fonts
-            self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+            self.font_list.setCurrentItem(
+                self.font_list.item(0)
+            )  # Automatically select the first item
 
     def filter_fonts_fnc(self):
         filter = self.filter_fonts_input.toPlainText().lower()
@@ -789,21 +948,33 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.font_list.clear()
         try:
             # Get the user-specific AppData folder
-            appdata_fonts_location = QStandardPaths.writableLocation(QStandardPaths.GenericDataLocation)
+            appdata_fonts_location = QStandardPaths.writableLocation(
+                QStandardPaths.GenericDataLocation
+            )
             # Construct the path to the user's fonts directory within AppData
-            appdata_fonts_dir = os.path.join(appdata_fonts_location, "Microsoft", "Windows", "Fonts")
+            appdata_fonts_dir = os.path.join(
+                appdata_fonts_location, "Microsoft", "Windows", "Fonts"
+            )
             # Initialize a list to store font file paths
             font_file_paths = []
             # List font files within the user's AppData fonts directory
-            font_files = [os.path.join(appdata_fonts_dir, file) for file in os.listdir(appdata_fonts_dir) if file.endswith((".ttf", ".otf"))]
+            font_files = [
+                os.path.join(appdata_fonts_dir, file)
+                for file in os.listdir(appdata_fonts_dir)
+                if file.endswith((".ttf", ".otf"))
+            ]
             font_file_paths.extend(font_files)
             for font_path in font_file_paths:
                 font_name = os.path.basename(font_path)
                 font_name_display = font_name.split(".")[0].capitalize()
                 item = QListWidgetItem(font_name_display)
-                item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
+                item.setData(
+                    1001, font_path
+                )  # Using an arbitrary ID (1001) to store font path
                 self.font_list.addItem(item)  # - populate the list with fonts
-                self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+                self.font_list.setCurrentItem(
+                    self.font_list.item(0)
+                )  # Automatically select the first item
         except Exception as e:
             print(e)
 
@@ -816,9 +987,13 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 font_name = os.path.basename(font_path)
                 font_name_display = font_name.split(".")[0].capitalize()
                 item = QListWidgetItem(font_name_display)
-                item.setData(1001, font_path)  # Using an arbitrary ID (1001) to store font path
+                item.setData(
+                    1001, font_path
+                )  # Using an arbitrary ID (1001) to store font path
                 self.font_list.addItem(item)  # - populate the list with fonts
-                self.font_list.setCurrentItem(self.font_list.item(0))  # Automatically select the first item
+                self.font_list.setCurrentItem(
+                    self.font_list.item(0)
+                )  # Automatically select the first item
             except:
                 pass
         # Disable the Generate WordCloud button if the selected path contains no font files
@@ -832,7 +1007,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         options = QFileDialog.Options()
         options |= QFileDialog.ShowDirsOnly
         # initial_directory = userPath  # system_fonts_path
-        selected_directory = QFileDialog.getExistingDirectory(self, "Select Fonts Directory", options=options)
+        selected_directory = QFileDialog.getExistingDirectory(
+            self, "Select Fonts Directory", options=options
+        )
 
         if selected_directory:
             self.fonts_directory = selected_directory
@@ -913,7 +1090,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.colormap = "gist_ncar"
             self.color_function = None
             return self.colormap
-        elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors":
+        elif (
+            self.colormaps_dropdown.currentText() != "Default"
+            and self.colormaps_dropdown.currentText() != "Random Colors"
+        ):
             self.colormap = self.colormaps_dropdown.currentText()
             self.color_function = None
             return self.colormap
@@ -927,7 +1107,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.colormap = "gist_ncar"
             self.color_function = None
             return self.color_function
-        elif self.colormaps_dropdown.currentText() != "Default" and self.colormaps_dropdown.currentText() != "Random Colors" and self.colormaps_dropdown.currentText() != "Gradient":
+        elif (
+            self.colormaps_dropdown.currentText() != "Default"
+            and self.colormaps_dropdown.currentText() != "Random Colors"
+            and self.colormaps_dropdown.currentText() != "Gradient"
+        ):
             self.colormap = self.colormaps_dropdown.currentText()
             self.color_function = None
             return self.color_function
@@ -986,10 +1170,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def gradient_orientation_fnc(self, button):
         pass
 
-    def generate_gradient_color(self, word, font_size, position, orientation, random_state=None, **kwargs):
+    def generate_gradient_color(
+        self, word, font_size, position, orientation, random_state=None, **kwargs
+    ):
         # Define the top-left and bottom-right colors
         top_color_hex = self.gradient_window.first_gradient_lbl.text()  # First color
-        bottom_color_hex = self.gradient_window.second_gradient_lbl.text()  # Second color
+        bottom_color_hex = (
+            self.gradient_window.second_gradient_lbl.text()
+        )  # Second color
         # Transform hex colors to RGB tuples
         top_color_rgb = mcolors.hex2color(top_color_hex)
         bottom_color_rgb = mcolors.hex2color(bottom_color_hex)
@@ -998,7 +1186,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         if self.gallery.isVisible():
             width, height = self.fa_image_size
         else:
-            if self.mask_path.lower().endswith(".png") or self.mask_path.lower().endswith(".jpg") or self.mask_path.lower().endswith(".jpeg"):
+            if (
+                self.mask_path.lower().endswith(".png")
+                or self.mask_path.lower().endswith(".jpg")
+                or self.mask_path.lower().endswith(".jpeg")
+            ):
                 width, height = self.raster_image_size
             elif self.mask_path.lower().endswith(".svg"):
                 width, height = self.svg_image_size
@@ -1008,12 +1200,36 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         if self.gradient_window.straight_diagonal_checkbox.isChecked():
             gradient_position = (x / height, y / width)  # - diagonal (left to right)
         elif self.gradient_window.diagonal45_checkbox.isChecked():
-            gradient_position = ((x + y) / (width + height), (x + y) / (width + height))  # 45-degree diagonal
+            gradient_position = (
+                (x + y) / (width + height),
+                (x + y) / (width + height),
+            )  # 45-degree diagonal
 
         # Adjust the x-range to extend the first color further across width and height
-        r = int(np.interp(gradient_position[0], [0, transition_point], [top_color_rgb[0], bottom_color_rgb[0]]) * 255)
-        g = int(np.interp(gradient_position[1], [0, transition_point], [top_color_rgb[1], bottom_color_rgb[1]]) * 255)
-        b = int(np.interp(gradient_position[0], [0, transition_point], [top_color_rgb[2], bottom_color_rgb[2]]) * 255)
+        r = int(
+            np.interp(
+                gradient_position[0],
+                [0, transition_point],
+                [top_color_rgb[0], bottom_color_rgb[0]],
+            )
+            * 255
+        )
+        g = int(
+            np.interp(
+                gradient_position[1],
+                [0, transition_point],
+                [top_color_rgb[1], bottom_color_rgb[1]],
+            )
+            * 255
+        )
+        b = int(
+            np.interp(
+                gradient_position[0],
+                [0, transition_point],
+                [top_color_rgb[2], bottom_color_rgb[2]],
+            )
+            * 255
+        )
 
         # Interpolate the color (for hex to rgb)
         # r = int(np.interp(gradient_position[0], [0, 1], [top_color_rgb[0], bottom_color_rgb[0]]) * 255)
@@ -1031,10 +1247,15 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def change_tab_based_on_selected_item(self, button):
         ## Collocations
-        if button == self.collocationSettings_btn or button == self.collocationSettings_btn2:
+        if (
+            button == self.collocationSettings_btn
+            or button == self.collocationSettings_btn2
+        ):
             self.parameters_window.setCurrentIndex(6)
         ## Font Size
-        elif button == self.fontSizeSettings_btn or button == self.fontSizeSettings_btn2:
+        elif (
+            button == self.fontSizeSettings_btn or button == self.fontSizeSettings_btn2
+        ):
             self.parameters_window.setCurrentIndex(1)
         ## Repeat
         elif button == self.repeatWords_btn:
@@ -1051,7 +1272,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def update_info_labels(self):
         self.repeat_info_label.setText(f"{self.repeat_checkbox.isChecked()}")
-        self.collocations_info_label.setText(f"{self.collocations_checkbox.isChecked()}")
+        self.collocations_info_label.setText(
+            f"{self.collocations_checkbox.isChecked()}"
+        )
 
     ## GENERATED FILE HANDLING FUNCTIONS ##
     # Generate a random string anf place it before a file name's extension
@@ -1075,7 +1298,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             output_full_path = rf"{self.output_image_path}"
             new_image_name = self.random_string_generator(output_full_path)
             # transfer newly renamed file to stash folder
-            stashed_file_location = rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            stashed_file_location = (
+                rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            )
             os.rename(new_image_name, stashed_file_location)
         elif self.export_format_options.currentText() == "BOTH":
             output_full_path = rf"{self.output_image_path_2}"
@@ -1084,18 +1309,24 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             png_name, png_ext = os.path.splitext(rf"{new_image_name}")
             svg_name, svg_ext = os.path.splitext(rf"{self.output_image_path}")
             output_full_path_svg = rf"{png_name}{svg_ext}"
-            os.rename(self.output_image_path, output_full_path_svg)  # rename the actual file on disk
+            os.rename(
+                self.output_image_path, output_full_path_svg
+            )  # rename the actual file on disk
             # transfer newly renamed file to stash folder
             stashed_file_location = rf"{os.path.join(stash_folder_name, os.path.basename(output_full_path_svg))}"
             os.rename(rf"{output_full_path_svg}", rf"{stashed_file_location}")
             # transfer PNG to stash folder
-            stashed_file_location_PNG = rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            stashed_file_location_PNG = (
+                rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            )
             os.rename(new_image_name, stashed_file_location_PNG)
         else:
             output_full_path = rf"{self.output_image_path_1}"
             new_image_name = self.random_string_generator(output_full_path)
             # transfer newly renamed file to stash folder
-            stashed_file_location = rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            stashed_file_location = (
+                rf"{os.path.join(stash_folder_name, os.path.basename(new_image_name))}"
+            )
             os.rename(new_image_name, stashed_file_location)
 
         self.stash_last_generated_button.setVisible(False)  # Hide button after stashing
@@ -1109,7 +1340,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             os.remove(self.output_image_path)
         else:
             os.remove(self.output_image_path_1)
-        self.delete_last_generated_button.setVisible(False)  # Hide button after deleting
+        self.delete_last_generated_button.setVisible(
+            False
+        )  # Hide button after deleting
         self.stash_last_generated_button.setVisible(False)  # Hide Stash button
 
     ## Font Size Sliders - Preset Buttons
@@ -1133,7 +1366,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def fontAwesomeIconsList_fnc(self):
         self.emoji_list.clear()
-        fontAwesome_font_path = resource_path("emojiFonts/Font Awesome 6 Free-Solid-900.otf")
+        fontAwesome_font_path = resource_path(
+            "emojiFonts/Font Awesome 6 Free-Solid-900.otf"
+        )
         font_id = QFontDatabase.addApplicationFont(fontAwesome_font_path)
         font_family_fontAwesome = QFontDatabase.applicationFontFamilies(font_id)[0]
         q_font_fontAwesome = QFont(font_family_fontAwesome, 50)
@@ -1141,7 +1376,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         for icon_key, icon_info in fontAwesome_data.items():
             if "styles" in icon_info and "solid" in icon_info["styles"]:
                 search_terms = icon_info["search"]["terms"]
-                icon_unicode = chr(int(icon_info["unicode"], 16))  # Transform hexadecimal to Unicode
+                icon_unicode = chr(
+                    int(icon_info["unicode"], 16)
+                )  # Transform hexadecimal to Unicode
                 # item_text = f"{icon_unicode} {', '.join(search_terms)}"
                 item = QListWidgetItem(icon_unicode)
                 self.emoji_list.addItem(item)
@@ -1236,7 +1473,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def custom_regexp(self):
         ## Heterogeneous - GOOD ?
         if self.heterogeneous_checkbox.isChecked():
-            regxp = r".+"  # - Any character can be a word or part of a word
+            regxp = r".+"  # - Any character can be a word or part of a word - Words are in order, due to space character being considered a word
 
         ## AlphaNumeric - GOOD
         elif self.binary_checkbox.isChecked():
@@ -1244,8 +1481,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         ## URL - Good, except for emojis as part of word
         elif self.url_checkbox.isChecked():
-            regxp = r"\b[\w\d/.'-]+\b"  # - Includes any punctuation, or character if part of a word, including numbers
-
+            regxp = (
+                regxp
+            ) = r"\b[\w'/.'-]+\b|[^\w\s]"  # - Includes any punctuation, or character if part of a word, including numbers, word order is randomized
         ## Disorder - GOOD
         elif self.disorder_checkbox.isChecked():
             regxp = r"\S"  # - treats characters as a word(all letters will be placed randomly, not as part of the word)
@@ -1262,6 +1500,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.gradient_window.close()
         self.error_window.close()
         self.gallery.close()
+        self.storeProfile_window.close()
 
     def on_gallery_close(self):
         # Initialize a separate flag, to check if window is closed or not, because window closed detection is garbage. window.isHidden() is also garbage.
@@ -1272,6 +1511,334 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.mask_dimensions_label.setText(f"")
             self.mask_image_thumbnail.setText(f"")
             self.mask_image_thumbnail.setVisible(False)
+
+    ## test
+
+    def init_SettingsFile_fnc(self):
+        # Initialize Settings File(db)
+        db_file = "wcgx.db"
+        if not os.path.isfile(db_file):
+            # Create and Connect to the SQLite database
+            conn = sqlite3.connect("wcgx.db")
+            # Create a cursor object
+            cursor = conn.cursor()
+            # Settings to be stored in Default profile
+            settings_to_insert = [
+                ("Min. Font Size", self.min_font_size_slider.value()),
+                ("Max. Font Size", self.max_font_size_slider.value()),
+                ("Margin", self.margin_slider.value()),
+                ("H. Odds", self.prefer_horizontal_slider.value()),
+                ("Font Step", self.font_step_slider.value()),
+                (
+                    "Character Filtering",
+                    self.characterFilteringOptionsGroup.checkedButton().objectName(),
+                ),
+                ("CLC", int(self.collocations_checkbox.isChecked())),
+                ("CLC. Thresh", self.collocations_thresh_slider.value()),
+                ("Repeat", int(self.repeat_checkbox.isChecked())),
+                ("Color Preset", self.colormaps_dropdown.currentText()),
+                ("Min Red", self.red_min.value()),
+                ("Min Green", self.green_min.value()),
+                ("Min Blue", self.blue_min.value()),
+                ("Max Red", self.red_max.value()),
+                ("Max Green", self.green_max.value()),
+                ("Max Blue", self.blue_max.value()),
+            ]
+            # Text to be stored in Default profile
+            text_to_insert = [
+                (
+                    "Default",
+                    "WCGX - WordCloud Generator X-Treme",
+                ),
+            ]
+            # Create table "Settings"
+            cursor.execute(
+                """
+                CREATE TABLE Settings (
+                    Profile TEXT NOT NULL,
+                    Key TEXT NOT NULL,
+                    Value,
+                    PRIMARY KEY (Profile, Key)
+                );
+                """
+            )
+            # Create Text
+            cursor.execute(
+                """
+                CREATE TABLE IF NOT EXISTS Text (
+                    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Profile TEXT NOT NULL,
+                    Value TEXT
+                );
+                """
+            )
+            conn.commit()  # Commit the creation of the table
+
+            # Insert Text
+            for entry in text_to_insert:
+                profile, value = entry
+                cursor.execute(
+                    """
+                    INSERT INTO Text (Profile, Value) VALUES (?, ?);
+                    """,
+                    (profile, value),
+                )
+            conn.commit()  # Commit the insert transactions
+
+            ## Insert settings
+            for key, value in settings_to_insert:
+                cursor.execute(
+                    """
+                    INSERT INTO Settings (Profile, Key, Value) VALUES ('Default', ?, ?);
+                """,
+                    (key, value),
+                )
+            # Commit the transaction
+            conn.commit()
+            self.refresh_SettingsList_fnc()
+            self.refresh_TextSettingsList_fnc()
+        else:
+            self.refresh_SettingsList_fnc()
+            self.refresh_TextSettingsList_fnc()
+
+    def refresh_SettingsList_fnc(self):
+        # Connect to the SQLite database
+        conn = sqlite3.connect("wcgx.db")
+        # Create a cursor object
+        cursor = conn.cursor()
+        # Populate the settingsProfiles_list QComboBox with profile names
+        cursor.execute("SELECT DISTINCT Profile FROM Settings")
+        all_profiles = cursor.fetchall()
+        # Clear the QComboBox before adding new items
+        self.settingsProfiles_list.clear()
+        for profile in all_profiles:
+            self.settingsProfiles_list.addItem(profile[0])
+        # Close the database connection
+        conn.close()
+
+    def refresh_TextSettingsList_fnc(self):
+        # Connect to the SQLite database
+        conn = sqlite3.connect("wcgx.db")
+        # Create a cursor object
+        cursor = conn.cursor()
+        # Populate the settingsProfiles_list QComboBox with profile names
+        cursor.execute("SELECT DISTINCT Profile FROM Text")
+        all_profiles = cursor.fetchall()
+        self.textProfiles_list.clear()
+        for profile in all_profiles:
+            self.textProfiles_list.addItem(profile[0])
+        # Close the database connection
+        conn.close()
+
+    def return_SettingsProfiles_fnc(self, profile, key):
+        # Connect to the SQLite database
+        conn = sqlite3.connect("wcgx.db")
+        cursor = conn.cursor()
+
+        # Prepare the SQL query to select the value
+        cursor.execute(
+            "SELECT Value FROM Settings WHERE Profile=? AND Key=?", (profile, key)
+        )
+
+        result = cursor.fetchone()
+
+        # Close the database connection
+        conn.close()
+
+        # Return the profile names
+        if result:
+            return result[0]
+        else:
+            return None
+
+    def return_TextProfiles_fnc(self, profile):
+        conn = sqlite3.connect("wcgx.db")
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT Value FROM Text WHERE Profile=?", (profile,))
+
+        result = (
+            cursor.fetchone()
+        )  # fetchone() since there's only one entry per profile
+
+        conn.close()
+
+        return result[0] if result else None
+
+    def apply_SettingsProfile_fnc(self):
+        min_font_size = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Min. Font Size"
+        )
+        max_font_size = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Max. Font Size"
+        )
+        margin = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Margin"
+        )
+        horizontal_odds = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "H. Odds"
+        )
+        font_step = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Font Step"
+        )
+        char_filtering = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Character Filtering"
+        )
+        clc = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "CLC"
+        )
+        clc_thresh = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "CLC. Thresh"
+        )
+        repeat = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Repeat"
+        )
+        color_preset = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Color Preset"
+        )
+        min_red = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Min Red"
+        )
+        min_green = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Min Green"
+        )
+        min_blue = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Min Blue"
+        )
+        max_red = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Max Red"
+        )
+        max_green = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Max Green"
+        )
+        max_blue = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Max Blue"
+        )
+        self.min_font_size_slider.setValue(min_font_size)
+        self.max_font_size_slider.setValue(max_font_size)
+        self.margin_slider.setValue(margin)
+        self.prefer_horizontal_slider.setValue(horizontal_odds)
+        self.font_step_slider.setValue(font_step)
+        getattr(self, char_filtering).setChecked(True)
+        self.collocations_checkbox.setChecked(clc)
+        self.collocations_thresh_slider.setValue(clc_thresh)
+        self.repeat_checkbox.setChecked(repeat)
+        self.colormaps_dropdown.setCurrentText(color_preset)
+        self.red_min.setValue(min_red)
+        self.green_min.setValue(min_green)
+        self.blue_min.setValue(min_blue)
+        self.red_max.setValue(max_red)
+        self.green_max.setValue(max_green)
+        self.blue_max.setValue(max_blue)
+
+    def applyTextProfile_fnc(self):
+        profile = self.textProfiles_list.currentText()
+        text_entry = self.return_TextProfiles_fnc(profile)
+        if text_entry:
+            self.word_input.setText(text_entry)
+
+    def storeProfile_fnc(self):
+        self.storeProfile_window.show()
+        # Identify the button that was clicked
+        button = self.sender()
+
+        if button.objectName() == "storeSettingsProfile_btn":
+            self.storeProfile_window.okay_store_btn.clicked.connect(
+                self.storeSettingsProfileOkAction
+            )
+        if button.objectName() == "storeTextProfile_btn":
+            self.storeProfile_window.okay_store_btn.clicked.connect(
+                self.storeTextProfileOkAction
+            )
+
+    def storeSettingsProfileOkAction(self):
+        if self.storeProfile_window.profile_name.toPlainText() != "":
+            # Create and Connect to the SQLite database
+            conn = sqlite3.connect("wcgx.db")
+            # Create a cursor object
+            cursor = conn.cursor()
+            # Settings to be stored in Default profile
+            settings_to_insert = [
+                ("Min. Font Size", self.min_font_size_slider.value()),
+                ("Max. Font Size", self.max_font_size_slider.value()),
+                ("Margin", self.margin_slider.value()),
+                ("H. Odds", self.prefer_horizontal_slider.value()),
+                ("Font Step", self.font_step_slider.value()),
+                (
+                    "Character Filtering",
+                    self.characterFilteringOptionsGroup.checkedButton().objectName(),
+                ),
+                ("CLC", int(self.collocations_checkbox.isChecked())),
+                ("CLC. Thresh", self.collocations_thresh_slider.value()),
+                ("Repeat", int(self.repeat_checkbox.isChecked())),
+                ("Color Preset", self.colormaps_dropdown.currentText()),
+                ("Min Red", self.red_min.value()),
+                ("Min Green", self.green_min.value()),
+                ("Min Blue", self.blue_min.value()),
+                ("Max Red", self.red_max.value()),
+                ("Max Green", self.green_max.value()),
+                ("Max Blue", self.blue_max.value()),
+            ]
+            # Get the profile name from the user input
+            profile_name = (
+                self.storeProfile_window.profile_name.toPlainText().strip().capitalize()
+            )
+
+            # Insert settings with the user-provided profile name
+            for key, value in settings_to_insert:
+                cursor.execute(
+                    """
+                INSERT INTO Settings (Profile, Key, Value) VALUES (?, ?, ?)
+                ON CONFLICT(Profile, Key) DO UPDATE SET Value = excluded.Value;
+                """,
+                    (profile_name, key, value),
+                )
+
+            # Commit the transaction
+            conn.commit()
+            self.storeProfile_window.close()
+            # Refresh the settings list
+            self.refresh_SettingsList_fnc()
+        else:
+            self.error_window.error_lbl.setText(
+                f"\n # Error:\nProfile name cannot be blank"
+            )
+            self.error_window.show()
+            self.error_window.adjustSize()
+
+    def storeTextProfileOkAction(self):
+        profile_name = (
+            self.storeProfile_window.profile_name.toPlainText().strip().capitalize()
+        )
+        text = self.word_input.toPlainText()
+        if self.storeProfile_window.profile_name.toPlainText() != "":
+            # Connect to the database
+            conn = sqlite3.connect("wcgx.db")
+            cursor = conn.cursor()
+
+            # Insert the user-provided text into the Text table under the given profile name
+            cursor.execute(
+                """
+                INSERT INTO Text (Profile, Value) VALUES (?, ?);
+                """,
+                (profile_name, text),
+            )
+            conn.commit()  # Commit the insert transaction
+
+            # Close the database connection
+            conn.close()
+            self.storeProfile_window.close()
+            # Refresh the settings list
+            self.refresh_TextSettingsList_fnc()
+        else:
+            self.error_window.error_lbl.setText(
+                f"\n # Error:\nProfile name cannot be blank"
+            )
+            self.error_window.show()
+            self.error_window.adjustSize()
+
+    def cancelSettingsStorage_fnc(self):
+        self.storeProfile_window.close()
 
 
 if __name__ == "__main__":

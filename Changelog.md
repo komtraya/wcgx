@@ -1,3 +1,10 @@
+**0.5.7**
+
+- The "URL" Character Filtering option in the "Char. Inc." tab now supports special characters as a single word
+- Implemented wcgx.db - facilitates settings and text storage
+    - wcgx.db will be created automatically on app start (if not yet created)
+
+
 **0.5.6**
 
 - You can now export Font Awesome masks to file (SVG or PNG)

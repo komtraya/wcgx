@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1943</width>
-    <height>1267</height>
+    <height>1317</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -126,6 +126,48 @@ font: 700 11pt &quot;Inter&quot;;
           <property name="verticalSpacing">
            <number>10</number>
           </property>
+          <item row="1" column="0">
+           <widget class="QPushButton" name="storeTextProfile_btn">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Store current text in WCGX.db</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/text_article.png</normaloff>:/Media/text_article.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QTabWidget" name="parameters_window">
             <property name="enabled">
@@ -456,7 +498,7 @@ QPushButton:checked {
                        </font>
                       </property>
                       <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Control the minimum font size of generated word(s) &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                       <property name="text">
                        <string>## Min Font Size</string>
@@ -508,7 +550,7 @@ QPushButton:checked {
                        <enum>Qt::ClickFocus</enum>
                       </property>
                       <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Set the minimum font size &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Minimum font size&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                       <property name="styleSheet">
                        <string notr="true"/>
@@ -523,7 +565,7 @@ QPushButton:checked {
                        <number>1</number>
                       </property>
                       <property name="value">
-                       <number>1</number>
+                       <number>2</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -707,7 +749,7 @@ QPushButton:pressed{
                        </font>
                       </property>
                       <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Control the maximum font size of generated word(s) &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                       <property name="text">
                        <string>## Max Font Size</string>
@@ -759,7 +801,7 @@ QPushButton:pressed{
                        <enum>Qt::ClickFocus</enum>
                       </property>
                       <property name="toolTip">
-                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Set the maximum font size &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Maximum font size&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                       </property>
                       <property name="styleSheet">
                        <string notr="true"/>
@@ -774,7 +816,7 @@ QPushButton:pressed{
                        <number>1</number>
                       </property>
                       <property name="value">
-                       <number>50</number>
+                       <number>28</number>
                       </property>
                       <property name="orientation">
                        <enum>Qt::Vertical</enum>
@@ -1269,7 +1311,7 @@ QPushButton:pressed{
                    <number>1</number>
                   </property>
                   <property name="value">
-                   <number>3</number>
+                   <number>4</number>
                   </property>
                   <property name="orientation">
                    <enum>Qt::Vertical</enum>
@@ -2067,7 +2109,7 @@ QPushButton:checked {
                 <x>130</x>
                 <y>10</y>
                 <width>406</width>
-                <height>477</height>
+                <height>611</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -2140,7 +2182,8 @@ ___</string>
                     </property>
                     <property name="text">
                      <string># Heterogeneous
- - Any character can be a word or part of a word</string>
+ - Any character can be a word or part of a word
+ - Words are in order</string>
                     </property>
                     <property name="textFormat">
                      <enum>Qt::MarkdownText</enum>
@@ -2200,7 +2243,7 @@ QPushButton:checked {
                      <bool>true</bool>
                     </property>
                     <property name="checked">
-                     <bool>true</bool>
+                     <bool>false</bool>
                     </property>
                     <property name="autoRepeat">
                      <bool>false</bool>
@@ -2223,6 +2266,12 @@ QPushButton:checked {
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_13">
                   <property name="spacing">
@@ -2250,11 +2299,18 @@ QPushButton:checked {
                     </property>
                     <property name="text">
                      <string># URL
- - allows special characters to be part of a word
- - example: website.com/page</string>
+ - Allows any special character to be part of a word, or a single word
+ - example: website.com/page
+ - Words in random order</string>
                     </property>
                     <property name="textFormat">
                      <enum>Qt::MarkdownText</enum>
+                    </property>
+                    <property name="scaledContents">
+                     <bool>false</bool>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
                     </property>
                    </widget>
                   </item>
@@ -2311,7 +2367,7 @@ QPushButton:checked {
                      <bool>true</bool>
                     </property>
                     <property name="checked">
-                     <bool>false</bool>
+                     <bool>true</bool>
                     </property>
                     <property name="autoRepeat">
                      <bool>false</bool>
@@ -2330,7 +2386,7 @@ QPushButton:checked {
                <item>
                 <widget class="QFrame" name="BinaryFrame">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
+                  <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -2361,8 +2417,9 @@ QPushButton:checked {
                     </property>
                     <property name="text">
                      <string># AlphaNumeric
- - number = word
- - or alpanumeric words</string>
+ - Single number can be a word or part of a word
+ - example: 0 0n3
+ - Words in random order</string>
                     </property>
                     <property name="textFormat">
                      <enum>Qt::MarkdownText</enum>
@@ -2473,7 +2530,8 @@ QPushButton:checked {
                     <property name="text">
                      <string># Disorder
  - Treats all characters as a word
- - Example: word1 = w o r d 1</string>
+ - Example: word1 = w o r d 1
+ - Words in random order</string>
                     </property>
                     <property name="textFormat">
                      <enum>Qt::MarkdownText</enum>
@@ -2590,27 +2648,6 @@ color:#141414;
             </property>
             <property name="placeholderText">
              <string>WordCloud text goes here. Different words will be identified based on space. Ex: word1 word2</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="generated_text_label">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="font">
-             <font>
-              <family>Inter</family>
-              <pointsize>9</pointsize>
-              <italic>false</italic>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="text">
-             <string>Generated Text:</string>
             </property>
            </widget>
           </item>
@@ -3457,6 +3494,296 @@ color:white;
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_32">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QPushButton" name="storeSettingsProfile_btn">
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="Resources.qrc">
+           <normaloff>:/Media/Settings_CogWheel.png</normaloff>:/Media/Settings_CogWheel.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QFrame" name="settingsAreaFrame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QComboBox" name="settingsProfiles_list">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>211</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>11</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">/* Style the QComboBox */
+QComboBox {
+    background-color: #141414; /* Background color of the entire combo box */
+    border: 1px solid #e6e6e6; /* Border around the combo box */
+    padding: 10px; /* Padding inside the combo box */
+    color:#e6e6e6; /* Current text color*/
+}
+/* Style the QComboBox's drop-down list */
+QComboBox QAbstractItemView {
+    background-color: #141414; /* Background color of the drop-down list */
+    border: 1px solid #e6e6e6; /* Border around the drop-down list */
+    padding: 10px; /* Padding inside the drop-down list */
+	color:#e6e6e6;
+}
+/* Style individual items within the QComboBox's drop-down list */
+QComboBox QAbstractItemView::item {
+    background-color: #141414; /* Background color of each item in the list */
+    padding: 1px; /* Padding inside each item */
+	color: #e6e6e6;
+}
+/* Style the selected item within the drop-down list */
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0,200,0,150); /* Background color of the selected item */
+    color: #e6e6e6; /* Text color of the selected item */
+}
+/* Style the drop-down list scroll bar (if it appears) */
+QComboBox QScrollBar:vertical {
+    width: 0px; /* Width of the vertical scrollbar */
+    background: #e6e6e6; /* Background color of the scrollbar */
+}
+/* Style the drop-down list scroll bar handle (thumb) */
+QComboBox QScrollBar::handle:vertical {
+    background: #141414; /* Background color of the scrollbar handle */
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="applySettingsProfile_btn">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Apply selected settings</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/apply_agree2.png</normaloff>:/Media/apply_agree2.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="textSettings_lbl">
+         <property name="minimumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>32</width>
+           <height>32</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap resource="Resources.qrc">:/Media/text_article.png</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QFrame" name="textAreaFrame">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QComboBox" name="textProfiles_list">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>211</width>
+              <height>41</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>11</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">/* Style the QComboBox */
+QComboBox {
+    background-color: #141414; /* Background color of the entire combo box */
+    border: 1px solid #e6e6e6; /* Border around the combo box */
+    padding: 10px; /* Padding inside the combo box */
+    color:#e6e6e6; /* Current text color*/
+}
+/* Style the QComboBox's drop-down list */
+QComboBox QAbstractItemView {
+    background-color: #141414; /* Background color of the drop-down list */
+    border: 1px solid #e6e6e6; /* Border around the drop-down list */
+    padding: 10px; /* Padding inside the drop-down list */
+	color:#e6e6e6;
+}
+/* Style individual items within the QComboBox's drop-down list */
+QComboBox QAbstractItemView::item {
+    background-color: #141414; /* Background color of each item in the list */
+    padding: 1px; /* Padding inside each item */
+	color: #e6e6e6;
+}
+/* Style the selected item within the drop-down list */
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0,200,0,150); /* Background color of the selected item */
+    color: #e6e6e6; /* Text color of the selected item */
+}
+/* Style the drop-down list scroll bar (if it appears) */
+QComboBox QScrollBar:vertical {
+    width: 0px; /* Width of the vertical scrollbar */
+    background: #e6e6e6; /* Background color of the scrollbar */
+}
+/* Style the drop-down list scroll bar handle (thumb) */
+QComboBox QScrollBar::handle:vertical {
+    background: #141414; /* Background color of the scrollbar handle */
+}</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="applyTextProfile_btn">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Apply selected text</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/apply_agree2.png</normaloff>:/Media/apply_agree2.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="parameters_summary_label_2">
          <property name="styleSheet">
@@ -4847,30 +5174,6 @@ color: rgb(255, 255, 255);</string>
                </layout>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QFrame" name="frame_18">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="MinimumExpanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Plain</enum>
-               </property>
-               <property name="lineWidth">
-                <number>1</number>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_22">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-               </layout>
-              </widget>
-             </item>
             </layout>
            </widget>
           </item>
@@ -5006,7 +5309,7 @@ color: rgb(255, 255, 255);</string>
                 </font>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Select Mask image &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Select mask image from file&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{
@@ -5042,7 +5345,7 @@ border:2px solid red;
                 </font>
                </property>
                <property name="toolTip">
-                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Select Mask image &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Select FontAwesome icon and set as mask image&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{
@@ -5718,9 +6021,9 @@ border:1px solid #e6e6e6;
  </resources>
  <connections/>
  <buttongroups>
-  <buttongroup name="parametersButtonGroup"/>
-  <buttongroup name="fontSizePresetsGroup"/>
   <buttongroup name="randomColorsPresetsGroup"/>
+  <buttongroup name="fontSizePresetsGroup"/>
+  <buttongroup name="parametersButtonGroup"/>
   <buttongroup name="characterFilteringOptionsGroup"/>
  </buttongroups>
 </ui>
