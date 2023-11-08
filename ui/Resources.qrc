@@ -3,6 +3,7 @@
     <file>WCGXicon2.ico</file>
   </qresource>
   <qresource prefix="Media">
+    <file>delete.png</file>
     <file>apply_agree2.png</file>
     <file>text_article.png</file>
     <file>Settings_CogWheel.png</file>

@@ -1,3 +1,11 @@
+**0.5.9**
+
+- You can no longer store blank text in wcgx.db
+- When storing text under an existing profile name, the profile is correctly updated with the new text
+- WordCloud destination path is now added to the list of Settings that are stored in wcgx.db
+- Some UI touch-ups
+
+
 **0.5.7**
 
 - The "URL" Character Filtering option in the "Char. Inc." tab now supports special characters as a single word

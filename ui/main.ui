@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1943</width>
+    <width>1949</width>
     <height>1317</height>
    </rect>
   </property>
@@ -25,7 +25,6 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget{
-/*font: 700 9pt &quot;Inter&quot;;*/
 background-color: rgb(20, 20, 20);
 color:#e6e6e6;
 }
@@ -141,7 +140,7 @@ font: 700 11pt &quot;Inter&quot;;
              </size>
             </property>
             <property name="toolTip">
-             <string>Store current text in WCGX.db</string>
+             <string>Store current text in wcgx.db</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton:pressed{
@@ -1796,125 +1795,27 @@ QPushButton:checked {
                  <enum>QFrame::Raised</enum>
                 </property>
                 <layout class="QGridLayout" name="gridLayout_23">
-                 <item row="2" column="0">
-                  <widget class="QFrame" name="frame_36">
-                   <layout class="QHBoxLayout" name="horizontalLayout_46">
-                    <item>
-                     <spacer name="horizontalSpacer_58">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="label_collocations_thresh">
-                      <property name="sizePolicy">
-                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                        <horstretch>0</horstretch>
-                        <verstretch>0</verstretch>
-                       </sizepolicy>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Inter</family>
-                        <pointsize>9</pointsize>
-                        <italic>false</italic>
-                        <bold>true</bold>
-                        <kerning>true</kerning>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>## Collocation Threshold</string>
-                      </property>
-                      <property name="textFormat">
-                       <enum>Qt::MarkdownText</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QSlider" name="collocations_thresh_slider">
-                      <property name="enabled">
-                       <bool>true</bool>
-                      </property>
-                      <property name="minimumSize">
-                       <size>
-                        <width>30</width>
-                        <height>0</height>
-                       </size>
-                      </property>
-                      <property name="maximumSize">
-                       <size>
-                        <width>30</width>
-                        <height>16777215</height>
-                       </size>
-                      </property>
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="minimum">
-                       <number>0</number>
-                      </property>
-                      <property name="maximum">
-                       <number>100</number>
-                      </property>
-                      <property name="pageStep">
-                       <number>1</number>
-                      </property>
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QLabel" name="collocation_thresh_slider_label">
-                      <property name="maximumSize">
-                       <size>
-                        <width>50</width>
-                        <height>50</height>
-                       </size>
-                      </property>
-                      <property name="font">
-                       <font>
-                        <family>Inter</family>
-                        <pointsize>14</pointsize>
-                        <italic>false</italic>
-                        <bold>true</bold>
-                        <kerning>true</kerning>
-                       </font>
-                      </property>
-                      <property name="text">
-                       <string>00</string>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="horizontalSpacer_59">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>40</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                   </layout>
-                  </widget>
-                 </item>
+                 <property name="leftMargin">
+                  <number>10</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>10</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>20</number>
+                 </property>
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
                  <item row="1" column="0" alignment="Qt::AlignHCenter">
                   <widget class="QLabel" name="label_25">
                    <property name="font">
                     <font>
                      <family>Inter</family>
-                     <pointsize>9</pointsize>
+                     <pointsize>11</pointsize>
                      <italic>false</italic>
                      <bold>true</bold>
                      <kerning>true</kerning>
@@ -1927,11 +1828,14 @@ expected co-occurrence by random chance.
 The collocation threshold is used as a filtering parameter
 to include only statistically significant bigrams in the word cloud.
 
-- A lower collocation threshold makes it easier for word pairs(bigrams)
-to pass the significance test and be treated as phrases.
-- A higher threshold means that bigrams must occur together
-much more frequently than expected by random chance
-to be included in the word cloud as 1 phrase.</string>
+- Lower collocation threshold:
+   Makes it easier for word pairs(bigrams)
+   to pass the significance test and be treated as phrases.
+
+- Higher collocation threshold:
+   Bigrams must occur together
+   much more frequently than expected by random chance
+   to be included in the word cloud as 1 phrase.</string>
                    </property>
                   </widget>
                  </item>
@@ -1956,7 +1860,7 @@ to be included in the word cloud as 1 phrase.</string>
                        </font>
                       </property>
                       <property name="text">
-                       <string># Whether to include collocations (bigrams) of two words.
+                       <string># Enable/Disable the collocations algorithm.
 ___</string>
                       </property>
                       <property name="textFormat">
@@ -1965,21 +1869,23 @@ ___</string>
                      </widget>
                     </item>
                     <item>
-                     <spacer name="verticalSpacer_33">
-                      <property name="orientation">
-                       <enum>Qt::Vertical</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>40</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
                      <widget class="QFrame" name="frame_38">
                       <layout class="QHBoxLayout" name="horizontalLayout_47">
+                       <property name="spacing">
+                        <number>10</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>10</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>10</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
                        <item>
                         <spacer name="horizontalSpacer_60">
                          <property name="orientation">
@@ -2005,7 +1911,7 @@ ___</string>
                           </font>
                          </property>
                          <property name="text">
-                          <string>## Collocations</string>
+                          <string>## Collocations On/Off</string>
                          </property>
                          <property name="textFormat">
                           <enum>Qt::MarkdownText</enum>
@@ -2036,7 +1942,7 @@ ___</string>
                           </font>
                          </property>
                          <property name="toolTip">
-                          <string/>
+                          <string>Enable/Disable collocation algorithm</string>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">QPushButton {
@@ -2076,6 +1982,108 @@ QPushButton:checked {
                         </widget>
                        </item>
                        <item>
+                        <widget class="QFrame" name="frame_36">
+                         <property name="minimumSize">
+                          <size>
+                           <width>289</width>
+                           <height>150</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>200</height>
+                          </size>
+                         </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_46">
+                          <item>
+                           <widget class="QLabel" name="label_collocations_thresh">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Inter</family>
+                              <pointsize>9</pointsize>
+                              <italic>false</italic>
+                              <bold>true</bold>
+                              <kerning>true</kerning>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>## Collocation Threshold</string>
+                            </property>
+                            <property name="textFormat">
+                             <enum>Qt::MarkdownText</enum>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QSlider" name="collocations_thresh_slider">
+                            <property name="enabled">
+                             <bool>true</bool>
+                            </property>
+                            <property name="minimumSize">
+                             <size>
+                              <width>30</width>
+                              <height>0</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>30</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="cursor">
+                             <cursorShape>PointingHandCursor</cursorShape>
+                            </property>
+                            <property name="toolTip">
+                             <string>Adjust collocation threshold</string>
+                            </property>
+                            <property name="minimum">
+                             <number>0</number>
+                            </property>
+                            <property name="maximum">
+                             <number>100</number>
+                            </property>
+                            <property name="pageStep">
+                             <number>1</number>
+                            </property>
+                            <property name="orientation">
+                             <enum>Qt::Vertical</enum>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="collocation_thresh_slider_label">
+                            <property name="maximumSize">
+                             <size>
+                              <width>50</width>
+                              <height>50</height>
+                             </size>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <family>Inter</family>
+                              <pointsize>14</pointsize>
+                              <italic>false</italic>
+                              <bold>true</bold>
+                              <kerning>true</kerning>
+                             </font>
+                            </property>
+                            <property name="text">
+                             <string>00</string>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
                         <spacer name="horizontalSpacer_61">
                          <property name="orientation">
                           <enum>Qt::Horizontal</enum>
@@ -2093,6 +2101,19 @@ QPushButton:checked {
                     </item>
                    </layout>
                   </widget>
+                 </item>
+                 <item row="2" column="0">
+                  <spacer name="verticalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>40</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                 </layout>
                </widget>
@@ -3495,21 +3516,65 @@ color:white;
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_32">
        <item alignment="Qt::AlignHCenter">
-        <widget class="QPushButton" name="storeSettingsProfile_btn">
+        <widget class="QFrame" name="delete_btnFrame1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>267</width>
+           <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>267</width>
+           <height>50</height>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">QPushButton:pressed{
+          <string notr="true">QWidget{
+background-color: rgba(20, 20, 20,0);
+}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_10">
+          <property name="spacing">
+           <number>40</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>15</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="storeSettingsProfile_btn">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Store current settings in wcgx.db</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
 	 padding-left: 3px;
      padding-top: 3px;
 }
@@ -3517,20 +3582,92 @@ QPushButton{
 background-color: rgba(100,100,100,0);
 border-radius:10px;
 }</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="Resources.qrc">
-           <normaloff>:/Media/Settings_CogWheel.png</normaloff>:/Media/Settings_CogWheel.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>32</width>
-           <height>32</height>
-          </size>
-         </property>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/Settings_CogWheel.png</normaloff>:/Media/Settings_CogWheel.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="settingsProfiles_lbl">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>10</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Settings Profiles</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="deleteSettingsProfile_btn">
+            <property name="minimumSize">
+             <size>
+              <width>14</width>
+              <height>15</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>14</width>
+              <height>15</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Delete selected Settings profile</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/delete.png</normaloff>:/Media/delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>14</width>
+              <height>15</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter">
@@ -3542,6 +3679,21 @@ border-radius:10px;
           </sizepolicy>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QComboBox" name="settingsProfiles_list">
             <property name="sizePolicy">
@@ -3647,28 +3799,159 @@ border-radius:10px;
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="textSettings_lbl">
+        <widget class="QFrame" name="delete_btnFrame2_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>267</width>
+           <height>30</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>32</width>
-           <height>32</height>
+           <width>267</width>
+           <height>50</height>
           </size>
          </property>
-         <property name="text">
-          <string/>
+         <property name="styleSheet">
+          <string notr="true">QWidget{
+background-color: rgba(20, 20, 20,0);
+}</string>
          </property>
-         <property name="pixmap">
-          <pixmap resource="Resources.qrc">:/Media/text_article.png</pixmap>
-         </property>
-         <property name="scaledContents">
-          <bool>true</bool>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <property name="spacing">
+           <number>50</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>15</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QPushButton" name="storeTextProfile_btn2">
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Store current text in wcgx.db</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
+/*	 padding-left: 3px;
+     padding-top: 3px;*/
+    border-style: inset;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/text_article.png</normaloff>:/Media/text_article.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="textProfiles_lbl">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>106</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>10</pointsize>
+              <italic>false</italic>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>Text Profiles</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignRight">
+           <widget class="QPushButton" name="deleteTextProfile_btn">
+            <property name="minimumSize">
+             <size>
+              <width>14</width>
+              <height>15</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>14</width>
+              <height>15</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Delete selected Text profile</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,0);
+border-radius:10px;
+}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="Resources.qrc">
+              <normaloff>:/Media/delete.png</normaloff>:/Media/delete.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>14</width>
+              <height>15</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item alignment="Qt::AlignHCenter">
@@ -3680,6 +3963,21 @@ border-radius:10px;
           </sizepolicy>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <property name="spacing">
+           <number>10</number>
+          </property>
+          <property name="leftMargin">
+           <number>10</number>
+          </property>
+          <property name="topMargin">
+           <number>10</number>
+          </property>
+          <property name="rightMargin">
+           <number>10</number>
+          </property>
+          <property name="bottomMargin">
+           <number>10</number>
+          </property>
           <item>
            <widget class="QComboBox" name="textProfiles_list">
             <property name="sizePolicy">
@@ -3784,19 +4082,32 @@ border-radius:10px;
          </layout>
         </widget>
        </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
        <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="parameters_summary_label_2">
          <property name="styleSheet">
           <string notr="true">font: 700 14pt &quot;Inter&quot;;</string>
          </property>
          <property name="text">
-          <string>Parameters</string>
+          <string>WordCloud Parameters</string>
          </property>
          <property name="wordWrap">
           <bool>false</bool>
          </property>
          <property name="margin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <property name="indent">
           <number>-1</number>
@@ -4194,6 +4505,12 @@ color:#e6e6e6;</string>
               <height>100</height>
              </size>
             </property>
+            <property name="font">
+             <font>
+              <family>Inter</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_19">
              <property name="spacing">
               <number>15</number>
@@ -4208,26 +4525,43 @@ color:#e6e6e6;</string>
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>10</number>
              </property>
-             <item alignment="Qt::AlignHCenter">
+             <item>
               <widget class="QLabel" name="label_color_presets">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
-                 <width>150</width>
-                 <height>30</height>
+                 <width>200</width>
+                 <height>40</height>
                 </size>
                </property>
                <property name="font">
                 <font>
                  <family>Inter</family>
-                 <pointsize>10</pointsize>
+                 <pointsize>12</pointsize>
                  <italic>false</italic>
                  <bold>true</bold>
                 </font>
                </property>
+               <property name="styleSheet">
+                <string notr="true">QLabel{
+font: 700 12pt &quot;Inter&quot;;
+}</string>
+               </property>
                <property name="text">
                 <string>Color Presets</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
                </property>
               </widget>
              </item>
@@ -6023,7 +6357,7 @@ border:1px solid #e6e6e6;
  <buttongroups>
   <buttongroup name="randomColorsPresetsGroup"/>
   <buttongroup name="fontSizePresetsGroup"/>
-  <buttongroup name="parametersButtonGroup"/>
   <buttongroup name="characterFilteringOptionsGroup"/>
+  <buttongroup name="parametersButtonGroup"/>
  </buttongroups>
 </ui>

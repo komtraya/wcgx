@@ -79,9 +79,6 @@ class GradientWindow(widget.QWidget, Ui_GradientWindow):
         self.gradient_push_indicator_lbl.setText(f"{int}")
 
 
-json_file_path = resource_path("fontAwesomeIcons.json")
-
-
 class GalleryWindow(widget.QWidget, Ui_GalleryWindow):
     def __init__(self):
         super().__init__()
@@ -140,6 +137,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.gradient_window = GradientWindow()
         self.error_window.close_btn.clicked.connect(lambda: self.error_window.close())
         self.storeProfile_window = StoreProfileWindow()
+        self.deleteProfile_window = DeleteProfileWindow(self)
         ##### ---------- #####
         self.gallery = GalleryWindow()
         ## Future color preset implementation(list needs sorting)
@@ -158,9 +156,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         ## Settings
         self.storeSettingsProfile_btn.clicked.connect(self.storeProfile_fnc)
         self.storeTextProfile_btn.clicked.connect(self.storeProfile_fnc)
+        self.storeTextProfile_btn2.clicked.connect(self.storeProfile_fnc)
         self.storeProfile_window.cancel_store_btn.clicked.connect(
             self.cancelSettingsStorage_fnc
         )
+
         ## Parameters display function connect
         self.parametersButtonGroup.buttonClicked.connect(
             self.change_tab_based_on_selected_item
@@ -301,7 +301,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.gallery.closeEvent = lambda close: self.on_gallery_close()
 
         ##Settings
-        self.init_SettingsFile_fnc()
+        self.init_wcgx_db()
         self.applySettingsProfile_btn.clicked.connect(self.apply_SettingsProfile_fnc)
         self.applyTextProfile_btn.clicked.connect(self.applyTextProfile_fnc)
 
@@ -1501,6 +1501,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.error_window.close()
         self.gallery.close()
         self.storeProfile_window.close()
+        self.deleteProfile_window.close()
 
     def on_gallery_close(self):
         # Initialize a separate flag, to check if window is closed or not, because window closed detection is garbage. window.isHidden() is also garbage.
@@ -1514,7 +1515,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## test
 
-    def init_SettingsFile_fnc(self):
+    def init_wcgx_db(self):
         # Initialize Settings File(db)
         db_file = "wcgx.db"
         if not os.path.isfile(db_file):
@@ -1666,6 +1667,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         return result[0] if result else None
 
     def apply_SettingsProfile_fnc(self):
+        destination_folder = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Destination Folder"
+        )
         min_font_size = self.return_SettingsProfiles_fnc(
             self.settingsProfiles_list.currentText(), "Min. Font Size"
         )
@@ -1730,6 +1734,22 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.red_max.setValue(max_red)
         self.green_max.setValue(max_green)
         self.blue_max.setValue(max_blue)
+        self.destination_path = destination_folder
+        if not self.destination_path:
+            self.open_destination_folder.setVisible(False)
+            self.select_destination_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+            )
+        else:
+            self.select_destination_button.setStyleSheet(
+                """
+            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+            QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA ;border-radius:10px;}"""
+            )
+            self.open_destination_folder.setVisible(True)
+        self.enable_WordCloud_Generator_Button()
 
     def applyTextProfile_fnc(self):
         profile = self.textProfiles_list.currentText()
@@ -1738,18 +1758,34 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.word_input.setText(text_entry)
 
     def storeProfile_fnc(self):
-        self.storeProfile_window.show()
         # Identify the button that was clicked
         button = self.sender()
-
+        self.storeProfile_window.label_x.setVisible(False)
+        # Disconnect button from function (if already exists)
+        try:
+            self.storeProfile_window.okay_store_btn.clicked.disconnect()
+        except:
+            pass
         if button.objectName() == "storeSettingsProfile_btn":
+            self.storeProfile_window.show()
             self.storeProfile_window.okay_store_btn.clicked.connect(
                 self.storeSettingsProfileOkAction
             )
-        if button.objectName() == "storeTextProfile_btn":
-            self.storeProfile_window.okay_store_btn.clicked.connect(
-                self.storeTextProfileOkAction
-            )
+        if (
+            button.objectName() == "storeTextProfile_btn"
+            or button.objectName() == "storeTextProfile_btn2"
+        ):
+            if self.word_input.toPlainText() != "":
+                self.storeProfile_window.show()
+                self.storeProfile_window.okay_store_btn.clicked.connect(
+                    self.storeTextProfileOkAction
+                )
+            else:
+                self.error_window.error_lbl.setText(
+                    f"\n # Error:\nMaybe add some text first, then you can store it."
+                )
+                self.error_window.show()
+                self.error_window.adjustSize()
 
     def storeSettingsProfileOkAction(self):
         if self.storeProfile_window.profile_name.toPlainText() != "":
@@ -1759,6 +1795,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             cursor = conn.cursor()
             # Settings to be stored in Default profile
             settings_to_insert = [
+                ("Destination Folder", self.destination_path),
                 ("Min. Font Size", self.min_font_size_slider.value()),
                 ("Max. Font Size", self.max_font_size_slider.value()),
                 ("Margin", self.margin_slider.value()),
@@ -1811,34 +1848,128 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.storeProfile_window.profile_name.toPlainText().strip().capitalize()
         )
         text = self.word_input.toPlainText()
-        if self.storeProfile_window.profile_name.toPlainText() != "":
+
+        if profile_name != "":
             # Connect to the database
             conn = sqlite3.connect("wcgx.db")
             cursor = conn.cursor()
 
-            # Insert the user-provided text into the Text table under the given profile name
+            # Check if the profile already exists
             cursor.execute(
-                """
-                INSERT INTO Text (Profile, Value) VALUES (?, ?);
-                """,
-                (profile_name, text),
+                "SELECT COUNT(*) FROM Text WHERE Profile = ?", (profile_name,)
             )
-            conn.commit()  # Commit the insert transaction
+            exists = cursor.fetchone()[0] > 0
 
-            # Close the database connection
-            conn.close()
+            if exists:
+                # Update the existing profile's text
+                cursor.execute(
+                    "UPDATE Text SET Value = ? WHERE Profile = ?", (text, profile_name)
+                )
+            else:
+                # Insert a new profile with the user-provided text
+                cursor.execute(
+                    "INSERT INTO Text (Profile, Value) VALUES (?, ?)",
+                    (profile_name, text),
+                )
+
+            conn.commit()  # Commit the transaction
+            conn.close()  # Close the database connection
             self.storeProfile_window.close()
             # Refresh the settings list
             self.refresh_TextSettingsList_fnc()
         else:
             self.error_window.error_lbl.setText(
-                f"\n # Error:\nProfile name cannot be blank"
+                "\n # Error:\nProfile name cannot be blank"
             )
             self.error_window.show()
             self.error_window.adjustSize()
 
     def cancelSettingsStorage_fnc(self):
         self.storeProfile_window.close()
+
+
+class DeleteProfileWindow(widget.QDialog, Ui_StoreProfileWindow):
+    def __init__(self, wcgx):
+        super().__init__()
+        self.setupUi(self)
+        self.main_window = wcgx
+
+        self.main_window.deleteSettingsProfile_btn.clicked.connect(
+            self.initDeleteProfile_fnc
+        )
+        self.main_window.deleteTextProfile_btn.clicked.connect(
+            self.initDeleteProfile_fnc
+        )
+        self.cancel_store_btn.clicked.connect(self.cancelDeleteProfile_fnc)
+
+    def cancelDeleteProfile_fnc(self):
+        self.close()
+
+    def deleteSettingsProfile(self):
+        profile_name = self.main_window.settingsProfiles_list.currentText()
+
+        conn = sqlite3.connect("wcgx.db")  # Connect to the database
+        cursor = conn.cursor()
+
+        # Delete the profile
+        cursor.execute("DELETE FROM Settings WHERE Profile = ?", (profile_name,))
+        conn.commit()  # Commit the delete transaction
+        conn.close()  # Close the database connection
+        self.close()
+        # Refresh the settings list
+        self.main_window.refresh_SettingsList_fnc()
+
+    def deleteTextProfile(self):
+        profile_name = (
+            self.main_window.textProfiles_list.currentText()
+        )  # Get selected profile name
+        conn = sqlite3.connect("wcgx.db")  # Connect to the database
+        cursor = conn.cursor()
+        # Delete the profile
+        cursor.execute("DELETE FROM Text WHERE Profile = ?", (profile_name,))
+        conn.commit()  # Commit the delete transaction
+        conn.close()  # Close the database connection
+        self.close()
+        # Refresh the settings list
+        self.main_window.refresh_TextSettingsList_fnc()
+
+    def initDeleteProfile_fnc(self):
+        button = self.sender()
+        self.profile_name.hide()
+        self.cancel_store_btn.setText("Cancel")
+        self.okay_store_btn.setText("Delete")
+        self.okay_store_btn.setStyleSheet("background-color:#141414; color:red;")
+        self.cancel_store_btn.setStyleSheet("background-color:#e6e6e6; color:#141414;")
+        self.setWindowTitle("Delete Profile")
+        self.setStyleSheet("background-color:red;")
+        self.setMinimumWidth(400)
+        self.setMinimumHeight(200)
+        # Disconnect any existing functions from button
+        try:
+            self.okay_store_btn.clicked.disconnect()
+        except:
+            pass
+        if (
+            button.objectName() == "deleteSettingsProfile_btn"
+            and self.main_window.settingsProfiles_list.currentText() is not ""
+        ):
+            self.okay_store_btn.clicked.connect(self.deleteSettingsProfile)
+            self.label_x.setText(
+                f'You are about to delete the Settings stored in "{self.main_window.settingsProfiles_list.currentText()}" profile.\nAre you sure?\nThis cannot be undone!\n\n\n'
+            )
+            self.adjustSize()
+            self.show()
+
+        if (
+            button.objectName() == "deleteTextProfile_btn"
+            and self.main_window.textProfiles_list.currentText() is not ""
+        ):
+            self.okay_store_btn.clicked.connect(self.deleteTextProfile)
+            self.label_x.setText(
+                f'You are about to delete the Text stored in "{self.main_window.textProfiles_list.currentText()}" profile.\nAre you sure?\nThis cannot be undone!\n\n\n'
+            )
+            self.adjustSize()
+            self.show()
 
 
 if __name__ == "__main__":

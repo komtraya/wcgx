@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1943, 1317)
+        MainWindow.resize(1949, 1317)
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -37,7 +37,6 @@ class Ui_MainWindow(object):
         icon.addFile(u":/Icon/WCGXicon2.ico", QSize(), QIcon.Normal, QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"QWidget{\n"
-"/*font: 700 9pt \"Inter\";*/\n"
 "background-color: rgb(20, 20, 20);\n"
 "color:#e6e6e6;\n"
 "}\n"
@@ -808,54 +807,18 @@ class Ui_MainWindow(object):
         self.frame_35.setFrameShape(QFrame.StyledPanel)
         self.frame_35.setFrameShadow(QFrame.Raised)
         self.gridLayout_23 = QGridLayout(self.frame_35)
+        self.gridLayout_23.setSpacing(0)
         self.gridLayout_23.setObjectName(u"gridLayout_23")
-        self.frame_36 = QFrame(self.frame_35)
-        self.frame_36.setObjectName(u"frame_36")
-        self.horizontalLayout_46 = QHBoxLayout(self.frame_36)
-        self.horizontalLayout_46.setObjectName(u"horizontalLayout_46")
-        self.horizontalSpacer_58 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_46.addItem(self.horizontalSpacer_58)
-
-        self.label_collocations_thresh = QLabel(self.frame_36)
-        self.label_collocations_thresh.setObjectName(u"label_collocations_thresh")
-        sizePolicy5.setHeightForWidth(self.label_collocations_thresh.sizePolicy().hasHeightForWidth())
-        self.label_collocations_thresh.setSizePolicy(sizePolicy5)
-        self.label_collocations_thresh.setFont(font)
-        self.label_collocations_thresh.setTextFormat(Qt.MarkdownText)
-
-        self.horizontalLayout_46.addWidget(self.label_collocations_thresh)
-
-        self.collocations_thresh_slider = QSlider(self.frame_36)
-        self.collocations_thresh_slider.setObjectName(u"collocations_thresh_slider")
-        self.collocations_thresh_slider.setEnabled(True)
-        self.collocations_thresh_slider.setMinimumSize(QSize(30, 0))
-        self.collocations_thresh_slider.setMaximumSize(QSize(30, 16777215))
-        self.collocations_thresh_slider.setCursor(QCursor(Qt.PointingHandCursor))
-        self.collocations_thresh_slider.setMinimum(0)
-        self.collocations_thresh_slider.setMaximum(100)
-        self.collocations_thresh_slider.setPageStep(1)
-        self.collocations_thresh_slider.setOrientation(Qt.Vertical)
-
-        self.horizontalLayout_46.addWidget(self.collocations_thresh_slider)
-
-        self.collocation_thresh_slider_label = QLabel(self.frame_36)
-        self.collocation_thresh_slider_label.setObjectName(u"collocation_thresh_slider_label")
-        self.collocation_thresh_slider_label.setMaximumSize(QSize(50, 50))
-        self.collocation_thresh_slider_label.setFont(font2)
-
-        self.horizontalLayout_46.addWidget(self.collocation_thresh_slider_label)
-
-        self.horizontalSpacer_59 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
-
-        self.horizontalLayout_46.addItem(self.horizontalSpacer_59)
-
-
-        self.gridLayout_23.addWidget(self.frame_36, 2, 0, 1, 1)
-
+        self.gridLayout_23.setContentsMargins(10, 0, 10, 20)
         self.label_25 = QLabel(self.frame_35)
         self.label_25.setObjectName(u"label_25")
-        self.label_25.setFont(font)
+        font3 = QFont()
+        font3.setFamilies([u"Inter"])
+        font3.setPointSize(11)
+        font3.setBold(True)
+        font3.setItalic(False)
+        font3.setKerning(True)
+        self.label_25.setFont(font3)
 
         self.gridLayout_23.addWidget(self.label_25, 1, 0, 1, 1, Qt.AlignHCenter)
 
@@ -872,14 +835,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_47.addWidget(self.label_26, 0, Qt.AlignHCenter)
 
-        self.verticalSpacer_33 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.verticalLayout_47.addItem(self.verticalSpacer_33)
-
         self.frame_38 = QFrame(self.frame_37)
         self.frame_38.setObjectName(u"frame_38")
         self.horizontalLayout_47 = QHBoxLayout(self.frame_38)
+        self.horizontalLayout_47.setSpacing(10)
         self.horizontalLayout_47.setObjectName(u"horizontalLayout_47")
+        self.horizontalLayout_47.setContentsMargins(10, 0, 10, 0)
         self.horizontalSpacer_60 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_47.addItem(self.horizontalSpacer_60)
@@ -916,6 +877,44 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_47.addWidget(self.collocations_checkbox)
 
+        self.frame_36 = QFrame(self.frame_38)
+        self.frame_36.setObjectName(u"frame_36")
+        self.frame_36.setMinimumSize(QSize(289, 150))
+        self.frame_36.setMaximumSize(QSize(16777215, 200))
+        self.horizontalLayout_46 = QHBoxLayout(self.frame_36)
+        self.horizontalLayout_46.setObjectName(u"horizontalLayout_46")
+        self.label_collocations_thresh = QLabel(self.frame_36)
+        self.label_collocations_thresh.setObjectName(u"label_collocations_thresh")
+        sizePolicy5.setHeightForWidth(self.label_collocations_thresh.sizePolicy().hasHeightForWidth())
+        self.label_collocations_thresh.setSizePolicy(sizePolicy5)
+        self.label_collocations_thresh.setFont(font)
+        self.label_collocations_thresh.setTextFormat(Qt.MarkdownText)
+
+        self.horizontalLayout_46.addWidget(self.label_collocations_thresh)
+
+        self.collocations_thresh_slider = QSlider(self.frame_36)
+        self.collocations_thresh_slider.setObjectName(u"collocations_thresh_slider")
+        self.collocations_thresh_slider.setEnabled(True)
+        self.collocations_thresh_slider.setMinimumSize(QSize(30, 0))
+        self.collocations_thresh_slider.setMaximumSize(QSize(30, 16777215))
+        self.collocations_thresh_slider.setCursor(QCursor(Qt.PointingHandCursor))
+        self.collocations_thresh_slider.setMinimum(0)
+        self.collocations_thresh_slider.setMaximum(100)
+        self.collocations_thresh_slider.setPageStep(1)
+        self.collocations_thresh_slider.setOrientation(Qt.Vertical)
+
+        self.horizontalLayout_46.addWidget(self.collocations_thresh_slider)
+
+        self.collocation_thresh_slider_label = QLabel(self.frame_36)
+        self.collocation_thresh_slider_label.setObjectName(u"collocation_thresh_slider_label")
+        self.collocation_thresh_slider_label.setMaximumSize(QSize(50, 50))
+        self.collocation_thresh_slider_label.setFont(font2)
+
+        self.horizontalLayout_46.addWidget(self.collocation_thresh_slider_label)
+
+
+        self.horizontalLayout_47.addWidget(self.frame_36)
+
         self.horizontalSpacer_61 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
 
         self.horizontalLayout_47.addItem(self.horizontalSpacer_61)
@@ -925,6 +924,10 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_23.addWidget(self.frame_37, 0, 0, 1, 1)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.gridLayout_23.addItem(self.verticalSpacer_2, 2, 0, 1, 1)
 
 
         self.verticalLayout_46.addWidget(self.frame_35)
@@ -1151,12 +1154,12 @@ class Ui_MainWindow(object):
         sizePolicy9.setVerticalStretch(0)
         sizePolicy9.setHeightForWidth(self.word_input.sizePolicy().hasHeightForWidth())
         self.word_input.setSizePolicy(sizePolicy9)
-        font3 = QFont()
-        font3.setFamilies([u"Inter"])
-        font3.setPointSize(14)
-        font3.setBold(True)
-        font3.setItalic(False)
-        self.word_input.setFont(font3)
+        font4 = QFont()
+        font4.setFamilies([u"Inter"])
+        font4.setPointSize(14)
+        font4.setBold(True)
+        font4.setItalic(False)
+        self.word_input.setFont(font4)
         self.word_input.setStyleSheet(u"QTextEdit{\n"
 "/*border:2px solid red;*/\n"
 "color:#141414;\n"
@@ -1182,12 +1185,12 @@ class Ui_MainWindow(object):
         sizePolicy10.setHeightForWidth(self.custom_font_directory_selection.sizePolicy().hasHeightForWidth())
         self.custom_font_directory_selection.setSizePolicy(sizePolicy10)
         self.custom_font_directory_selection.setMinimumSize(QSize(134, 30))
-        font4 = QFont()
-        font4.setFamilies([u"Inter"])
-        font4.setPointSize(9)
-        font4.setBold(True)
-        font4.setItalic(False)
-        self.custom_font_directory_selection.setFont(font4)
+        font5 = QFont()
+        font5.setFamilies([u"Inter"])
+        font5.setPointSize(9)
+        font5.setBold(True)
+        font5.setItalic(False)
+        self.custom_font_directory_selection.setFont(font5)
         self.custom_font_directory_selection.setStyleSheet(u"")
 
         self.verticalLayout_3.addWidget(self.custom_font_directory_selection)
@@ -1197,7 +1200,7 @@ class Ui_MainWindow(object):
         sizePolicy10.setHeightForWidth(self.load_emoji_fonts_btn.sizePolicy().hasHeightForWidth())
         self.load_emoji_fonts_btn.setSizePolicy(sizePolicy10)
         self.load_emoji_fonts_btn.setMinimumSize(QSize(107, 30))
-        self.load_emoji_fonts_btn.setFont(font4)
+        self.load_emoji_fonts_btn.setFont(font5)
         self.load_emoji_fonts_btn.setStyleSheet(u"QPushButton{\n"
 "background-color:#212121;\n"
 "color:#e6e6e6;\n"
@@ -1210,7 +1213,7 @@ class Ui_MainWindow(object):
         sizePolicy10.setHeightForWidth(self.load_appData_fonts_btn.sizePolicy().hasHeightForWidth())
         self.load_appData_fonts_btn.setSizePolicy(sizePolicy10)
         self.load_appData_fonts_btn.setMinimumSize(QSize(121, 30))
-        self.load_appData_fonts_btn.setFont(font4)
+        self.load_appData_fonts_btn.setFont(font5)
         self.load_appData_fonts_btn.setStyleSheet(u"QPushButton{\n"
 "background-color:#212121;\n"
 "color:#e6e6e6;\n"
@@ -1223,7 +1226,7 @@ class Ui_MainWindow(object):
         sizePolicy10.setHeightForWidth(self.load_system_fonts_btn.sizePolicy().hasHeightForWidth())
         self.load_system_fonts_btn.setSizePolicy(sizePolicy10)
         self.load_system_fonts_btn.setMinimumSize(QSize(121, 30))
-        self.load_system_fonts_btn.setFont(font4)
+        self.load_system_fonts_btn.setFont(font5)
         self.load_system_fonts_btn.setStyleSheet(u"QPushButton{\n"
 "background-color:#212121;\n"
 "color:#e6e6e6;\n"
@@ -1239,11 +1242,11 @@ class Ui_MainWindow(object):
         sizePolicy11.setHeightForWidth(self.filter_fonts_input.sizePolicy().hasHeightForWidth())
         self.filter_fonts_input.setSizePolicy(sizePolicy11)
         self.filter_fonts_input.setMaximumSize(QSize(16777215, 30))
-        font5 = QFont()
-        font5.setFamilies([u"Inter"])
-        font5.setPointSize(10)
-        font5.setBold(True)
-        self.filter_fonts_input.setFont(font5)
+        font6 = QFont()
+        font6.setFamilies([u"Inter"])
+        font6.setPointSize(10)
+        font6.setBold(True)
+        self.filter_fonts_input.setFont(font6)
         self.filter_fonts_input.setStyleSheet(u"color:#141414;")
 
         self.verticalLayout_3.addWidget(self.filter_fonts_input)
@@ -1253,12 +1256,12 @@ class Ui_MainWindow(object):
         sizePolicy8.setHeightForWidth(self.font_list.sizePolicy().hasHeightForWidth())
         self.font_list.setSizePolicy(sizePolicy8)
         self.font_list.setMinimumSize(QSize(0, 500))
-        font6 = QFont()
-        font6.setFamilies([u"Inter"])
-        font6.setPointSize(11)
-        font6.setBold(True)
-        font6.setItalic(False)
-        self.font_list.setFont(font6)
+        font7 = QFont()
+        font7.setFamilies([u"Inter"])
+        font7.setPointSize(11)
+        font7.setBold(True)
+        font7.setItalic(False)
+        self.font_list.setFont(font7)
         self.font_list.setStyleSheet(u"QListWidget{\n"
 "border:2px solid gray;\n"
 "color: #141414;\n"
@@ -1304,7 +1307,7 @@ class Ui_MainWindow(object):
         self.stash_last_generated_button.setObjectName(u"stash_last_generated_button")
         self.stash_last_generated_button.setMinimumSize(QSize(40, 40))
         self.stash_last_generated_button.setMaximumSize(QSize(40, 40))
-        self.stash_last_generated_button.setFont(font4)
+        self.stash_last_generated_button.setFont(font5)
         self.stash_last_generated_button.setStyleSheet(u"QPushButton {\n"
 "    background-color: green; /* or any other color you want */\n"
 "}\n"
@@ -1323,7 +1326,7 @@ class Ui_MainWindow(object):
         self.delete_last_generated_button.setObjectName(u"delete_last_generated_button")
         self.delete_last_generated_button.setMinimumSize(QSize(40, 40))
         self.delete_last_generated_button.setMaximumSize(QSize(40, 40))
-        self.delete_last_generated_button.setFont(font4)
+        self.delete_last_generated_button.setFont(font5)
         self.delete_last_generated_button.setStyleSheet(u"QPushButton {\n"
 "    background-color: red; /* or any other color you want */\n"
 "}\n"
@@ -1350,7 +1353,7 @@ class Ui_MainWindow(object):
         sizePolicy8.setHeightForWidth(self.export_as_frame.sizePolicy().hasHeightForWidth())
         self.export_as_frame.setSizePolicy(sizePolicy8)
         self.export_as_frame.setMinimumSize(QSize(100, 75))
-        self.export_as_frame.setFont(font4)
+        self.export_as_frame.setFont(font5)
         self.export_as_frame.setFlat(True)
         self.verticalLayout_26 = QVBoxLayout(self.export_as_frame)
         self.verticalLayout_26.setSpacing(0)
@@ -1363,7 +1366,7 @@ class Ui_MainWindow(object):
         sizePolicy14.setVerticalStretch(0)
         sizePolicy14.setHeightForWidth(self.exportAs_label.sizePolicy().hasHeightForWidth())
         self.exportAs_label.setSizePolicy(sizePolicy14)
-        self.exportAs_label.setFont(font4)
+        self.exportAs_label.setFont(font5)
 
         self.verticalLayout_26.addWidget(self.exportAs_label, 0, Qt.AlignHCenter)
 
@@ -1374,7 +1377,7 @@ class Ui_MainWindow(object):
         self.export_format_options.setObjectName(u"export_format_options")
         sizePolicy7.setHeightForWidth(self.export_format_options.sizePolicy().hasHeightForWidth())
         self.export_format_options.setSizePolicy(sizePolicy7)
-        self.export_format_options.setFont(font4)
+        self.export_format_options.setFont(font5)
         self.export_format_options.setStyleSheet(u"/* Style the QComboBox */\n"
 "QComboBox {\n"
 "    background-color: #141414; /* Background color of the entire combo box */\n"
@@ -1513,7 +1516,7 @@ class Ui_MainWindow(object):
         sizePolicy8.setHeightForWidth(self.generate_wordcloud_button.sizePolicy().hasHeightForWidth())
         self.generate_wordcloud_button.setSizePolicy(sizePolicy8)
         self.generate_wordcloud_button.setMinimumSize(QSize(250, 0))
-        self.generate_wordcloud_button.setFont(font4)
+        self.generate_wordcloud_button.setFont(font5)
         self.generate_wordcloud_button.setToolTipDuration(-1)
         self.generate_wordcloud_button.setStyleSheet(u"QPushButton{\n"
 "color: rgb(200,200,200);\n"
@@ -1551,7 +1554,7 @@ class Ui_MainWindow(object):
         self.SummaryFrame = QFrame(self.centralwidget)
         self.SummaryFrame.setObjectName(u"SummaryFrame")
         self.SummaryFrame.setMinimumSize(QSize(301, 401))
-        self.SummaryFrame.setFont(font4)
+        self.SummaryFrame.setFont(font5)
         self.SummaryFrame.setStyleSheet(u"QFrame{\n"
 "background-color:rgba(200,0,200,50);\n"
 "}\n"
@@ -1564,7 +1567,20 @@ class Ui_MainWindow(object):
         self.SummaryFrame.setFrameShadow(QFrame.Raised)
         self.verticalLayout_32 = QVBoxLayout(self.SummaryFrame)
         self.verticalLayout_32.setObjectName(u"verticalLayout_32")
-        self.storeSettingsProfile_btn = QPushButton(self.SummaryFrame)
+        self.delete_btnFrame1 = QFrame(self.SummaryFrame)
+        self.delete_btnFrame1.setObjectName(u"delete_btnFrame1")
+        sizePolicy4.setHeightForWidth(self.delete_btnFrame1.sizePolicy().hasHeightForWidth())
+        self.delete_btnFrame1.setSizePolicy(sizePolicy4)
+        self.delete_btnFrame1.setMinimumSize(QSize(267, 30))
+        self.delete_btnFrame1.setMaximumSize(QSize(267, 50))
+        self.delete_btnFrame1.setStyleSheet(u"QWidget{\n"
+"background-color: rgba(20, 20, 20,0);\n"
+"}")
+        self.horizontalLayout_10 = QHBoxLayout(self.delete_btnFrame1)
+        self.horizontalLayout_10.setSpacing(40)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(0, 15, 0, 0)
+        self.storeSettingsProfile_btn = QPushButton(self.delete_btnFrame1)
         self.storeSettingsProfile_btn.setObjectName(u"storeSettingsProfile_btn")
         self.storeSettingsProfile_btn.setMinimumSize(QSize(32, 32))
         self.storeSettingsProfile_btn.setMaximumSize(QSize(32, 32))
@@ -1581,24 +1597,62 @@ class Ui_MainWindow(object):
         self.storeSettingsProfile_btn.setIcon(icon3)
         self.storeSettingsProfile_btn.setIconSize(QSize(32, 32))
 
-        self.verticalLayout_32.addWidget(self.storeSettingsProfile_btn, 0, Qt.AlignHCenter)
+        self.horizontalLayout_10.addWidget(self.storeSettingsProfile_btn)
+
+        self.settingsProfiles_lbl = QLabel(self.delete_btnFrame1)
+        self.settingsProfiles_lbl.setObjectName(u"settingsProfiles_lbl")
+        sizePolicy4.setHeightForWidth(self.settingsProfiles_lbl.sizePolicy().hasHeightForWidth())
+        self.settingsProfiles_lbl.setSizePolicy(sizePolicy4)
+        self.settingsProfiles_lbl.setMinimumSize(QSize(0, 20))
+        font8 = QFont()
+        font8.setFamilies([u"Inter"])
+        font8.setPointSize(10)
+        font8.setBold(True)
+        font8.setItalic(False)
+        self.settingsProfiles_lbl.setFont(font8)
+
+        self.horizontalLayout_10.addWidget(self.settingsProfiles_lbl)
+
+        self.deleteSettingsProfile_btn = QPushButton(self.delete_btnFrame1)
+        self.deleteSettingsProfile_btn.setObjectName(u"deleteSettingsProfile_btn")
+        self.deleteSettingsProfile_btn.setMinimumSize(QSize(14, 15))
+        self.deleteSettingsProfile_btn.setMaximumSize(QSize(14, 15))
+        self.deleteSettingsProfile_btn.setStyleSheet(u"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}\n"
+"QPushButton{\n"
+"background-color: rgba(100,100,100,0);\n"
+"border-radius:10px;\n"
+"}")
+        icon4 = QIcon()
+        icon4.addFile(u":/Media/delete.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.deleteSettingsProfile_btn.setIcon(icon4)
+        self.deleteSettingsProfile_btn.setIconSize(QSize(14, 15))
+
+        self.horizontalLayout_10.addWidget(self.deleteSettingsProfile_btn, 0, Qt.AlignRight)
+
+
+        self.verticalLayout_32.addWidget(self.delete_btnFrame1, 0, Qt.AlignHCenter)
 
         self.settingsAreaFrame = QFrame(self.SummaryFrame)
         self.settingsAreaFrame.setObjectName(u"settingsAreaFrame")
         sizePolicy4.setHeightForWidth(self.settingsAreaFrame.sizePolicy().hasHeightForWidth())
         self.settingsAreaFrame.setSizePolicy(sizePolicy4)
         self.horizontalLayout_7 = QHBoxLayout(self.settingsAreaFrame)
+        self.horizontalLayout_7.setSpacing(10)
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
+        self.horizontalLayout_7.setContentsMargins(10, 10, 10, 10)
         self.settingsProfiles_list = QComboBox(self.settingsAreaFrame)
         self.settingsProfiles_list.setObjectName(u"settingsProfiles_list")
         sizePolicy4.setHeightForWidth(self.settingsProfiles_list.sizePolicy().hasHeightForWidth())
         self.settingsProfiles_list.setSizePolicy(sizePolicy4)
         self.settingsProfiles_list.setMinimumSize(QSize(211, 41))
-        font7 = QFont()
-        font7.setFamilies([u"Inter"])
-        font7.setPointSize(11)
-        font7.setBold(True)
-        self.settingsProfiles_list.setFont(font7)
+        font9 = QFont()
+        font9.setFamilies([u"Inter"])
+        font9.setPointSize(11)
+        font9.setBold(True)
+        self.settingsProfiles_list.setFont(font9)
         self.settingsProfiles_list.setStyleSheet(u"/* Style the QComboBox */\n"
 "QComboBox {\n"
 "    background-color: #141414; /* Background color of the entire combo box */\n"
@@ -1649,9 +1703,9 @@ class Ui_MainWindow(object):
 "background-color: rgba(100,100,100,0);\n"
 "border-radius:10px;\n"
 "}")
-        icon4 = QIcon()
-        icon4.addFile(u":/Media/apply_agree2.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.applySettingsProfile_btn.setIcon(icon4)
+        icon5 = QIcon()
+        icon5.addFile(u":/Media/apply_agree2.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.applySettingsProfile_btn.setIcon(icon5)
         self.applySettingsProfile_btn.setIconSize(QSize(32, 32))
 
         self.horizontalLayout_7.addWidget(self.applySettingsProfile_btn)
@@ -1659,27 +1713,80 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_32.addWidget(self.settingsAreaFrame, 0, Qt.AlignHCenter)
 
-        self.textSettings_lbl = QLabel(self.SummaryFrame)
-        self.textSettings_lbl.setObjectName(u"textSettings_lbl")
-        self.textSettings_lbl.setMinimumSize(QSize(32, 32))
-        self.textSettings_lbl.setMaximumSize(QSize(32, 32))
-        self.textSettings_lbl.setPixmap(QPixmap(u":/Media/text_article.png"))
-        self.textSettings_lbl.setScaledContents(True)
+        self.delete_btnFrame2_2 = QFrame(self.SummaryFrame)
+        self.delete_btnFrame2_2.setObjectName(u"delete_btnFrame2_2")
+        sizePolicy4.setHeightForWidth(self.delete_btnFrame2_2.sizePolicy().hasHeightForWidth())
+        self.delete_btnFrame2_2.setSizePolicy(sizePolicy4)
+        self.delete_btnFrame2_2.setMinimumSize(QSize(267, 30))
+        self.delete_btnFrame2_2.setMaximumSize(QSize(267, 50))
+        self.delete_btnFrame2_2.setStyleSheet(u"QWidget{\n"
+"background-color: rgba(20, 20, 20,0);\n"
+"}")
+        self.horizontalLayout_12 = QHBoxLayout(self.delete_btnFrame2_2)
+        self.horizontalLayout_12.setSpacing(50)
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.horizontalLayout_12.setContentsMargins(0, 15, 0, 0)
+        self.storeTextProfile_btn2 = QPushButton(self.delete_btnFrame2_2)
+        self.storeTextProfile_btn2.setObjectName(u"storeTextProfile_btn2")
+        self.storeTextProfile_btn2.setMinimumSize(QSize(32, 32))
+        self.storeTextProfile_btn2.setMaximumSize(QSize(32, 32))
+        self.storeTextProfile_btn2.setStyleSheet(u"QPushButton:pressed{\n"
+"/*	 padding-left: 3px;\n"
+"     padding-top: 3px;*/\n"
+"    border-style: inset;\n"
+"}\n"
+"QPushButton{\n"
+"background-color: rgba(100,100,100,0);\n"
+"border-radius:10px;\n"
+"}")
+        self.storeTextProfile_btn2.setIcon(icon1)
+        self.storeTextProfile_btn2.setIconSize(QSize(32, 32))
 
-        self.verticalLayout_32.addWidget(self.textSettings_lbl, 0, Qt.AlignHCenter)
+        self.horizontalLayout_12.addWidget(self.storeTextProfile_btn2, 0, Qt.AlignHCenter)
+
+        self.textProfiles_lbl = QLabel(self.delete_btnFrame2_2)
+        self.textProfiles_lbl.setObjectName(u"textProfiles_lbl")
+        sizePolicy4.setHeightForWidth(self.textProfiles_lbl.sizePolicy().hasHeightForWidth())
+        self.textProfiles_lbl.setSizePolicy(sizePolicy4)
+        self.textProfiles_lbl.setMinimumSize(QSize(106, 20))
+        self.textProfiles_lbl.setFont(font8)
+
+        self.horizontalLayout_12.addWidget(self.textProfiles_lbl)
+
+        self.deleteTextProfile_btn = QPushButton(self.delete_btnFrame2_2)
+        self.deleteTextProfile_btn.setObjectName(u"deleteTextProfile_btn")
+        self.deleteTextProfile_btn.setMinimumSize(QSize(14, 15))
+        self.deleteTextProfile_btn.setMaximumSize(QSize(14, 15))
+        self.deleteTextProfile_btn.setStyleSheet(u"QPushButton:pressed{\n"
+"	 padding-left: 3px;\n"
+"     padding-top: 3px;\n"
+"}\n"
+"QPushButton{\n"
+"background-color: rgba(100,100,100,0);\n"
+"border-radius:10px;\n"
+"}")
+        self.deleteTextProfile_btn.setIcon(icon4)
+        self.deleteTextProfile_btn.setIconSize(QSize(14, 15))
+
+        self.horizontalLayout_12.addWidget(self.deleteTextProfile_btn, 0, Qt.AlignRight)
+
+
+        self.verticalLayout_32.addWidget(self.delete_btnFrame2_2, 0, Qt.AlignHCenter)
 
         self.textAreaFrame = QFrame(self.SummaryFrame)
         self.textAreaFrame.setObjectName(u"textAreaFrame")
         sizePolicy4.setHeightForWidth(self.textAreaFrame.sizePolicy().hasHeightForWidth())
         self.textAreaFrame.setSizePolicy(sizePolicy4)
         self.horizontalLayout_9 = QHBoxLayout(self.textAreaFrame)
+        self.horizontalLayout_9.setSpacing(10)
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.horizontalLayout_9.setContentsMargins(10, 10, 10, 10)
         self.textProfiles_list = QComboBox(self.textAreaFrame)
         self.textProfiles_list.setObjectName(u"textProfiles_list")
         sizePolicy4.setHeightForWidth(self.textProfiles_list.sizePolicy().hasHeightForWidth())
         self.textProfiles_list.setSizePolicy(sizePolicy4)
         self.textProfiles_list.setMinimumSize(QSize(211, 41))
-        self.textProfiles_list.setFont(font7)
+        self.textProfiles_list.setFont(font9)
         self.textProfiles_list.setStyleSheet(u"/* Style the QComboBox */\n"
 "QComboBox {\n"
 "    background-color: #141414; /* Background color of the entire combo box */\n"
@@ -1730,7 +1837,7 @@ class Ui_MainWindow(object):
 "background-color: rgba(100,100,100,0);\n"
 "border-radius:10px;\n"
 "}")
-        self.applyTextProfile_btn.setIcon(icon4)
+        self.applyTextProfile_btn.setIcon(icon5)
         self.applyTextProfile_btn.setIconSize(QSize(32, 32))
 
         self.horizontalLayout_9.addWidget(self.applyTextProfile_btn)
@@ -1738,11 +1845,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_32.addWidget(self.textAreaFrame, 0, Qt.AlignHCenter)
 
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.verticalLayout_32.addItem(self.horizontalSpacer)
+
         self.parameters_summary_label_2 = QLabel(self.SummaryFrame)
         self.parameters_summary_label_2.setObjectName(u"parameters_summary_label_2")
         self.parameters_summary_label_2.setStyleSheet(u"font: 700 14pt \"Inter\";")
         self.parameters_summary_label_2.setWordWrap(False)
-        self.parameters_summary_label_2.setMargin(0)
+        self.parameters_summary_label_2.setMargin(10)
         self.parameters_summary_label_2.setIndent(-1)
         self.parameters_summary_label_2.setOpenExternalLinks(False)
 
@@ -1755,7 +1866,7 @@ class Ui_MainWindow(object):
         self.parametersButtonGroup.setObjectName(u"parametersButtonGroup")
         self.parametersButtonGroup.addButton(self.repeatWords_btn)
         self.repeatWords_btn.setObjectName(u"repeatWords_btn")
-        self.repeatWords_btn.setFont(font7)
+        self.repeatWords_btn.setFont(font9)
         self.repeatWords_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1763,11 +1874,6 @@ class Ui_MainWindow(object):
 
         self.repeat_info_label = QLabel(self.SummaryFrame)
         self.repeat_info_label.setObjectName(u"repeat_info_label")
-        font8 = QFont()
-        font8.setFamilies([u"Inter"])
-        font8.setPointSize(10)
-        font8.setBold(True)
-        font8.setItalic(False)
         self.repeat_info_label.setFont(font8)
 
         self.horizontalLayout_19.addWidget(self.repeat_info_label)
@@ -1780,7 +1886,7 @@ class Ui_MainWindow(object):
         self.marginSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.marginSettings_btn)
         self.marginSettings_btn.setObjectName(u"marginSettings_btn")
-        self.marginSettings_btn.setFont(font7)
+        self.marginSettings_btn.setFont(font9)
         self.marginSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1800,7 +1906,7 @@ class Ui_MainWindow(object):
         self.fontSizeSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.fontSizeSettings_btn)
         self.fontSizeSettings_btn.setObjectName(u"fontSizeSettings_btn")
-        self.fontSizeSettings_btn.setFont(font7)
+        self.fontSizeSettings_btn.setFont(font9)
         self.fontSizeSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1820,7 +1926,7 @@ class Ui_MainWindow(object):
         self.fontSizeSettings_btn2 = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.fontSizeSettings_btn2)
         self.fontSizeSettings_btn2.setObjectName(u"fontSizeSettings_btn2")
-        self.fontSizeSettings_btn2.setFont(font7)
+        self.fontSizeSettings_btn2.setFont(font9)
         self.fontSizeSettings_btn2.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1840,7 +1946,7 @@ class Ui_MainWindow(object):
         self.textOrientationSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.textOrientationSettings_btn)
         self.textOrientationSettings_btn.setObjectName(u"textOrientationSettings_btn")
-        self.textOrientationSettings_btn.setFont(font7)
+        self.textOrientationSettings_btn.setFont(font9)
         self.textOrientationSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1860,7 +1966,7 @@ class Ui_MainWindow(object):
         self.fontStepSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.fontStepSettings_btn)
         self.fontStepSettings_btn.setObjectName(u"fontStepSettings_btn")
-        self.fontStepSettings_btn.setFont(font7)
+        self.fontStepSettings_btn.setFont(font9)
         self.fontStepSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1880,7 +1986,7 @@ class Ui_MainWindow(object):
         self.collocationSettings_btn = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.collocationSettings_btn)
         self.collocationSettings_btn.setObjectName(u"collocationSettings_btn")
-        self.collocationSettings_btn.setFont(font7)
+        self.collocationSettings_btn.setFont(font9)
         self.collocationSettings_btn.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1900,7 +2006,7 @@ class Ui_MainWindow(object):
         self.collocationSettings_btn2 = QPushButton(self.SummaryFrame)
         self.parametersButtonGroup.addButton(self.collocationSettings_btn2)
         self.collocationSettings_btn2.setObjectName(u"collocationSettings_btn2")
-        self.collocationSettings_btn2.setFont(font7)
+        self.collocationSettings_btn2.setFont(font9)
         self.collocationSettings_btn2.setStyleSheet(u"background:rgba(0,0,0,0);\n"
 "color:#e6e6e6;")
 
@@ -1923,7 +2029,7 @@ class Ui_MainWindow(object):
         self.color_presets_group.setObjectName(u"color_presets_group")
         sizePolicy4.setHeightForWidth(self.color_presets_group.sizePolicy().hasHeightForWidth())
         self.color_presets_group.setSizePolicy(sizePolicy4)
-        self.color_presets_group.setFont(font4)
+        self.color_presets_group.setFont(font5)
         self.color_presets_group.setStyleSheet(u"background:none;")
         self.color_presets_group.setFrameShape(QFrame.NoFrame)
         self.color_presets_group.setFrameShadow(QFrame.Raised)
@@ -1936,16 +2042,31 @@ class Ui_MainWindow(object):
         sizePolicy6.setHeightForWidth(self.cp_title_dropdown.sizePolicy().hasHeightForWidth())
         self.cp_title_dropdown.setSizePolicy(sizePolicy6)
         self.cp_title_dropdown.setMaximumSize(QSize(16777215, 100))
+        font10 = QFont()
+        font10.setFamilies([u"Inter"])
+        font10.setPointSize(11)
+        self.cp_title_dropdown.setFont(font10)
         self.verticalLayout_19 = QVBoxLayout(self.cp_title_dropdown)
         self.verticalLayout_19.setSpacing(15)
         self.verticalLayout_19.setObjectName(u"verticalLayout_19")
-        self.verticalLayout_19.setContentsMargins(0, 10, 0, 0)
+        self.verticalLayout_19.setContentsMargins(0, 10, 0, 10)
         self.label_color_presets = QLabel(self.cp_title_dropdown)
         self.label_color_presets.setObjectName(u"label_color_presets")
-        self.label_color_presets.setMaximumSize(QSize(150, 30))
-        self.label_color_presets.setFont(font8)
+        self.label_color_presets.setMinimumSize(QSize(0, 0))
+        self.label_color_presets.setMaximumSize(QSize(200, 40))
+        font11 = QFont()
+        font11.setFamilies([u"Inter"])
+        font11.setPointSize(12)
+        font11.setBold(True)
+        font11.setItalic(False)
+        self.label_color_presets.setFont(font11)
+        self.label_color_presets.setStyleSheet(u"QLabel{\n"
+"font: 700 12pt \"Inter\";\n"
+"}")
+        self.label_color_presets.setTextFormat(Qt.RichText)
+        self.label_color_presets.setAlignment(Qt.AlignCenter)
 
-        self.verticalLayout_19.addWidget(self.label_color_presets, 0, Qt.AlignHCenter)
+        self.verticalLayout_19.addWidget(self.label_color_presets)
 
         self.colormaps_dropdown = QComboBox(self.cp_title_dropdown)
         self.colormaps_dropdown.addItem("")
@@ -1996,7 +2117,7 @@ class Ui_MainWindow(object):
         self.colormaps_dropdown.setSizePolicy(sizePolicy6)
         self.colormaps_dropdown.setMinimumSize(QSize(200, 30))
         self.colormaps_dropdown.setMaximumSize(QSize(250, 40))
-        self.colormaps_dropdown.setFont(font4)
+        self.colormaps_dropdown.setFont(font5)
         self.colormaps_dropdown.setStyleSheet(u"/* Style the QComboBox */\n"
 "QComboBox {\n"
 "    background-color: #141414; /* Background color of the entire combo box */\n"
@@ -2047,7 +2168,7 @@ class Ui_MainWindow(object):
         sizePolicy10.setHeightForWidth(self.gradient_settings_btn.sizePolicy().hasHeightForWidth())
         self.gradient_settings_btn.setSizePolicy(sizePolicy10)
         self.gradient_settings_btn.setMinimumSize(QSize(107, 30))
-        self.gradient_settings_btn.setFont(font6)
+        self.gradient_settings_btn.setFont(font7)
         self.gradient_settings_btn.setStyleSheet(u"QPushButton{\n"
 "background-color:#212121;\n"
 "color:#e6e6e6;\n"
@@ -2090,7 +2211,7 @@ class Ui_MainWindow(object):
         self.randomColorsPresetsGroup.setObjectName(u"randomColorsPresetsGroup")
         self.randomColorsPresetsGroup.addButton(self.rcp_minimize_red)
         self.rcp_minimize_red.setObjectName(u"rcp_minimize_red")
-        self.rcp_minimize_red.setFont(font3)
+        self.rcp_minimize_red.setFont(font4)
         self.rcp_minimize_red.setStyleSheet(u"color: rgb(250, 0, 0);\n"
 "")
 
@@ -2099,7 +2220,7 @@ class Ui_MainWindow(object):
         self.rcp_maximize_red = QPushButton(self.color_range_preset_buttons_frame)
         self.randomColorsPresetsGroup.addButton(self.rcp_maximize_red)
         self.rcp_maximize_red.setObjectName(u"rcp_maximize_red")
-        self.rcp_maximize_red.setFont(font3)
+        self.rcp_maximize_red.setFont(font4)
         self.rcp_maximize_red.setStyleSheet(u"color: rgb(250, 0, 0);")
 
         self.horizontalLayout_11.addWidget(self.rcp_maximize_red)
@@ -2113,7 +2234,7 @@ class Ui_MainWindow(object):
         self.rcp_minimize_green = QPushButton(self.color_range_preset_buttons_frame)
         self.randomColorsPresetsGroup.addButton(self.rcp_minimize_green)
         self.rcp_minimize_green.setObjectName(u"rcp_minimize_green")
-        self.rcp_minimize_green.setFont(font3)
+        self.rcp_minimize_green.setFont(font4)
         self.rcp_minimize_green.setStyleSheet(u"color: rgb(0, 250, 0);")
 
         self.horizontalLayout_31.addWidget(self.rcp_minimize_green)
@@ -2121,7 +2242,7 @@ class Ui_MainWindow(object):
         self.rcp_maximize_green = QPushButton(self.color_range_preset_buttons_frame)
         self.randomColorsPresetsGroup.addButton(self.rcp_maximize_green)
         self.rcp_maximize_green.setObjectName(u"rcp_maximize_green")
-        self.rcp_maximize_green.setFont(font3)
+        self.rcp_maximize_green.setFont(font4)
         self.rcp_maximize_green.setStyleSheet(u"color: rgb(0, 250, 0);")
 
         self.horizontalLayout_31.addWidget(self.rcp_maximize_green)
@@ -2135,7 +2256,7 @@ class Ui_MainWindow(object):
         self.rcp_maximize_blue = QPushButton(self.color_range_preset_buttons_frame)
         self.randomColorsPresetsGroup.addButton(self.rcp_maximize_blue)
         self.rcp_maximize_blue.setObjectName(u"rcp_maximize_blue")
-        self.rcp_maximize_blue.setFont(font3)
+        self.rcp_maximize_blue.setFont(font4)
         self.rcp_maximize_blue.setStyleSheet(u"color: rgb(0, 0, 250);")
 
         self.horizontalLayout_32.addWidget(self.rcp_maximize_blue)
@@ -2143,7 +2264,7 @@ class Ui_MainWindow(object):
         self.rcp_minimize_blue = QPushButton(self.color_range_preset_buttons_frame)
         self.randomColorsPresetsGroup.addButton(self.rcp_minimize_blue)
         self.rcp_minimize_blue.setObjectName(u"rcp_minimize_blue")
-        self.rcp_minimize_blue.setFont(font3)
+        self.rcp_minimize_blue.setFont(font4)
         self.rcp_minimize_blue.setStyleSheet(u"color: rgb(0, 0, 250);")
 
         self.horizontalLayout_32.addWidget(self.rcp_minimize_blue)
@@ -2165,7 +2286,7 @@ class Ui_MainWindow(object):
         self.red_min.setObjectName(u"red_min")
         self.red_min.setMinimumSize(QSize(60, 30))
         self.red_min.setMaximumSize(QSize(60, 30))
-        self.red_min.setFont(font4)
+        self.red_min.setFont(font5)
         self.red_min.setStyleSheet(u"background-color: rgb(200, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.red_min.setAccelerated(True)
@@ -2179,7 +2300,7 @@ class Ui_MainWindow(object):
         self.green_min.setObjectName(u"green_min")
         self.green_min.setMinimumSize(QSize(60, 30))
         self.green_min.setMaximumSize(QSize(60, 30))
-        self.green_min.setFont(font4)
+        self.green_min.setFont(font5)
         self.green_min.setStyleSheet(u"background-color: rgb(0, 200, 0);\n"
 "color: rgb(25, 25, 25);")
         self.green_min.setAccelerated(True)
@@ -2192,7 +2313,7 @@ class Ui_MainWindow(object):
         self.blue_min.setObjectName(u"blue_min")
         self.blue_min.setMinimumSize(QSize(60, 30))
         self.blue_min.setMaximumSize(QSize(60, 30))
-        self.blue_min.setFont(font4)
+        self.blue_min.setFont(font5)
         self.blue_min.setStyleSheet(u"background-color: rgb(0, 0, 200);\n"
 "color: rgb(255, 255, 255);")
         self.blue_min.setAccelerated(True)
@@ -2215,28 +2336,28 @@ class Ui_MainWindow(object):
         self.rcp_dark = QPushButton(self.rcpresets3)
         self.randomColorsPresetsGroup.addButton(self.rcp_dark)
         self.rcp_dark.setObjectName(u"rcp_dark")
-        self.rcp_dark.setFont(font4)
+        self.rcp_dark.setFont(font5)
 
         self.gridLayout_7.addWidget(self.rcp_dark, 0, 2, 1, 1)
 
         self.rcp_reset = QPushButton(self.rcpresets3)
         self.randomColorsPresetsGroup.addButton(self.rcp_reset)
         self.rcp_reset.setObjectName(u"rcp_reset")
-        self.rcp_reset.setFont(font4)
+        self.rcp_reset.setFont(font5)
 
         self.gridLayout_7.addWidget(self.rcp_reset, 0, 4, 1, 1)
 
         self.rcp_bright = QPushButton(self.rcpresets3)
         self.randomColorsPresetsGroup.addButton(self.rcp_bright)
         self.rcp_bright.setObjectName(u"rcp_bright")
-        self.rcp_bright.setFont(font4)
+        self.rcp_bright.setFont(font5)
 
         self.gridLayout_7.addWidget(self.rcp_bright, 0, 0, 1, 1)
 
         self.rcp_gray = QPushButton(self.rcpresets3)
         self.randomColorsPresetsGroup.addButton(self.rcp_gray)
         self.rcp_gray.setObjectName(u"rcp_gray")
-        self.rcp_gray.setFont(font4)
+        self.rcp_gray.setFont(font5)
 
         self.gridLayout_7.addWidget(self.rcp_gray, 0, 1, 1, 1)
 
@@ -2254,7 +2375,7 @@ class Ui_MainWindow(object):
         self.red_max.setObjectName(u"red_max")
         self.red_max.setMinimumSize(QSize(60, 30))
         self.red_max.setMaximumSize(QSize(60, 30))
-        self.red_max.setFont(font4)
+        self.red_max.setFont(font5)
         self.red_max.setStyleSheet(u"background-color: rgb(200, 0, 0);\n"
 "color: rgb(255, 255, 255);")
         self.red_max.setAccelerated(True)
@@ -2268,7 +2389,7 @@ class Ui_MainWindow(object):
         self.green_max.setObjectName(u"green_max")
         self.green_max.setMinimumSize(QSize(60, 30))
         self.green_max.setMaximumSize(QSize(60, 30))
-        self.green_max.setFont(font4)
+        self.green_max.setFont(font5)
         self.green_max.setStyleSheet(u"background-color: rgb(0, 200, 0);\n"
 "color: rgb(25, 25, 25);")
         self.green_max.setAccelerated(True)
@@ -2281,7 +2402,7 @@ class Ui_MainWindow(object):
         self.blue_max.setObjectName(u"blue_max")
         self.blue_max.setMinimumSize(QSize(60, 30))
         self.blue_max.setMaximumSize(QSize(60, 30))
-        self.blue_max.setFont(font4)
+        self.blue_max.setFont(font5)
         self.blue_max.setStyleSheet(u"background-color: rgb(0, 0, 200);\n"
 "color: rgb(255, 255, 255);")
         self.blue_max.setAccelerated(True)
@@ -2338,14 +2459,14 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.mask_dimensions_label.sizePolicy().hasHeightForWidth())
         self.mask_dimensions_label.setSizePolicy(sizePolicy4)
         self.mask_dimensions_label.setMaximumSize(QSize(300, 16777215))
-        font9 = QFont()
-        font9.setFamilies([u"Inter"])
-        font9.setPointSize(9)
-        font9.setBold(True)
-        font9.setItalic(False)
-        font9.setUnderline(False)
-        font9.setStyleStrategy(QFont.PreferDefault)
-        self.mask_dimensions_label.setFont(font9)
+        font12 = QFont()
+        font12.setFamilies([u"Inter"])
+        font12.setPointSize(9)
+        font12.setBold(True)
+        font12.setItalic(False)
+        font12.setUnderline(False)
+        font12.setStyleStrategy(QFont.PreferDefault)
+        self.mask_dimensions_label.setFont(font12)
         self.mask_dimensions_label.setCursor(QCursor(Qt.ArrowCursor))
 
         self.verticalLayout.addWidget(self.mask_dimensions_label, 0, Qt.AlignHCenter)
@@ -2360,7 +2481,7 @@ class Ui_MainWindow(object):
         self.mask_select_button.setObjectName(u"mask_select_button")
         self.mask_select_button.setMinimumSize(QSize(150, 50))
         self.mask_select_button.setMaximumSize(QSize(150, 16777215))
-        self.mask_select_button.setFont(font4)
+        self.mask_select_button.setFont(font5)
         self.mask_select_button.setStyleSheet(u"QPushButton{\n"
 "border:2px solid red; \n"
 "}\n"
@@ -2372,7 +2493,7 @@ class Ui_MainWindow(object):
         self.fa_mask_select_button.setObjectName(u"fa_mask_select_button")
         self.fa_mask_select_button.setMinimumSize(QSize(150, 50))
         self.fa_mask_select_button.setMaximumSize(QSize(150, 16777215))
-        self.fa_mask_select_button.setFont(font4)
+        self.fa_mask_select_button.setFont(font5)
         self.fa_mask_select_button.setStyleSheet(u"QPushButton{\n"
 "border:2px solid red; \n"
 "}\n"
@@ -2387,7 +2508,7 @@ class Ui_MainWindow(object):
         self.select_destination_button.setEnabled(True)
         self.select_destination_button.setMinimumSize(QSize(150, 50))
         self.select_destination_button.setMaximumSize(QSize(150, 16777215))
-        self.select_destination_button.setFont(font4)
+        self.select_destination_button.setFont(font5)
         self.select_destination_button.setStyleSheet(u"QPushButton{\n"
 "border:2px solid red; \n"
 "}\n"
@@ -2399,7 +2520,7 @@ class Ui_MainWindow(object):
         self.open_destination_folder.setObjectName(u"open_destination_folder")
         self.open_destination_folder.setMinimumSize(QSize(50, 50))
         self.open_destination_folder.setMaximumSize(QSize(40, 50))
-        self.open_destination_folder.setFont(font4)
+        self.open_destination_folder.setFont(font5)
         self.open_destination_folder.setStyleSheet(u"QPushButton{\n"
 "color: rgb(0, 170, 0);\n"
 "border-radius:5px;\n"
@@ -2502,10 +2623,10 @@ class Ui_MainWindow(object):
         self.EmojiFull_Frame.setObjectName(u"EmojiFull_Frame")
         sizePolicy9.setHeightForWidth(self.EmojiFull_Frame.sizePolicy().hasHeightForWidth())
         self.EmojiFull_Frame.setSizePolicy(sizePolicy9)
-        font10 = QFont()
-        font10.setFamilies([u"Inter"])
-        font10.setBold(True)
-        self.EmojiFull_Frame.setFont(font10)
+        font13 = QFont()
+        font13.setFamilies([u"Inter"])
+        font13.setBold(True)
+        self.EmojiFull_Frame.setFont(font13)
         self.verticalLayout_9 = QVBoxLayout(self.EmojiFull_Frame)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
         self.verticalLayout_9.setContentsMargins(20, -1, -1, -1)
@@ -2520,7 +2641,7 @@ class Ui_MainWindow(object):
         self.unicode_Emojis_btn.setEnabled(True)
         self.unicode_Emojis_btn.setMinimumSize(QSize(150, 40))
         self.unicode_Emojis_btn.setMaximumSize(QSize(150, 16777215))
-        self.unicode_Emojis_btn.setFont(font4)
+        self.unicode_Emojis_btn.setFont(font5)
         self.unicode_Emojis_btn.setStyleSheet(u"QPushButton{\n"
 "\n"
 "}\n"
@@ -2533,7 +2654,7 @@ class Ui_MainWindow(object):
         self.font_Awesome_Icons_btn.setEnabled(True)
         self.font_Awesome_Icons_btn.setMinimumSize(QSize(150, 40))
         self.font_Awesome_Icons_btn.setMaximumSize(QSize(150, 16777215))
-        self.font_Awesome_Icons_btn.setFont(font4)
+        self.font_Awesome_Icons_btn.setFont(font5)
         self.font_Awesome_Icons_btn.setStyleSheet(u"QPushButton{\n"
 "\n"
 "}\n"
@@ -2554,7 +2675,7 @@ class Ui_MainWindow(object):
         self.emojiFilter_label.setObjectName(u"emojiFilter_label")
         sizePolicy4.setHeightForWidth(self.emojiFilter_label.sizePolicy().hasHeightForWidth())
         self.emojiFilter_label.setSizePolicy(sizePolicy4)
-        self.emojiFilter_label.setFont(font7)
+        self.emojiFilter_label.setFont(font9)
 
         self.horizontalLayout_5.addWidget(self.emojiFilter_label)
 
@@ -2573,7 +2694,7 @@ class Ui_MainWindow(object):
         sizePolicy4.setHeightForWidth(self.emoji_filter_list.sizePolicy().hasHeightForWidth())
         self.emoji_filter_list.setSizePolicy(sizePolicy4)
         self.emoji_filter_list.setMinimumSize(QSize(211, 41))
-        self.emoji_filter_list.setFont(font7)
+        self.emoji_filter_list.setFont(font9)
         self.emoji_filter_list.setStyleSheet(u"/* Style the QComboBox */\n"
 "QComboBox {\n"
 "    background-color: #141414; /* Background color of the entire combo box */\n"
@@ -2620,7 +2741,7 @@ class Ui_MainWindow(object):
         sizePolicy11.setHeightForWidth(self.unicodeEmojis_filter_input.sizePolicy().hasHeightForWidth())
         self.unicodeEmojis_filter_input.setSizePolicy(sizePolicy11)
         self.unicodeEmojis_filter_input.setMaximumSize(QSize(16777215, 30))
-        self.unicodeEmojis_filter_input.setFont(font5)
+        self.unicodeEmojis_filter_input.setFont(font6)
         self.unicodeEmojis_filter_input.setStyleSheet(u"color:#141414;")
 
         self.verticalLayout_9.addWidget(self.unicodeEmojis_filter_input, 0, Qt.AlignHCenter)
@@ -2636,7 +2757,7 @@ class Ui_MainWindow(object):
         sizePolicy11.setHeightForWidth(self.fontAwesome_filter_input.sizePolicy().hasHeightForWidth())
         self.fontAwesome_filter_input.setSizePolicy(sizePolicy11)
         self.fontAwesome_filter_input.setMaximumSize(QSize(16777215, 30))
-        self.fontAwesome_filter_input.setFont(font5)
+        self.fontAwesome_filter_input.setFont(font6)
         self.fontAwesome_filter_input.setStyleSheet(u"color:#141414;")
 
         self.horizontalLayout_8.addWidget(self.fontAwesome_filter_input)
@@ -2648,11 +2769,11 @@ class Ui_MainWindow(object):
         self.emoji_list.setObjectName(u"emoji_list")
         sizePolicy8.setHeightForWidth(self.emoji_list.sizePolicy().hasHeightForWidth())
         self.emoji_list.setSizePolicy(sizePolicy8)
-        font11 = QFont()
-        font11.setFamilies([u"Segoe UI Emoji"])
-        font11.setPointSize(40)
-        font11.setBold(False)
-        self.emoji_list.setFont(font11)
+        font14 = QFont()
+        font14.setFamilies([u"Segoe UI Emoji"])
+        font14.setPointSize(40)
+        font14.setBold(False)
+        self.emoji_list.setFont(font14)
         self.emoji_list.setStyleSheet(u"QListWidget::item:selected {\n"
 "    background: rgba(0,200,0,200);\n"
 "}\n"
@@ -2705,7 +2826,7 @@ class Ui_MainWindow(object):
 "font: 700 11pt \"Inter\";\n"
 "}", None))
 #if QT_CONFIG(tooltip)
-        self.storeTextProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Store current text in WCGX.db", None))
+        self.storeTextProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Store current text in wcgx.db", None))
 #endif // QT_CONFIG(tooltip)
         self.storeTextProfile_btn.setText("")
         self.label.setText(QCoreApplication.translate("MainWindow", u"# Repeat Words On/Off", None))
@@ -2802,26 +2923,32 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.stopwords_checkbox.setText("")
         self.parameters_window.setTabText(self.parameters_window.indexOf(self.parameters_windowPage6), QCoreApplication.translate("MainWindow", u"StopWords", None))
-        self.label_collocations_thresh.setText(QCoreApplication.translate("MainWindow", u"## Collocation Threshold", None))
-        self.collocation_thresh_slider_label.setText(QCoreApplication.translate("MainWindow", u"00", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"The Dunning likelihood collocation score is calculated for each\n"
 "bigram based on its frequency and compared to the\n"
 "expected co-occurrence by random chance.\n"
 "The collocation threshold is used as a filtering parameter\n"
 "to include only statistically significant bigrams in the word cloud.\n"
 "\n"
-"- A lower collocation threshold makes it easier for word pairs(bigrams)\n"
-"to pass the significance test and be treated as phrases.\n"
-"- A higher threshold means that bigrams must occur together\n"
-"much more frequently than expected by random chance\n"
-"to be included in the word cloud as 1 phrase.", None))
-        self.label_26.setText(QCoreApplication.translate("MainWindow", u"# Whether to include collocations (bigrams) of two words.\n"
+"- Lower collocation threshold:\n"
+"   Makes it easier for word pairs(bigrams)\n"
+"   to pass the significance test and be treated as phrases.\n"
+"\n"
+"- Higher collocation threshold:\n"
+"   Bigrams must occur together\n"
+"   much more frequently than expected by random chance\n"
+"   to be included in the word cloud as 1 phrase.", None))
+        self.label_26.setText(QCoreApplication.translate("MainWindow", u"# Enable/Disable the collocations algorithm.\n"
 "___", None))
-        self.label_collocations.setText(QCoreApplication.translate("MainWindow", u"## Collocations", None))
+        self.label_collocations.setText(QCoreApplication.translate("MainWindow", u"## Collocations On/Off", None))
 #if QT_CONFIG(tooltip)
-        self.collocations_checkbox.setToolTip("")
+        self.collocations_checkbox.setToolTip(QCoreApplication.translate("MainWindow", u"Enable/Disable collocation algorithm", None))
 #endif // QT_CONFIG(tooltip)
         self.collocations_checkbox.setText("")
+        self.label_collocations_thresh.setText(QCoreApplication.translate("MainWindow", u"## Collocation Threshold", None))
+#if QT_CONFIG(tooltip)
+        self.collocations_thresh_slider.setToolTip(QCoreApplication.translate("MainWindow", u"Adjust collocation threshold", None))
+#endif // QT_CONFIG(tooltip)
+        self.collocation_thresh_slider_label.setText(QCoreApplication.translate("MainWindow", u"00", None))
         self.parameters_window.setTabText(self.parameters_window.indexOf(self.parameters_windowPage8), QCoreApplication.translate("MainWindow", u"Collocations", None))
         self.character_filtering_lbl.setText(QCoreApplication.translate("MainWindow", u"# Character Filtering\n"
 "___", None))
@@ -2916,17 +3043,33 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.generate_wordcloud_button.setShortcut("")
 #endif // QT_CONFIG(shortcut)
+#if QT_CONFIG(tooltip)
+        self.storeSettingsProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Store current settings in wcgx.db", None))
+#endif // QT_CONFIG(tooltip)
         self.storeSettingsProfile_btn.setText("")
+        self.settingsProfiles_lbl.setText(QCoreApplication.translate("MainWindow", u"Settings Profiles", None))
+#if QT_CONFIG(tooltip)
+        self.deleteSettingsProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Delete selected Settings profile", None))
+#endif // QT_CONFIG(tooltip)
+        self.deleteSettingsProfile_btn.setText("")
 #if QT_CONFIG(tooltip)
         self.applySettingsProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Apply selected settings", None))
 #endif // QT_CONFIG(tooltip)
         self.applySettingsProfile_btn.setText("")
-        self.textSettings_lbl.setText("")
+#if QT_CONFIG(tooltip)
+        self.storeTextProfile_btn2.setToolTip(QCoreApplication.translate("MainWindow", u"Store current text in wcgx.db", None))
+#endif // QT_CONFIG(tooltip)
+        self.storeTextProfile_btn2.setText("")
+        self.textProfiles_lbl.setText(QCoreApplication.translate("MainWindow", u"Text Profiles", None))
+#if QT_CONFIG(tooltip)
+        self.deleteTextProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Delete selected Text profile", None))
+#endif // QT_CONFIG(tooltip)
+        self.deleteTextProfile_btn.setText("")
 #if QT_CONFIG(tooltip)
         self.applyTextProfile_btn.setToolTip(QCoreApplication.translate("MainWindow", u"Apply selected text", None))
 #endif // QT_CONFIG(tooltip)
         self.applyTextProfile_btn.setText("")
-        self.parameters_summary_label_2.setText(QCoreApplication.translate("MainWindow", u"Parameters", None))
+        self.parameters_summary_label_2.setText(QCoreApplication.translate("MainWindow", u"WordCloud Parameters", None))
         self.repeatWords_btn.setText(QCoreApplication.translate("MainWindow", u"Repeat Words:", None))
         self.repeat_info_label.setText(QCoreApplication.translate("MainWindow", u"result here", None))
         self.marginSettings_btn.setText(QCoreApplication.translate("MainWindow", u"Margin:", None))

@@ -16,8 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QDialog, QFrame, QGridLayout,
-    QHBoxLayout, QLayout, QPlainTextEdit, QPushButton,
-    QSizePolicy, QWidget)
+    QHBoxLayout, QLabel, QLayout, QPlainTextEdit,
+    QPushButton, QSizePolicy, QWidget)
 import Resources_rc
 
 class Ui_StoreProfileWindow(object):
@@ -66,18 +66,23 @@ class Ui_StoreProfileWindow(object):
         self.horizontalLayout_3.setContentsMargins(20, -1, 20, 20)
         self.frame = QFrame(StoreProfileWindow)
         self.frame.setObjectName(u"frame")
-        self.frame.setMaximumSize(QSize(500, 200))
+        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.MinimumExpanding)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
+        self.frame.setSizePolicy(sizePolicy1)
+        self.frame.setMaximumSize(QSize(500, 500))
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
         self.gridLayout = QGridLayout(self.frame)
         self.gridLayout.setObjectName(u"gridLayout")
         self.profile_name = QPlainTextEdit(self.frame)
         self.profile_name.setObjectName(u"profile_name")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.profile_name.sizePolicy().hasHeightForWidth())
-        self.profile_name.setSizePolicy(sizePolicy1)
+        sizePolicy2 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.profile_name.sizePolicy().hasHeightForWidth())
+        self.profile_name.setSizePolicy(sizePolicy2)
         self.profile_name.setMaximumSize(QSize(300, 40))
         font = QFont()
         font.setFamilies([u"Inter"])
@@ -86,7 +91,7 @@ class Ui_StoreProfileWindow(object):
         self.profile_name.setFont(font)
         self.profile_name.setStyleSheet(u"color:#141414;")
 
-        self.gridLayout.addWidget(self.profile_name, 0, 0, 1, 1, Qt.AlignHCenter)
+        self.gridLayout.addWidget(self.profile_name, 1, 0, 1, 1, Qt.AlignHCenter)
 
         self.buttons_Frame = QFrame(self.frame)
         self.buttons_Frame.setObjectName(u"buttons_Frame")
@@ -125,7 +130,25 @@ class Ui_StoreProfileWindow(object):
         self.horizontalLayout.addWidget(self.okay_store_btn)
 
 
-        self.gridLayout.addWidget(self.buttons_Frame, 1, 0, 1, 1)
+        self.gridLayout.addWidget(self.buttons_Frame, 2, 0, 1, 1)
+
+        self.label_x = QLabel(self.frame)
+        self.label_x.setObjectName(u"label_x")
+        sizePolicy.setHeightForWidth(self.label_x.sizePolicy().hasHeightForWidth())
+        self.label_x.setSizePolicy(sizePolicy)
+        self.label_x.setMinimumSize(QSize(0, 0))
+        font2 = QFont()
+        font2.setFamilies([u"Inter"])
+        font2.setPointSize(12)
+        font2.setBold(True)
+        self.label_x.setFont(font2)
+        self.label_x.setFrameShadow(QFrame.Plain)
+        self.label_x.setTextFormat(Qt.AutoText)
+        self.label_x.setAlignment(Qt.AlignCenter)
+        self.label_x.setWordWrap(True)
+        self.label_x.setMargin(0)
+
+        self.gridLayout.addWidget(self.label_x, 0, 0, 1, 1, Qt.AlignHCenter|Qt.AlignVCenter)
 
         self.gridLayout.setRowMinimumHeight(0, 1)
 
@@ -141,12 +164,13 @@ class Ui_StoreProfileWindow(object):
         StoreProfileWindow.setWindowTitle(QCoreApplication.translate("StoreProfileWindow", u"Store Profile", None))
         self.profile_name.setPlaceholderText(QCoreApplication.translate("StoreProfileWindow", u"Profile Name", None))
 #if QT_CONFIG(tooltip)
-        self.cancel_store_btn.setToolTip(QCoreApplication.translate("StoreProfileWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Load unicode emojis</span></p></body></html>", None))
+        self.cancel_store_btn.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.cancel_store_btn.setText(QCoreApplication.translate("StoreProfileWindow", u"CANCEL", None))
 #if QT_CONFIG(tooltip)
-        self.okay_store_btn.setToolTip(QCoreApplication.translate("StoreProfileWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Load unicode emojis</span></p></body></html>", None))
+        self.okay_store_btn.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.okay_store_btn.setText(QCoreApplication.translate("StoreProfileWindow", u"OK", None))
+        self.label_x.setText("")
     # retranslateUi
 

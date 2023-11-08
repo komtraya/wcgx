@@ -39,8 +39,6 @@ In this realm, your word cloud dances upon materials of any hue, except the pure
 With [wcgx](https://github.com/komtraya/wcgx/releases) at your fingertips, you can embark on a magical journey, where your word cloud masterpiece awaits to be manifested in all its poetic splendor.
 
 
-## Python edition: 3.7.7
-
 ## Acknowledgements:
 
 - [PySide6](https://pypi.org/project/PySide6/) (UI)
