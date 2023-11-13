@@ -31,7 +31,6 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget{
-/*font: 700 9pt &quot;Inter&quot;;*/
 background-color: rgb(20, 20, 20);
 color:#e6e6e6;
 }
@@ -49,6 +48,12 @@ QPushButton{
 background-color: rgba(100,100,100,150);
 color:#E6E6FA;/*#3cf3b6;*/
 border-radius:10px;
+}
+QPlainTextEdit:focus{
+border: 1px solid #e6e6e6;
+}
+QPlainTextEdit{
+color: #141414;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -143,7 +148,7 @@ border-radius:10px;
             </font>
            </property>
            <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Export selected icon&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>Export selected icon</string>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {
@@ -186,7 +191,7 @@ QPushButton:pressed{
             </font>
            </property>
            <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:400;&quot;&gt;Export selected icon&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>Export selected icon</string>
            </property>
            <property name="styleSheet">
             <string notr="true">QPushButton {

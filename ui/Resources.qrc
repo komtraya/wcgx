@@ -3,10 +3,11 @@
     <file>WCGXicon2.ico</file>
   </qresource>
   <qresource prefix="Media">
+    <file>download.png</file>
     <file>delete.png</file>
+    <file>LogoAssetForButton.png</file>
     <file>apply_agree2.png</file>
     <file>text_article.png</file>
     <file>Settings_CogWheel.png</file>
-    <file>LogoAssetForButton.png</file>
   </qresource>
 </RCC>

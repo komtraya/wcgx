@@ -32,8 +32,12 @@ As the curtain rises, an exquisite array of features unfolds before you:
 
 - **Efficiency’s Embrace**: Upon creation, the delete/stash button emerges, an enigmatic choice for your latest word cloud—discard or embrace its wonder. Stashed within a chamber known as "Keep", your masterpieces reside.
 
+- **Settings Sanctuary**: Now, your configurations find refuge in a sacred space. Store and fetch them effortlessly, maintaining the essence of your artistic journey.
+
+- **Font Quest**: Embark on a quest for fonts beyond the ordinary. With the power to download fonts directly within the application, expand your typographic arsenal and take your creations to unprecedented altitudes.
+
 ## A Symphony of Color
-In this realm, your word cloud dances upon materials of any hue, except the purest white. It adapts effortlessly to the color tapestries of your imagination.
+In this realm, your word cloud dances upon materials of any hue, except the purest white. It adapts gracefully to the color tapestries of your imagination.
 
 ## Embark on the Journey
 With [wcgx](https://github.com/komtraya/wcgx/releases) at your fingertips, you can embark on a magical journey, where your word cloud masterpiece awaits to be manifested in all its poetic splendor.

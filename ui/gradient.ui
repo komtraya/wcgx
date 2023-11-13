@@ -109,7 +109,7 @@ border-radius:10px;
                </font>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exported image size multiplier&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="text">
                <string>## Transition point</string>
@@ -146,7 +146,7 @@ border-radius:10px;
                <enum>Qt::DefaultContextMenu</enum>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Color transition point&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string>Color transition point</string>
               </property>
               <property name="layoutDirection">
                <enum>Qt::LeftToRight</enum>
@@ -248,7 +248,7 @@ border-radius: 5px;
                </font>
               </property>
               <property name="toolTip">
-               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Exported image size will be multiplied by this number&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+               <string/>
               </property>
               <property name="text">
                <string>15</string>

@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FontSquirrelWindow</class>
+ <widget class="QWidget" name="FontSquirrelWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1001</width>
+    <height>820</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1000</width>
+    <height>820</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Inter</family>
+    <bold>true</bold>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Download Font Squirrel Fonts</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="Resources.qrc">
+    <normaloff>:/Icon/WCGXicon2.ico</normaloff>:/Icon/WCGXicon2.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget{
+background-color: rgb(20, 20, 20);
+color:#e6e6e6;
+}
+QLabel, QFrame, QToolButton{
+background:none;
+}
+QToolBar{
+background-color:rgba(200,0,200,50);
+}
+QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}
+QPushButton{
+background-color: rgba(100,100,100,150);
+color:#E6E6FA;/*#3cf3b6;*/
+border-radius:10px;
+}
+QPlainTextEdit:focus{
+border: 1px solid #e6e6e6;
+}
+QPlainTextEdit{
+color: #141414;
+}
+QTextEdit{
+color:#e6e6e6;
+background:#151515;
+}
+QTextEdit:focus {
+border:1px solid #e6e6e6;
+}</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="11" column="0">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="0" alignment="Qt::AlignHCenter">
+    <widget class="QFrame" name="frame_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_2">
+      <property name="rightMargin">
+       <number>70</number>
+      </property>
+      <item row="0" column="0">
+       <widget class="QLabel" name="select_category_lbl">
+        <property name="font">
+         <font>
+          <family>Inter</family>
+          <pointsize>10</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Exported image size will be multiplied by this number</string>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="text">
+         <string>Select category of fonts to download:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="indent">
+         <number>-1</number>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="download_category_btn">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>211</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Inter</family>
+          <pointsize>9</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Export selected icon</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #32d026;
+	color: #212121;
+}
+QPushButton:pressed{
+	 padding-left: 3px;
+     padding-top: 3px;
+}</string>
+        </property>
+        <property name="text">
+         <string>Download Category</string>
+        </property>
+        <attribute name="buttonGroup">
+         <string notr="true">downloadButtonsGroup</string>
+        </attribute>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QFrame" name="frame">
+        <layout class="QHBoxLayout" name="horizontalLayout2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QComboBox" name="fs_category_list">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>211</width>
+             <height>43</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <family>Inter</family>
+             <pointsize>11</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">/* Style the QComboBox */
+QComboBox {
+    background-color: #141414; /* Background color of the entire combo box */
+    border: 1px solid #e6e6e6; /* Border around the combo box */
+    padding: 10px; /* Padding inside the combo box */
+    color:#e6e6e6; /* Current text color*/
+}
+/* Style the QComboBox's drop-down list */
+QComboBox QAbstractItemView {
+    background-color: #141414; /* Background color of the drop-down list */
+    border: 1px solid #e6e6e6; /* Border around the drop-down list */
+    padding: 10px; /* Padding inside the drop-down list */
+	color:#e6e6e6;
+}
+/* Style individual items within the QComboBox's drop-down list */
+QComboBox QAbstractItemView::item {
+    background-color: #141414; /* Background color of each item in the list */
+    padding: 1px; /* Padding inside each item */
+	color: #e6e6e6;
+}
+/* Style the selected item within the drop-down list */
+QComboBox QAbstractItemView::item:selected {
+    background-color: rgba(0,200,0,150); /* Background color of the selected item */
+    color: #e6e6e6; /* Text color of the selected item */
+}
+/* Style the drop-down list scroll bar (if it appears) */
+QComboBox QScrollBar:vertical {
+    width: 0px; /* Width of the vertical scrollbar */
+    background: #e6e6e6; /* Background color of the scrollbar */
+}
+/* Style the drop-down list scroll bar handle (thumb) */
+QComboBox QScrollBar::handle:vertical {
+    background: #141414; /* Background color of the scrollbar handle */
+}</string>
+           </property>
+           <property name="maxVisibleItems">
+            <number>20</number>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string>Blackletter</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Calligraphic</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Comic</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Dingbat</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Handdrawn</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Display</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Monospaced</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Novelty</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Pixel</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Programming</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Retro</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Script</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Serif</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Stencil</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>All</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QFrame" name="frame_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>9</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="total_fonts_lbl">
+              <property name="font">
+               <font>
+                <family>Inter</family>
+                <pointsize>10</pointsize>
+                <italic>false</italic>
+                <bold>true</bold>
+                <kerning>true</kerning>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Exported image size will be multiplied by this number</string>
+              </property>
+              <property name="text">
+               <string>Font Families:</string>
+              </property>
+              <property name="margin">
+               <number>5</number>
+              </property>
+              <property name="indent">
+               <number>-1</number>
+              </property>
+              <property name="openExternalLinks">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item alignment="Qt::AlignHCenter">
+             <widget class="QLabel" name="font_count_lbl">
+              <property name="minimumSize">
+               <size>
+                <width>49</width>
+                <height>29</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Inter</family>
+                <pointsize>11</pointsize>
+                <italic>false</italic>
+                <bold>true</bold>
+                <kerning>true</kerning>
+               </font>
+              </property>
+              <property name="toolTip">
+               <string>Exported image size will be multiplied by this number</string>
+              </property>
+              <property name="text">
+               <string>21</string>
+              </property>
+              <property name="margin">
+               <number>5</number>
+              </property>
+              <property name="indent">
+               <number>-1</number>
+              </property>
+              <property name="openExternalLinks">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="10" column="0" alignment="Qt::AlignHCenter">
+    <widget class="QLabel" name="info_lbl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>600</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Inter</family>
+       <pointsize>11</pointsize>
+       <italic>false</italic>
+       <bold>true</bold>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::MarkdownText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QFrame" name="FS_FullFrame">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Inter</family>
+       <bold>true</bold>
+      </font>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_9">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QFrame" name="Masks_FilterFrame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8"/>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QFrame" name="downloadImageFA_Frame">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3"/>
+       </widget>
+      </item>
+      <item alignment="Qt::AlignHCenter">
+       <widget class="QLabel" name="download_info_lbl">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>500</width>
+          <height>98</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <family>Inter</family>
+          <pointsize>10</pointsize>
+          <italic>false</italic>
+          <bold>true</bold>
+          <kerning>true</kerning>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string>Exported image size will be multiplied by this number</string>
+        </property>
+        <property name="lineWidth">
+         <number>1</number>
+        </property>
+        <property name="midLineWidth">
+         <number>0</number>
+        </property>
+        <property name="text">
+         <string>- Fonts will be downloaded from Font Squirrel
+- Files are downloaded in .zip format
+- WCGX will unzip all downloaded font families automatically, transfer the fonts in a new folder named after the font category you downloaded, delete all other files, including the original zip file.
+- All font names contain the &quot;-webfont&quot; suffix - they will be renamed to eliminate that.</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::MarkdownText</enum>
+        </property>
+        <property name="scaledContents">
+         <bool>false</bool>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="margin">
+         <number>0</number>
+        </property>
+        <property name="indent">
+         <number>-1</number>
+        </property>
+        <property name="openExternalLinks">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="9" column="0" alignment="Qt::AlignHCenter">
+    <widget class="QLabel" name="downloading_lbl">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="font">
+      <font>
+       <family>Inter</family>
+       <pointsize>10</pointsize>
+       <italic>false</italic>
+       <bold>true</bold>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Exported image size will be multiplied by this number</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="margin">
+      <number>0</number>
+     </property>
+     <property name="indent">
+      <number>-1</number>
+     </property>
+     <property name="openExternalLinks">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="Resources.qrc"/>
+ </resources>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="downloadButtonsGroup"/>
+ </buttongroups>
+</ui>

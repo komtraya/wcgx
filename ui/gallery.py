@@ -35,7 +35,6 @@ class Ui_GalleryWindow(object):
         icon.addFile(u":/Icon/WCGXicon2.ico", QSize(), QIcon.Normal, QIcon.Off)
         GalleryWindow.setWindowIcon(icon)
         GalleryWindow.setStyleSheet(u"QWidget{\n"
-"/*font: 700 9pt \"Inter\";*/\n"
 "background-color: rgb(20, 20, 20);\n"
 "color:#e6e6e6;\n"
 "}\n"
@@ -53,6 +52,12 @@ class Ui_GalleryWindow(object):
 "background-color: rgba(100,100,100,150);\n"
 "color:#E6E6FA;/*#3cf3b6;*/\n"
 "border-radius:10px;\n"
+"}\n"
+"QPlainTextEdit:focus{\n"
+"border: 1px solid #e6e6e6;\n"
+"}\n"
+"QPlainTextEdit{\n"
+"color: #141414;\n"
 "}")
         self.gridLayout = QGridLayout(GalleryWindow)
         self.gridLayout.setObjectName(u"gridLayout")
@@ -197,11 +202,11 @@ class Ui_GalleryWindow(object):
         GalleryWindow.setWindowTitle(QCoreApplication.translate("GalleryWindow", u"Mask Gallery", None))
         self.fa_filter_input.setPlaceholderText(QCoreApplication.translate("GalleryWindow", u"Filter", None))
 #if QT_CONFIG(tooltip)
-        self.export_fa_png_btn.setToolTip(QCoreApplication.translate("GalleryWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Export selected icon</span></p></body></html>", None))
+        self.export_fa_png_btn.setToolTip(QCoreApplication.translate("GalleryWindow", u"Export selected icon", None))
 #endif // QT_CONFIG(tooltip)
         self.export_fa_png_btn.setText(QCoreApplication.translate("GalleryWindow", u"PNG", None))
 #if QT_CONFIG(tooltip)
-        self.export_fa_svg_btn.setToolTip(QCoreApplication.translate("GalleryWindow", u"<html><head/><body><p><span style=\" font-size:10pt; font-weight:400;\">Export selected icon</span></p></body></html>", None))
+        self.export_fa_svg_btn.setToolTip(QCoreApplication.translate("GalleryWindow", u"Export selected icon", None))
 #endif // QT_CONFIG(tooltip)
         self.export_fa_svg_btn.setText(QCoreApplication.translate("GalleryWindow", u"SVG", None))
     # retranslateUi

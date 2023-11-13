@@ -1,3 +1,14 @@
+**0.7.0**
+
+- Implemented StopWords
+- StopWords are now included in the Settings profile
+- Profile name input-box is now cleared after storing a profile, instead of keeping the last typed profile name
+- Updated exported WordCloud image file-name structure to font_name--profile_name
+- New button: Download some fonts - opens a new window, where you can download fonts
+- Eliminated redundant tooltips
+- Some UI touch-ups
+
+
 **0.5.9**
 
 - You can no longer store blank text in wcgx.db
@@ -20,6 +31,7 @@
 - Tooltips for Unicode Emojis - name of selected emoji
 - You can now filter Unicode Emojis based on name
 - Minor UI adjustments
+
 
 **0.5.5**
 

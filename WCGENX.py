@@ -12,17 +12,20 @@ from PySide6.QtWidgets import (
     QFileDialog,
     QListWidgetItem,
     QColorDialog,
-    QPushButton,
 )
 from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtCore import QStandardPaths, QSize, QRectF, Qt
+from PySide6.QtCore import QStandardPaths, QSize, QThread, Signal
 
 from ui.main import Ui_MainWindow
 from ui.gradient import Ui_GradientWindow
 from ui.error import Ui_Error
 from ui.storeProfile import Ui_StoreProfileWindow
 from ui.gallery import Ui_GalleryWindow
+from ui.fsw import Ui_FontSquirrelWindow
 import sqlite3
+import requests
+import zipfile
+import shutil
 
 # import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
@@ -77,6 +80,228 @@ class GradientWindow(widget.QWidget, Ui_GradientWindow):
 
     def gradient_push_slider_changed_fnc(self, int):
         self.gradient_push_indicator_lbl.setText(f"{int}")
+
+
+class FontSquirrel(widget.QWidget, Ui_FontSquirrelWindow):
+    update_signal = Signal(str)
+
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.fs_category_list.currentTextChanged.connect(self.font_count_indicator_fnc)
+        self.download_category_btn.clicked.connect(self.download_font_category_fnc)
+
+    def download_font_category_fnc(self):
+        classification_to_download = self.fs_category_list.currentText()
+        options = QFileDialog.Options()
+        destination_folder = QFileDialog.getExistingDirectory(
+            self, "Select Folder", "", options=options
+        )
+
+        if destination_folder and self.fs_category_list.currentText() != "All":
+
+            class DownloadThread(QThread):
+                update_signal = Signal(str)
+                downloading_lbl = self.downloading_lbl
+
+                def run(self):
+                    try:
+                        self.downloading_lbl.setText("Downloading...")
+                        font_list_url = f"https://www.fontsquirrel.com/api/fontlist/{classification_to_download}"
+                        font_list_response = requests.get(font_list_url)
+                        font_list = font_list_response.json()
+                        font_properties_dict = {}
+
+                        for font in font_list:
+                            family_urlname = font["family_urlname"]
+                            font_properties_dict[family_urlname] = font
+
+                        for (
+                            family_urlname,
+                            font_properties,
+                        ) in font_properties_dict.items():
+                            try:
+                                font_download_url = f"https://www.fontsquirrel.com/fontfacekit/{family_urlname}"
+                                local_zip_path = f"{family_urlname}-fontfacekit.zip"
+                                font_response = requests.get(font_download_url)
+
+                                with open(local_zip_path, "wb") as font_zip:
+                                    font_zip.write(font_response.content)
+
+                                extracted_dir = os.path.join(
+                                    destination_folder, classification_to_download
+                                )
+                                os.makedirs(extracted_dir, exist_ok=True)
+                                extracted_dir = rf"{extracted_dir}"
+                                with zipfile.ZipFile(local_zip_path, "r") as zip_ref:
+                                    zip_ref.extractall(extracted_dir)
+
+                                for root, dirs, files in os.walk(extracted_dir):
+                                    for file in files:
+                                        if file.lower().endswith((".otf", ".ttf")):
+                                            old_file_path = os.path.join(root, file)
+                                            new_file_path = os.path.join(
+                                                root, file.replace("-webfont", "")
+                                            )
+                                            os.rename(old_file_path, new_file_path)
+
+                                for root, dirs, files in os.walk(extracted_dir):
+                                    for file in files:
+                                        if file.lower().endswith((".otf", ".ttf")):
+                                            file_path = os.path.join(root, file)
+                                            shutil.move(
+                                                file_path,
+                                                os.path.join(extracted_dir, file),
+                                            )
+
+                                for item in os.listdir(extracted_dir):
+                                    item_path = os.path.join(extracted_dir, item)
+                                    if os.path.isfile(
+                                        item_path
+                                    ) and not item.lower().endswith((".otf", ".ttf")):
+                                        os.remove(item_path)
+                                    elif os.path.isdir(item_path):
+                                        shutil.rmtree(item_path)
+
+                                os.remove(local_zip_path)
+
+                                self.update_signal.emit(
+                                    f'# {family_urlname}\n- downloaded\n- extracted\n- files renamed in "{extracted_dir}".'
+                                )
+                            except Exception as e:
+                                self.update_signal.emit(
+                                    f"Error downloading font '{family_urlname}':\n- {str(e)}"
+                                )
+                                self.downloading_lbl.setText("")
+                        self.update_signal.emit("# Done.")
+                        self.downloading_lbl.setText("")
+
+                    except Exception as e:
+                        self.update_signal.emit(f"Error: {str(e)}")
+                        self.downloading_lbl.setText("")
+
+            download_thread = DownloadThread(self)
+            download_thread.update_signal.connect(self.update_ui)
+            download_thread.start()
+        elif destination_folder and self.fs_category_list.currentText() == "All":
+
+            class DownloadAllFontsThread(QThread):
+                update_signal = Signal(str)
+                downloading_lbl = self.downloading_lbl
+
+                def run(self):
+                    try:
+                        self.downloading_lbl.setText("Downloading...")
+                        all_fonts_url = "https://www.fontsquirrel.com/api/fontlist/all"
+                        all_fonts_response = requests.get(all_fonts_url)
+                        all_fonts_list = all_fonts_response.json()
+
+                        for font in all_fonts_list:
+                            family_urlname = font["family_urlname"]
+                            classification = font["classification"]
+
+                            font_download_url = f"https://www.fontsquirrel.com/fontfacekit/{family_urlname}"
+                            local_zip_path = f"{family_urlname}-fontfacekit.zip"
+                            font_response = requests.get(font_download_url)
+
+                            with open(local_zip_path, "wb") as font_zip:
+                                font_zip.write(font_response.content)
+
+                            extracted_dir = os.path.join(
+                                destination_folder, classification
+                            )
+                            os.makedirs(extracted_dir, exist_ok=True)
+                            extracted_dir = rf"{extracted_dir}"
+                            with zipfile.ZipFile(local_zip_path, "r") as zip_ref:
+                                zip_ref.extractall(extracted_dir)
+
+                            for root, dirs, files in os.walk(extracted_dir):
+                                for file in files:
+                                    if file.lower().endswith((".otf", ".ttf")):
+                                        old_file_path = os.path.join(root, file)
+                                        new_file_path = os.path.join(
+                                            root, file.replace("-webfont", "")
+                                        )
+                                        os.rename(old_file_path, new_file_path)
+
+                            for root, dirs, files in os.walk(extracted_dir):
+                                for file in files:
+                                    if file.lower().endswith((".otf", ".ttf")):
+                                        file_path = os.path.join(root, file)
+                                        shutil.move(
+                                            file_path,
+                                            os.path.join(extracted_dir, file),
+                                        )
+
+                            for item in os.listdir(extracted_dir):
+                                item_path = os.path.join(extracted_dir, item)
+                                if os.path.isfile(
+                                    item_path
+                                ) and not item.lower().endswith((".otf", ".ttf")):
+                                    os.remove(item_path)
+                                elif os.path.isdir(item_path):
+                                    shutil.rmtree(item_path)
+
+                            os.remove(local_zip_path)
+
+                            self.update_signal.emit(
+                                f'# {family_urlname}\n- downloaded\n- extracted\n- files renamed in "{extracted_dir}".'
+                            )
+
+                        self.update_signal.emit("# Done.")
+                        self.downloading_lbl.setText("")
+
+                    except Exception as e:
+                        self.update_signal.emit(f"Error: {str(e)}")
+                        self.downloading_lbl.setText("")
+
+            download_all_fonts_thread = DownloadAllFontsThread(self)
+            download_all_fonts_thread.update_signal.connect(self.update_ui)
+            download_all_fonts_thread.start()
+
+        self.downloading_lbl.setText("")
+
+    def update_ui(self, message):
+        self.info_lbl.setText(message)
+
+    def font_count_indicator_fnc(self):
+        text = self.fs_category_list.currentText()
+        if text == "Blackletter":
+            self.font_count_lbl.setText("21")
+        elif text == "Calligraphic":
+            self.font_count_lbl.setText("13")
+        elif text == "Comic":
+            self.font_count_lbl.setText("22")
+        elif text == "Dingbat":
+            self.font_count_lbl.setText("26")
+        elif text == "Display":
+            self.font_count_lbl.setText("245")
+        elif text == "Grunge":
+            self.font_count_lbl.setText("1")
+        elif text == "Handdrawn":
+            self.font_count_lbl.setText("54")
+        elif text == "Monospaced":
+            self.font_count_lbl.setText("27")
+        elif text == "Novelty":
+            self.font_count_lbl.setText("27")
+        elif text == "Pixel":
+            self.font_count_lbl.setText("2")
+        elif text == "Pixel":
+            self.font_count_lbl.setText("2")
+        elif text == "Programming":
+            self.font_count_lbl.setText("2")
+        elif text == "Retro":
+            self.font_count_lbl.setText("33")
+        elif text == "Script":
+            self.font_count_lbl.setText("72")
+        elif text == "Serif":
+            self.font_count_lbl.setText("148")
+        elif text == "Stencil":
+            self.font_count_lbl.setText("14")
+        elif text == "Typewriter":
+            self.font_count_lbl.setText("12")
+        elif text == "All":
+            self.font_count_lbl.setText("700+")
 
 
 class GalleryWindow(widget.QWidget, Ui_GalleryWindow):
@@ -138,6 +363,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.error_window.close_btn.clicked.connect(lambda: self.error_window.close())
         self.storeProfile_window = StoreProfileWindow()
         self.deleteProfile_window = DeleteProfileWindow(self)
+        self.fs_window = FontSquirrel()
         ##### ---------- #####
         self.gallery = GalleryWindow()
         ## Future color preset implementation(list needs sorting)
@@ -145,7 +371,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         # for palette_names in cm.cmap_d:
         #     self.colormaps_dropdown.addItem(palette_names)
         #     print(palette_names)
-
+        ## Font Squirrel
+        self.open_fs_window.clicked.connect(self.open_fs_window_fnc)
         ## Gallery
         self.fa_mask_select_button.clicked.connect(self.start_gallery_window)
         self.gallery.fa_filter_input.textChanged.connect(self.filter_fa_images)
@@ -153,6 +380,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.gallery.downloadButtonsGroup.buttonClicked.connect(
             self.download_selected_icon_fnc
         )
+
         ## Settings
         self.storeSettingsProfile_btn.clicked.connect(self.storeProfile_fnc)
         self.storeTextProfile_btn.clicked.connect(self.storeProfile_fnc)
@@ -298,6 +526,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         ##Close all extra windows along with main window
         self.closeEvent = lambda close: self.on_close()
+
         self.gallery.closeEvent = lambda close: self.on_gallery_close()
 
         ##Settings
@@ -307,11 +536,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     # # # # # Create WordCloud object and Export Image(s) # # # # #
     def generate_WordCloud(self):
-        # @ PARAMETERS
         wordcloud = WordCloud(
             mask=self.mask_image,
-            # width=width,
-            # height=height,
             regexp=self.custom_regexp(),
             background_color=None,
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
@@ -327,7 +553,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             max_font_size=self.max_font_size_slider.value(),
             min_font_size=self.min_font_size_slider.value(),
             font_step=self.font_step_slider.value(),
-            stopwords=set(),
+            stopwords=self.stopwords_fnc(),
             min_word_length=0,
             include_numbers=True,
             random_state=self.random_state_fnc(),  # Generated WC will be the same color/layout, until random_state int is different
@@ -351,7 +577,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             wordcloud_image = Image.fromarray(wordcloud_image)
 
             # Export the PIL Image object as a PNG image file
-            self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+            if self.settingsProfiles_list.currentText() != "":
+                self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--{self.settingsProfiles_list.currentText()}[WCGX].png"
+            else:
+                self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--No-Profile[WCGX].png"
             wordcloud_image.save(self.output_image_path)
             os.startfile(self.output_image_path)  # Open file after generating it
         ## SVG
@@ -359,7 +588,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             # Generate the SVG representation of the word cloud
             svg_code = wordcloud.to_svg()
             # Export the SVG code to a file
-            self.output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+            if self.settingsProfiles_list.currentText() != "":
+                self.output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--{self.settingsProfiles_list.currentText()}[WCGX].svg"
+            else:
+                self.output_image_path_1 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--No-Profile[WCGX].svg"
             with open(f"{self.output_image_path_1}", "w", encoding="utf-8") as f:
                 f.write(svg_code)
         ## BOTH
@@ -367,7 +599,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             # Generate the SVG representation of the word cloud
             svg_code = wordcloud.to_svg()
             # Export the SVG code to a file
-            self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].svg"
+            if self.settingsProfiles_list.currentText() != "":
+                self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--{self.settingsProfiles_list.currentText()}[WCGX].svg"
+            else:
+                self.output_image_path = rf"{self.destination_path}\{self.font_list.currentItem().text()}--No-Profile[WCGX].svg"
             with open(f"{self.output_image_path}", "w", encoding="utf-8") as f:
                 f.write(svg_code)
 
@@ -377,7 +612,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             wordcloud_image = Image.fromarray(wordcloud_image)
 
             # Export the PIL Image object as a PNG image file
-            self.output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--M{self.margin_slider.value()}--mF{self.min_font_size_slider.value()}--MF{self.max_font_size_slider.value()}--{self.colormaps_dropdown.currentText()}[WCGX].png"
+            if self.settingsProfiles_list.currentText() != "":
+                self.output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--{self.settingsProfiles_list.currentText()}[WCGX].png"
+            else:
+                self.output_image_path_2 = rf"{self.destination_path}\{self.font_list.currentItem().text()}--No-Profile[WCGX].png"
             wordcloud_image.save(self.output_image_path_2)
             os.startfile(
                 self.output_image_path_2
@@ -881,10 +1119,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         else:
             self.WC_GeneratorFrame.setVisible(False)
 
-    # def change_color(self, color):
-    # Set the background color to red when the button is clicked
-    # self.name_here.setStyleSheet(f"color: {color};")
-
     ## SELECT FONT and FONT HANDLING
     def apply_selected_font(self, item):
         try:
@@ -1166,9 +1400,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         )
         a = 255
         return f"rgba({r}, {g}, {b},{a})"
-
-    def gradient_orientation_fnc(self, button):
-        pass
 
     def generate_gradient_color(
         self, word, font_size, position, orientation, random_state=None, **kwargs
@@ -1473,21 +1704,19 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
     def custom_regexp(self):
         ## Heterogeneous - GOOD ?
         if self.heterogeneous_checkbox.isChecked():
-            regxp = r".+"  # - Any character can be a word or part of a word - Words are in order, due to space character being considered a word
+            regexp = r".+"  # - Any character can be a word or part of a word - Words are in order, due to space character being considered a word
 
         ## AlphaNumeric - GOOD
         elif self.binary_checkbox.isChecked():
-            regxp = r"\b(?:[a-zA-Z]+\d+\w*|\d+\w*)\b"  # - Numbers as a word, or alphanumeric words!
+            regexp = r"\b(?:[a-zA-Z]+\d+\w*|\d+\w*)\b"  # - Numbers as a word, or alphanumeric words!
 
         ## URL - Good, except for emojis as part of word
         elif self.url_checkbox.isChecked():
-            regxp = (
-                regxp
-            ) = r"\b[\w'/.'-]+\b|[^\w\s]"  # - Includes any punctuation, or character if part of a word, including numbers, word order is randomized
+            regexp = r"\b[\w'/.'-]+\b|[^\w\s]"  # - Includes any punctuation, or character if part of a word, including numbers, word order is randomized
         ## Disorder - GOOD
         elif self.disorder_checkbox.isChecked():
-            regxp = r"\S"  # - treats characters as a word(all letters will be placed randomly, not as part of the word)
-        return regxp
+            regexp = r"\S"  # - treats characters as a word(all letters will be placed randomly, not as part of the word)
+        return regexp
 
     def random_state_fnc(self):
         if self.random_seed_slider.value() == 0:
@@ -1512,8 +1741,18 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.mask_dimensions_label.setText(f"")
             self.mask_image_thumbnail.setText(f"")
             self.mask_image_thumbnail.setVisible(False)
+        self.gallery.fa_filter_input.setPlainText("")
 
-    ## test
+    def stopwords_fnc(self):
+        if self.stopwords.toPlainText != "":
+            stopwords = set()
+            text = self.stopwords.toPlainText()
+            words = text.split()
+            for word in words:
+                stopwords.add(word)
+        else:
+            stopwords = set()
+        return stopwords
 
     def init_wcgx_db(self):
         # Initialize Settings File(db)
@@ -1718,6 +1957,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         max_blue = self.return_SettingsProfiles_fnc(
             self.settingsProfiles_list.currentText(), "Max Blue"
         )
+        stopwords = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "StopWords"
+        )
         self.min_font_size_slider.setValue(min_font_size)
         self.max_font_size_slider.setValue(max_font_size)
         self.margin_slider.setValue(margin)
@@ -1735,6 +1977,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.green_max.setValue(max_green)
         self.blue_max.setValue(max_blue)
         self.destination_path = destination_folder
+        self.stopwords.setText(stopwords)
         if not self.destination_path:
             self.open_destination_folder.setVisible(False)
             self.select_destination_button.setStyleSheet(
@@ -1815,6 +2058,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 ("Max Red", self.red_max.value()),
                 ("Max Green", self.green_max.value()),
                 ("Max Blue", self.blue_max.value()),
+                ("StopWords", self.stopwords.toPlainText()),
             ]
             # Get the profile name from the user input
             profile_name = (
@@ -1825,8 +2069,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             for key, value in settings_to_insert:
                 cursor.execute(
                     """
-                INSERT INTO Settings (Profile, Key, Value) VALUES (?, ?, ?)
-                ON CONFLICT(Profile, Key) DO UPDATE SET Value = excluded.Value;
+                INSERT OR REPLACE INTO Settings (Profile, Key, Value) VALUES (?, ?, ?);
                 """,
                     (profile_name, key, value),
                 )
@@ -1842,6 +2085,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             )
             self.error_window.show()
             self.error_window.adjustSize()
+        self.storeProfile_window.profile_name.setPlainText("")
 
     def storeTextProfileOkAction(self):
         profile_name = (
@@ -1883,9 +2127,14 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             )
             self.error_window.show()
             self.error_window.adjustSize()
+        self.storeProfile_window.profile_name.setPlainText("")
 
     def cancelSettingsStorage_fnc(self):
+        self.storeProfile_window.profile_name.setPlainText("")
         self.storeProfile_window.close()
+
+    def open_fs_window_fnc(self):
+        self.fs_window.show()
 
 
 class DeleteProfileWindow(widget.QDialog, Ui_StoreProfileWindow):
