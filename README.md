@@ -7,6 +7,11 @@
 ## Enchanting Creations Await
 Within the heart of Windows, a singular, elegant executable awaits—a true artisan of word cloud imagery. [Here lies](https://github.com/komtraya/wcgx/releases) an enchanting realm where the essence of artistry is distilled into mesmerizing word cloud designs.
 
+
+## A Symphony of Color
+In this realm, your word cloud dances upon materials of any hue, except the purest white. It adapts gracefully to the color tapestries of your imagination.
+
+
 ## Showcase Your Masterpiece
 As the curtain rises, an exquisite array of features unfolds before you:
 
@@ -36,8 +41,6 @@ As the curtain rises, an exquisite array of features unfolds before you:
 
 - **Font Quest**: Embark on a quest for fonts beyond the ordinary. With the power to download fonts directly within the application, expand your typographic arsenal and take your creations to unprecedented altitudes.
 
-## A Symphony of Color
-In this realm, your word cloud dances upon materials of any hue, except the purest white. It adapts gracefully to the color tapestries of your imagination.
 
 ## Embark on the Journey
 With [wcgx](https://github.com/komtraya/wcgx/releases) at your fingertips, you can embark on a magical journey, where your word cloud masterpiece awaits to be manifested in all its poetic splendor.

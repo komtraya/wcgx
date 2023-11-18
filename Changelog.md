@@ -1,3 +1,10 @@
+**0.7.1**
+
+- Implemented "Profile Fonts" - fonts added to this list can be stored in a Settings profile
+- New button to update the selected Settings profile with the current settings
+- Upon new Settings/Text profile creation, the created profile's name will be selected in the dropdown list
+
+
 **0.7.0**
 
 - Implemented StopWords

@@ -155,7 +155,7 @@ border:1px solid #e6e6e6;
          </font>
         </property>
         <property name="toolTip">
-         <string>Export selected icon</string>
+         <string/>
         </property>
         <property name="styleSheet">
          <string notr="true">QPushButton {

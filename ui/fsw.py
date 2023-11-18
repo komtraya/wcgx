@@ -336,7 +336,7 @@ class Ui_FontSquirrelWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.select_category_lbl.setText(QCoreApplication.translate("FontSquirrelWindow", u"Select category of fonts to download:", None))
 #if QT_CONFIG(tooltip)
-        self.download_category_btn.setToolTip(QCoreApplication.translate("FontSquirrelWindow", u"Export selected icon", None))
+        self.download_category_btn.setToolTip("")
 #endif // QT_CONFIG(tooltip)
         self.download_category_btn.setText(QCoreApplication.translate("FontSquirrelWindow", u"Download Category", None))
         self.fs_category_list.setItemText(0, QCoreApplication.translate("FontSquirrelWindow", u"Blackletter", None))

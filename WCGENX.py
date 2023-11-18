@@ -14,7 +14,7 @@ from PySide6.QtWidgets import (
     QColorDialog,
 )
 from PySide6.QtSvg import QSvgRenderer
-from PySide6.QtCore import QStandardPaths, QSize, QThread, Signal
+from PySide6.QtCore import QStandardPaths, QSize, QThread, Signal, Qt
 
 from ui.main import Ui_MainWindow
 from ui.gradient import Ui_GradientWindow
@@ -166,7 +166,7 @@ class FontSquirrel(widget.QWidget, Ui_FontSquirrelWindow):
                                 os.remove(local_zip_path)
 
                                 self.update_signal.emit(
-                                    f'# {family_urlname}\n- downloaded\n- extracted\n- files renamed in "{extracted_dir}".'
+                                    f'# {family_urlname}\n- downloaded\n- extracted\n- files renamed in "{extracted_dir}"'
                                 )
                             except Exception as e:
                                 self.update_signal.emit(
@@ -245,7 +245,7 @@ class FontSquirrel(widget.QWidget, Ui_FontSquirrelWindow):
                             os.remove(local_zip_path)
 
                             self.update_signal.emit(
-                                f'# {family_urlname}\n- downloaded\n- extracted\n- files renamed in "{extracted_dir}".'
+                                f'# {family_urlname}\n- downloaded\n- extracted\n- files renamed in "{extracted_dir}"'
                             )
 
                         self.update_signal.emit("# Done.")
@@ -388,7 +388,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.storeProfile_window.cancel_store_btn.clicked.connect(
             self.cancelSettingsStorage_fnc
         )
-
+        self.add_profile_font_btn.clicked.connect(self.add_font_to_profile_fonts_list)
+        self.delete_profile_font_btn.clicked.connect(self.delete_font_from_profile_fonts_list)
+        self.apply_profile_font_btn.clicked.connect(self.apply_selected_profile_font)
+        self.update_settingsProfile_btn.clicked.connect(self.update_selected_settings_profile)
         ## Parameters display function connect
         self.parametersButtonGroup.buttonClicked.connect(
             self.change_tab_based_on_selected_item
@@ -533,7 +536,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.init_wcgx_db()
         self.applySettingsProfile_btn.clicked.connect(self.apply_SettingsProfile_fnc)
         self.applyTextProfile_btn.clicked.connect(self.applyTextProfile_fnc)
-
+        # Initialize wordcloud_font_path
+        self.wordcloud_font_path = None
     # # # # # Create WordCloud object and Export Image(s) # # # # #
     def generate_WordCloud(self):
         wordcloud = WordCloud(
@@ -542,7 +546,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             background_color=None,
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
             margin=self.margin_slider.value(),
-            font_path=self.font_list.currentItem().data(1001),
+            font_path=fr"{self.wordcloud_font_path}",
             repeat=self.repeat_checkbox.isChecked(),
             collocation_threshold=self.collocations_thresh_slider.value(),
             collocations=self.collocations_checkbox.isChecked(),
@@ -1074,10 +1078,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                     painter.end()
                     # Transform QImage to Pillow Image
                     pil_image = Image.fromqpixmap(mask_test)
-                    resizeMax = (
-                        200,
-                        10000,
-                    )  # Height will be calculated based on original width, so that aspect ratio is maintained
+                    resizeMax = (200, 10000)  # Height will be calculated based on original width, so that aspect ratio is maintained
                     pil_image.thumbnail(resizeMax, resample=Image.Resampling.LANCZOS)
                     resized_thumb = ImageQt(pil_image)
                     pixmap = QPixmap.fromImage(resized_thumb)
@@ -1129,9 +1130,43 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             if font_families:
                 selected_font = QFont(font_families[0], 15)  # Use the first font family
                 self.word_input.setFont(selected_font)
+            self.wordcloud_font_path = font_path
         except:
             pass
+    # Add currently selected font to Profile Fonts list, so it can be stored in a Settings profile
+    def add_font_to_profile_fonts_list(self):
+        try:
+            profile_font_path = self.font_list.currentItem().data(1001)
+            profile_font_name = os.path.basename(profile_font_path)
+            profile_font_display_name = profile_font_name.split(".")[0].capitalize()
+        
+            self.profile_fonts_list.addItem(profile_font_display_name, profile_font_path)
+        except:
+            pass
+    # Delete currently selected font from Profile Fonts list, so it can be stored in a Settings profile
+    def delete_font_from_profile_fonts_list(self):
+        try:
+            selected_profile_font = self.profile_fonts_list.currentText()
+            index = self.profile_fonts_list.findText(selected_profile_font)
+            if index != -1:
+                self.profile_fonts_list.removeItem(index)
+        except:
+            pass
+    
+    def apply_selected_profile_font(self):
+        if self.profile_fonts_list.currentText():
+            try:
+                font_path = self.profile_fonts_list.currentData(Qt.UserRole)
+                font_id = QFontDatabase.addApplicationFont(font_path)
+                font_families = QFontDatabase.applicationFontFamilies(font_id)
 
+                if font_families:
+                    selected_font = QFont(font_families[0], 15)  # Use the first font family
+                    self.word_input.setFont(selected_font)
+                self.wordcloud_font_path = font_path
+            except:
+                pass
+    
     def scan_system_fonts(self):
         self.font_list.clear()
         # Get the directories where fonts are typically located
@@ -1156,7 +1191,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             item = QListWidgetItem(font_name_display)
             item.setData(
                 1001, font_path
-            )  # Using an arbitrary ID (1001) to store font path
+            )  # Using an arbitrary ID (1001) to store font path, so we can access this data
             self.font_list.addItem(item)  # - populate the list with fonts
             self.font_list.setCurrentItem(
                 self.font_list.item(0)
@@ -1762,6 +1797,18 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             conn = sqlite3.connect("wcgx.db")
             # Create a cursor object
             cursor = conn.cursor()
+            # Create a list of profile fonts and their data - this will stay empty on wcgx.db creation
+            profile_fonts_data = []
+            for index in range(self.profile_fonts_list.count()):
+                try:
+                    item_text = self.profile_fonts_list.itemText(index)
+                    item_data = self.profile_fonts_list.itemData(index, Qt.UserRole)
+                    profile_fonts_data.append((item_text, item_data))
+                except:
+                    pass
+            # Serialize the list data to a string using JSON
+            profile_fonts_data_str = json.dumps(profile_fonts_data)
+            
             # Settings to be stored in Default profile
             settings_to_insert = [
                 ("Min. Font Size", self.min_font_size_slider.value()),
@@ -1783,6 +1830,8 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 ("Max Red", self.red_max.value()),
                 ("Max Green", self.green_max.value()),
                 ("Max Blue", self.blue_max.value()),
+                ("StopWords", self.stopwords.toPlainText()),
+                ("Profile Fonts", profile_fonts_data_str)
             ]
             # Text to be stored in Default profile
             text_to_insert = [
@@ -1887,7 +1936,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         # Return the profile names
         if result:
-            return result[0]
+            if key == "Profile Fonts":
+                profile_fonts_data = json.loads(result[0])  # Deserialize the stored JSON string
+                return profile_fonts_data
+            else:
+                return result[0]
         else:
             return None
 
@@ -1960,6 +2013,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         stopwords = self.return_SettingsProfiles_fnc(
             self.settingsProfiles_list.currentText(), "StopWords"
         )
+        profile_fonts = self.return_SettingsProfiles_fnc(
+            self.settingsProfiles_list.currentText(), "Profile Fonts"
+        )
+        # Apply settings
         self.min_font_size_slider.setValue(min_font_size)
         self.max_font_size_slider.setValue(max_font_size)
         self.margin_slider.setValue(margin)
@@ -1978,6 +2035,17 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.blue_max.setValue(max_blue)
         self.destination_path = destination_folder
         self.stopwords.setText(stopwords)
+        # Apply stored profile fonts, if any
+        # Clear the existing items in the list
+        self.profile_fonts_list.clear()
+
+        # Populate the list with the fetched "Profile Fonts"
+        try:
+            for item_text, item_data in profile_fonts:
+                self.profile_fonts_list.addItem(item_text, item_data)
+        except:
+            pass
+
         if not self.destination_path:
             self.open_destination_folder.setVisible(False)
             self.select_destination_button.setStyleSheet(
@@ -2032,11 +2100,22 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     def storeSettingsProfileOkAction(self):
         if self.storeProfile_window.profile_name.toPlainText() != "":
-            # Create and Connect to the SQLite database
+            # Connect to the SQLite database
             conn = sqlite3.connect("wcgx.db")
             # Create a cursor object
             cursor = conn.cursor()
-            # Settings to be stored in Default profile
+            # Create a list of profile fonts and their data
+            profile_fonts_data = []
+            for index in range(self.profile_fonts_list.count()):
+                try:
+                    item_text = self.profile_fonts_list.itemText(index)
+                    item_data = self.profile_fonts_list.itemData(index, Qt.UserRole)
+                    profile_fonts_data.append((item_text, item_data))
+                except:
+                    pass
+            # Serialize the list data to a string using JSON
+            profile_fonts_data_str = json.dumps(profile_fonts_data)
+            # Settings to be stored in profile
             settings_to_insert = [
                 ("Destination Folder", self.destination_path),
                 ("Min. Font Size", self.min_font_size_slider.value()),
@@ -2059,6 +2138,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                 ("Max Green", self.green_max.value()),
                 ("Max Blue", self.blue_max.value()),
                 ("StopWords", self.stopwords.toPlainText()),
+                ("Profile Fonts", profile_fonts_data_str)
             ]
             # Get the profile name from the user input
             profile_name = (
@@ -2076,9 +2156,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
             # Commit the transaction
             conn.commit()
+
             self.storeProfile_window.close()
             # Refresh the settings list
             self.refresh_SettingsList_fnc()
+            # Select the stored profile in Setting Profile dropdown
+            self.settingsProfiles_list.setCurrentText(profile_name)
         else:
             self.error_window.error_lbl.setText(
                 f"\n # Error:\nProfile name cannot be blank"
@@ -2086,7 +2169,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.error_window.show()
             self.error_window.adjustSize()
         self.storeProfile_window.profile_name.setPlainText("")
-
+    
     def storeTextProfileOkAction(self):
         profile_name = (
             self.storeProfile_window.profile_name.toPlainText().strip().capitalize()
@@ -2121,6 +2204,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.storeProfile_window.close()
             # Refresh the settings list
             self.refresh_TextSettingsList_fnc()
+            self.textProfiles_list.setCurrentText(profile_name)
         else:
             self.error_window.error_lbl.setText(
                 "\n # Error:\nProfile name cannot be blank"
@@ -2128,6 +2212,66 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.error_window.show()
             self.error_window.adjustSize()
         self.storeProfile_window.profile_name.setPlainText("")
+    
+    def update_selected_settings_profile(self):
+        if self.settingsProfiles_list.currentText():
+            # Connect to the SQLite database
+            conn = sqlite3.connect("wcgx.db")
+            # Create a cursor object
+            cursor = conn.cursor()
+            # Create a list of profile fonts and their data
+            profile_fonts_data = []
+            for index in range(self.profile_fonts_list.count()):
+                try:
+                    item_text = self.profile_fonts_list.itemText(index)
+                    item_data = self.profile_fonts_list.itemData(index, Qt.UserRole)
+                    profile_fonts_data.append((item_text, item_data))
+                except:
+                    pass
+            # Serialize the list data to a string using JSON
+            profile_fonts_data_str = json.dumps(profile_fonts_data)
+            # Settings to be stored in profile
+            settings_to_insert = [
+                ("Destination Folder", self.destination_path),
+                ("Min. Font Size", self.min_font_size_slider.value()),
+                ("Max. Font Size", self.max_font_size_slider.value()),
+                ("Margin", self.margin_slider.value()),
+                ("H. Odds", self.prefer_horizontal_slider.value()),
+                ("Font Step", self.font_step_slider.value()),
+                (
+                    "Character Filtering",
+                    self.characterFilteringOptionsGroup.checkedButton().objectName(),
+                ),
+                ("CLC", int(self.collocations_checkbox.isChecked())),
+                ("CLC. Thresh", self.collocations_thresh_slider.value()),
+                ("Repeat", int(self.repeat_checkbox.isChecked())),
+                ("Color Preset", self.colormaps_dropdown.currentText()),
+                ("Min Red", self.red_min.value()),
+                ("Min Green", self.green_min.value()),
+                ("Min Blue", self.blue_min.value()),
+                ("Max Red", self.red_max.value()),
+                ("Max Green", self.green_max.value()),
+                ("Max Blue", self.blue_max.value()),
+                ("StopWords", self.stopwords.toPlainText()),
+                ("Profile Fonts", profile_fonts_data_str)
+            ]
+            # Get the profile name from the user input
+            profile_name = (
+                self.settingsProfiles_list.currentText()
+            )
+
+            # Insert settings with the user-provided profile name
+            for key, value in settings_to_insert:
+                cursor.execute(
+                    """
+                INSERT OR REPLACE INTO Settings (Profile, Key, Value) VALUES (?, ?, ?);
+                """,
+                    (profile_name, key, value),
+                )
+
+            # Commit the transaction
+            conn.commit()
+
 
     def cancelSettingsStorage_fnc(self):
         self.storeProfile_window.profile_name.setPlainText("")

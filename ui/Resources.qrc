@@ -3,6 +3,9 @@
     <file>WCGXicon2.ico</file>
   </qresource>
   <qresource prefix="Media">
+    <file>delete_minus.png</file>
+    <file>update_repair_settings.png</file>
+    <file>add_plus.png</file>
     <file>download.png</file>
     <file>delete.png</file>
     <file>LogoAssetForButton.png</file>
