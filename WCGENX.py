@@ -63,6 +63,13 @@ class ErrorWindow(widget.QMainWindow, Ui_Error):
         super().__init__()
         self.setupUi(self)
 
+class AreYouSure(widget.QDialog, Ui_StoreProfileWindow):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.profile_name.setVisible(False)
+        self.setWindowTitle("Are You Sure?")
+        
 
 class StoreProfileWindow(widget.QDialog, Ui_StoreProfileWindow):
     def __init__(self):
@@ -359,6 +366,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.error_window = ErrorWindow()
+        self.are_you_sure_window = AreYouSure()
         self.gradient_window = GradientWindow()
         self.error_window.close_btn.clicked.connect(lambda: self.error_window.close())
         self.storeProfile_window = StoreProfileWindow()
@@ -534,10 +542,17 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
         ##Settings
         self.init_wcgx_db()
+        self.apply_SettingsProfile_fnc()
         self.applySettingsProfile_btn.clicked.connect(self.apply_SettingsProfile_fnc)
         self.applyTextProfile_btn.clicked.connect(self.applyTextProfile_fnc)
+        
         # Initialize wordcloud_font_path
         self.wordcloud_font_path = None
+        
+        # Apply first font in the list of fonts on app start
+        if self.font_list.count() > 0:
+            first_item = self.font_list.item(0)
+            self.apply_selected_font(first_item)
     # # # # # Create WordCloud object and Export Image(s) # # # # #
     def generate_WordCloud(self):
         wordcloud = WordCloud(
@@ -1304,7 +1319,36 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.scan_appData_fonts()
 
     ## RANDOM COLOR PRESETS FUNCTIONS ##
+    
     def random_colors_presets_function(self, button):
+        if button == self.colp_pink_btn:
+            self.red_max.setValue(255)
+            self.green_max.setValue(0)
+            self.blue_max.setValue(255)
+            self.red_min.setValue(255)
+            self.green_min.setValue(0)
+            self.blue_min.setValue(255)
+        if button == self.colp_wpp_btn:
+            self.red_max.setValue(89)
+            self.green_max.setValue(13)
+            self.blue_max.setValue(59)
+            self.red_min.setValue(89)
+            self.green_min.setValue(13)
+            self.blue_min.setValue(59)
+        if button == self.colp_14_btn:
+            self.red_max.setValue(20)
+            self.green_max.setValue(20)
+            self.blue_max.setValue(20)
+            self.red_min.setValue(20)
+            self.green_min.setValue(20)
+            self.blue_min.setValue(20)
+        if button == self.colp_e6_btn:
+            self.red_max.setValue(230)
+            self.green_max.setValue(230)
+            self.blue_max.setValue(230)
+            self.red_min.setValue(230)
+            self.green_min.setValue(230)
+            self.blue_min.setValue(230)
         if button == self.rcp_bright:
             self.red_max.setValue(255)
             self.green_max.setValue(255)
@@ -1319,7 +1363,6 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.red_min.setValue(125)
             self.green_min.setValue(125)
             self.blue_min.setValue(125)
-
         if button == self.rcp_dark:
             self.red_max.setValue(150)
             self.green_max.setValue(150)
@@ -1959,108 +2002,109 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         return result[0] if result else None
 
     def apply_SettingsProfile_fnc(self):
-        destination_folder = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Destination Folder"
-        )
-        min_font_size = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Min. Font Size"
-        )
-        max_font_size = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Max. Font Size"
-        )
-        margin = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Margin"
-        )
-        horizontal_odds = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "H. Odds"
-        )
-        font_step = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Font Step"
-        )
-        char_filtering = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Character Filtering"
-        )
-        clc = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "CLC"
-        )
-        clc_thresh = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "CLC. Thresh"
-        )
-        repeat = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Repeat"
-        )
-        color_preset = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Color Preset"
-        )
-        min_red = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Min Red"
-        )
-        min_green = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Min Green"
-        )
-        min_blue = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Min Blue"
-        )
-        max_red = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Max Red"
-        )
-        max_green = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Max Green"
-        )
-        max_blue = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Max Blue"
-        )
-        stopwords = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "StopWords"
-        )
-        profile_fonts = self.return_SettingsProfiles_fnc(
-            self.settingsProfiles_list.currentText(), "Profile Fonts"
-        )
-        # Apply settings
-        self.min_font_size_slider.setValue(min_font_size)
-        self.max_font_size_slider.setValue(max_font_size)
-        self.margin_slider.setValue(margin)
-        self.prefer_horizontal_slider.setValue(horizontal_odds)
-        self.font_step_slider.setValue(font_step)
-        getattr(self, char_filtering).setChecked(True)
-        self.collocations_checkbox.setChecked(clc)
-        self.collocations_thresh_slider.setValue(clc_thresh)
-        self.repeat_checkbox.setChecked(repeat)
-        self.colormaps_dropdown.setCurrentText(color_preset)
-        self.red_min.setValue(min_red)
-        self.green_min.setValue(min_green)
-        self.blue_min.setValue(min_blue)
-        self.red_max.setValue(max_red)
-        self.green_max.setValue(max_green)
-        self.blue_max.setValue(max_blue)
-        self.destination_path = destination_folder
-        self.stopwords.setText(stopwords)
-        # Apply stored profile fonts, if any
-        # Clear the existing items in the list
-        self.profile_fonts_list.clear()
-
-        # Populate the list with the fetched "Profile Fonts"
-        try:
-            for item_text, item_data in profile_fonts:
-                self.profile_fonts_list.addItem(item_text, item_data)
-        except:
-            pass
-
-        if not self.destination_path:
-            self.open_destination_folder.setVisible(False)
-            self.select_destination_button.setStyleSheet(
-                """
-            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+        if self.settingsProfiles_list.currentText():
+            destination_folder = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Destination Folder"
             )
-        else:
-            self.select_destination_button.setStyleSheet(
-                """
-            QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
-            QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA ;border-radius:10px;}"""
+            min_font_size = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Min. Font Size"
             )
-            self.open_destination_folder.setVisible(True)
-        self.enable_WordCloud_Generator_Button()
+            max_font_size = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Max. Font Size"
+            )
+            margin = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Margin"
+            )
+            horizontal_odds = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "H. Odds"
+            )
+            font_step = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Font Step"
+            )
+            char_filtering = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Character Filtering"
+            )
+            clc = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "CLC"
+            )
+            clc_thresh = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "CLC. Thresh"
+            )
+            repeat = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Repeat"
+            )
+            color_preset = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Color Preset"
+            )
+            min_red = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Min Red"
+            )
+            min_green = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Min Green"
+            )
+            min_blue = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Min Blue"
+            )
+            max_red = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Max Red"
+            )
+            max_green = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Max Green"
+            )
+            max_blue = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Max Blue"
+            )
+            stopwords = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "StopWords"
+            )
+            profile_fonts = self.return_SettingsProfiles_fnc(
+                self.settingsProfiles_list.currentText(), "Profile Fonts"
+            )
+            # Apply settings
+            self.min_font_size_slider.setValue(min_font_size)
+            self.max_font_size_slider.setValue(max_font_size)
+            self.margin_slider.setValue(margin)
+            self.prefer_horizontal_slider.setValue(horizontal_odds)
+            self.font_step_slider.setValue(font_step)
+            getattr(self, char_filtering).setChecked(True)
+            self.collocations_checkbox.setChecked(clc)
+            self.collocations_thresh_slider.setValue(clc_thresh)
+            self.repeat_checkbox.setChecked(repeat)
+            self.colormaps_dropdown.setCurrentText(color_preset)
+            self.red_min.setValue(min_red)
+            self.green_min.setValue(min_green)
+            self.blue_min.setValue(min_blue)
+            self.red_max.setValue(max_red)
+            self.green_max.setValue(max_green)
+            self.blue_max.setValue(max_blue)
+            self.destination_path = destination_folder
+            self.stopwords.setText(stopwords)
+            # Apply stored profile fonts, if any
+            # Clear the existing items in the list
+            self.profile_fonts_list.clear()
+
+            # Populate the list with the fetched "Profile Fonts"
+            try:
+                for item_text, item_data in profile_fonts:
+                    self.profile_fonts_list.addItem(item_text, item_data)
+            except:
+                pass
+
+            if not self.destination_path:
+                self.open_destination_folder.setVisible(False)
+                self.select_destination_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{border:2px solid red; background-color:  rgba(100,100,100,150); color: #E6E6FA; border-radius:10px;}"""
+                )
+            else:
+                self.select_destination_button.setStyleSheet(
+                    """
+                QPushButton:pressed{padding-left: 3px; padding-top: 3px;}
+                QPushButton{background-color:  rgba(100,100,100,150); color: #E6E6FA ;border-radius:10px;}"""
+                )
+                self.open_destination_folder.setVisible(True)
+            self.enable_WordCloud_Generator_Button()
 
     def applyTextProfile_fnc(self):
         profile = self.textProfiles_list.currentText()
@@ -2214,6 +2258,12 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.storeProfile_window.profile_name.setPlainText("")
     
     def update_selected_settings_profile(self):
+        self.are_you_sure_window.label_x.setText(f"You are about to update -{self.settingsProfiles_list.currentText()}- Profile with the current settings.\n\nContinue?")
+        self.are_you_sure_window.okay_store_btn.clicked.connect(self.update_selected_settings_profile_OK)
+        self.are_you_sure_window.cancel_store_btn.clicked.connect(lambda _ : self.are_you_sure_window.close())
+        self.are_you_sure_window.show()
+    
+    def update_selected_settings_profile_OK(self):
         if self.settingsProfiles_list.currentText():
             # Connect to the SQLite database
             conn = sqlite3.connect("wcgx.db")
@@ -2271,7 +2321,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
             # Commit the transaction
             conn.commit()
-
+        self.are_you_sure_window.okay_store_btn.clicked.disconnect()
+        self.are_you_sure_window.cancel_store_btn.clicked.disconnect()
+        self.are_you_sure_window.label_x.setText("")
+        self.are_you_sure_window.close()
 
     def cancelSettingsStorage_fnc(self):
         self.storeProfile_window.profile_name.setPlainText("")

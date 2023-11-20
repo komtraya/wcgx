@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1962, 1360)
+        MainWindow.resize(1962, 1368)
         sizePolicy = QSizePolicy(QSizePolicy.MinimumExpanding, QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1358,8 +1358,9 @@ class Ui_MainWindow(object):
 "/* Style the drop-down list scroll bar handle (thumb) */\n"
 "QComboBox QScrollBar::handle:vertical {\n"
 "    background: #141414; /* Background color of the scrollbar handle */\n"
-"    border-radius:5px;\n"
+"    border-radius:0px;\n"
 "}")
+        self.profile_fonts_list.setMaxVisibleItems(15)
 
         self.profileFonts_Frame.addWidget(self.profile_fonts_list)
 
@@ -1958,6 +1959,7 @@ class Ui_MainWindow(object):
 "QComboBox QScrollBar::handle:vertical {\n"
 "    background: #141414; /* Background color of the scrollbar handle */\n"
 "}")
+        self.settingsProfiles_list.setMaxVisibleItems(15)
 
         self.horizontalLayout_7.addWidget(self.settingsProfiles_list)
 
@@ -2090,6 +2092,7 @@ class Ui_MainWindow(object):
 "QComboBox QScrollBar::handle:vertical {\n"
 "    background: #141414; /* Background color of the scrollbar handle */\n"
 "}")
+        self.textProfiles_list.setMaxVisibleItems(15)
 
         self.horizontalLayout_9.addWidget(self.textProfiles_list)
 
@@ -2423,8 +2426,9 @@ class Ui_MainWindow(object):
 "/* Style the drop-down list scroll bar handle (thumb) */\n"
 "QComboBox QScrollBar::handle:vertical {\n"
 "    background: #141414; /* Background color of the scrollbar handle */\n"
-"    border-radius:5px;\n"
+"    border-radius:0px;\n"
 "}")
+        self.colormaps_dropdown.setMaxVisibleItems(15)
 
         self.verticalLayout_19.addWidget(self.colormaps_dropdown)
 
@@ -2451,10 +2455,56 @@ class Ui_MainWindow(object):
         self.RandomColorFrame.setSizePolicy(sizePolicy4)
         self.gridLayout_13 = QGridLayout(self.RandomColorFrame)
         self.gridLayout_13.setObjectName(u"gridLayout_13")
+        self.gridLayout_13.setHorizontalSpacing(0)
+        self.gridLayout_13.setVerticalSpacing(20)
+        self.gridLayout_13.setContentsMargins(-1, -1, -1, 20)
+        self.horizontalLayout_22 = QHBoxLayout()
+        self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
+        self.rcp_bright = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup = QButtonGroup(MainWindow)
+        self.randomColorsPresetsGroup.setObjectName(u"randomColorsPresetsGroup")
+        self.randomColorsPresetsGroup.addButton(self.rcp_bright)
+        self.rcp_bright.setObjectName(u"rcp_bright")
+        sizePolicy4.setHeightForWidth(self.rcp_bright.sizePolicy().hasHeightForWidth())
+        self.rcp_bright.setSizePolicy(sizePolicy4)
+        self.rcp_bright.setFont(font13)
+
+        self.horizontalLayout_22.addWidget(self.rcp_bright)
+
+        self.rcp_gray = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.rcp_gray)
+        self.rcp_gray.setObjectName(u"rcp_gray")
+        sizePolicy4.setHeightForWidth(self.rcp_gray.sizePolicy().hasHeightForWidth())
+        self.rcp_gray.setSizePolicy(sizePolicy4)
+        self.rcp_gray.setFont(font13)
+
+        self.horizontalLayout_22.addWidget(self.rcp_gray)
+
+        self.rcp_dark = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.rcp_dark)
+        self.rcp_dark.setObjectName(u"rcp_dark")
+        sizePolicy4.setHeightForWidth(self.rcp_dark.sizePolicy().hasHeightForWidth())
+        self.rcp_dark.setSizePolicy(sizePolicy4)
+        self.rcp_dark.setFont(font13)
+
+        self.horizontalLayout_22.addWidget(self.rcp_dark)
+
+        self.rcp_reset = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.rcp_reset)
+        self.rcp_reset.setObjectName(u"rcp_reset")
+        sizePolicy4.setHeightForWidth(self.rcp_reset.sizePolicy().hasHeightForWidth())
+        self.rcp_reset.setSizePolicy(sizePolicy4)
+        self.rcp_reset.setFont(font13)
+
+        self.horizontalLayout_22.addWidget(self.rcp_reset)
+
+
+        self.gridLayout_13.addLayout(self.horizontalLayout_22, 1, 0, 1, 1)
+
         self.rColorRangeContainer = QFrame(self.RandomColorFrame)
         self.rColorRangeContainer.setObjectName(u"rColorRangeContainer")
-        sizePolicy8.setHeightForWidth(self.rColorRangeContainer.sizePolicy().hasHeightForWidth())
-        self.rColorRangeContainer.setSizePolicy(sizePolicy8)
+        sizePolicy5.setHeightForWidth(self.rColorRangeContainer.sizePolicy().hasHeightForWidth())
+        self.rColorRangeContainer.setSizePolicy(sizePolicy5)
         self.rColorRangeContainer.setMaximumSize(QSize(256, 16777215))
         self.rColorRangeContainer.setFrameShape(QFrame.NoFrame)
         self.verticalLayout_20 = QVBoxLayout(self.rColorRangeContainer)
@@ -2475,8 +2525,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11.setSpacing(0)
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.rcp_minimize_red = QPushButton(self.color_range_preset_buttons_frame)
-        self.randomColorsPresetsGroup = QButtonGroup(MainWindow)
-        self.randomColorsPresetsGroup.setObjectName(u"randomColorsPresetsGroup")
         self.randomColorsPresetsGroup.addButton(self.rcp_minimize_red)
         self.rcp_minimize_red.setObjectName(u"rcp_minimize_red")
         self.rcp_minimize_red.setFont(font5)
@@ -2597,41 +2645,10 @@ class Ui_MainWindow(object):
 
         self.rcpresets3 = QFrame(self.rColorRangeContainer)
         self.rcpresets3.setObjectName(u"rcpresets3")
-        sizePolicy14 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.MinimumExpanding)
-        sizePolicy14.setHorizontalStretch(0)
-        sizePolicy14.setVerticalStretch(0)
-        sizePolicy14.setHeightForWidth(self.rcpresets3.sizePolicy().hasHeightForWidth())
-        self.rcpresets3.setSizePolicy(sizePolicy14)
+        sizePolicy4.setHeightForWidth(self.rcpresets3.sizePolicy().hasHeightForWidth())
+        self.rcpresets3.setSizePolicy(sizePolicy4)
         self.gridLayout_7 = QGridLayout(self.rcpresets3)
         self.gridLayout_7.setObjectName(u"gridLayout_7")
-        self.rcp_dark = QPushButton(self.rcpresets3)
-        self.randomColorsPresetsGroup.addButton(self.rcp_dark)
-        self.rcp_dark.setObjectName(u"rcp_dark")
-        self.rcp_dark.setFont(font6)
-
-        self.gridLayout_7.addWidget(self.rcp_dark, 0, 2, 1, 1)
-
-        self.rcp_reset = QPushButton(self.rcpresets3)
-        self.randomColorsPresetsGroup.addButton(self.rcp_reset)
-        self.rcp_reset.setObjectName(u"rcp_reset")
-        self.rcp_reset.setFont(font6)
-
-        self.gridLayout_7.addWidget(self.rcp_reset, 0, 4, 1, 1)
-
-        self.rcp_bright = QPushButton(self.rcpresets3)
-        self.randomColorsPresetsGroup.addButton(self.rcp_bright)
-        self.rcp_bright.setObjectName(u"rcp_bright")
-        self.rcp_bright.setFont(font6)
-
-        self.gridLayout_7.addWidget(self.rcp_bright, 0, 0, 1, 1)
-
-        self.rcp_gray = QPushButton(self.rcpresets3)
-        self.randomColorsPresetsGroup.addButton(self.rcp_gray)
-        self.rcp_gray.setObjectName(u"rcp_gray")
-        self.rcp_gray.setFont(font6)
-
-        self.gridLayout_7.addWidget(self.rcp_gray, 0, 1, 1, 1)
-
 
         self.verticalLayout_20.addWidget(self.rcpresets3, 0, Qt.AlignHCenter)
 
@@ -2686,7 +2703,80 @@ class Ui_MainWindow(object):
         self.verticalLayout_20.addWidget(self.ColorsMaxGP, 0, Qt.AlignHCenter|Qt.AlignVCenter)
 
 
-        self.gridLayout_13.addWidget(self.rColorRangeContainer, 0, 0, 1, 1, Qt.AlignHCenter)
+        self.gridLayout_13.addWidget(self.rColorRangeContainer, 0, 0, 1, 1)
+
+        self.horizontalLayout_21 = QHBoxLayout()
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.colp_pink_btn = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.colp_pink_btn)
+        self.colp_pink_btn.setObjectName(u"colp_pink_btn")
+        self.colp_pink_btn.setEnabled(True)
+        self.colp_pink_btn.setMinimumSize(QSize(32, 32))
+        self.colp_pink_btn.setMaximumSize(QSize(32, 32))
+        self.colp_pink_btn.setFont(font6)
+        self.colp_pink_btn.setStyleSheet(u"QPushButton{\n"
+"background: #ff00ff;\n"
+"border-radius: 4px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background:rgba(100,100,100,100)\n"
+"}")
+
+        self.horizontalLayout_21.addWidget(self.colp_pink_btn)
+
+        self.colp_wpp_btn = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.colp_wpp_btn)
+        self.colp_wpp_btn.setObjectName(u"colp_wpp_btn")
+        self.colp_wpp_btn.setEnabled(True)
+        self.colp_wpp_btn.setMinimumSize(QSize(32, 32))
+        self.colp_wpp_btn.setMaximumSize(QSize(32, 32))
+        self.colp_wpp_btn.setFont(font6)
+        self.colp_wpp_btn.setStyleSheet(u"QPushButton{\n"
+"background:#590d3b;\n"
+"border-radius:3px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background:rgba(100,100,100,100)\n"
+"}")
+
+        self.horizontalLayout_21.addWidget(self.colp_wpp_btn)
+
+        self.colp_14_btn = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.colp_14_btn)
+        self.colp_14_btn.setObjectName(u"colp_14_btn")
+        self.colp_14_btn.setEnabled(True)
+        self.colp_14_btn.setMinimumSize(QSize(32, 32))
+        self.colp_14_btn.setMaximumSize(QSize(32, 32))
+        self.colp_14_btn.setFont(font6)
+        self.colp_14_btn.setStyleSheet(u"QPushButton{\n"
+"background:#141414;\n"
+"border-radius:3px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background:rgba(100,100,100,100)\n"
+"}")
+
+        self.horizontalLayout_21.addWidget(self.colp_14_btn)
+
+        self.colp_e6_btn = QPushButton(self.RandomColorFrame)
+        self.randomColorsPresetsGroup.addButton(self.colp_e6_btn)
+        self.colp_e6_btn.setObjectName(u"colp_e6_btn")
+        self.colp_e6_btn.setEnabled(True)
+        self.colp_e6_btn.setMinimumSize(QSize(32, 32))
+        self.colp_e6_btn.setMaximumSize(QSize(32, 32))
+        self.colp_e6_btn.setFont(font6)
+        self.colp_e6_btn.setStyleSheet(u"QPushButton{\n"
+"background:#e6e6e6;\n"
+"border-radius:3px;\n"
+"}\n"
+"QPushButton:pressed{\n"
+"background:rgba(100,100,100,100)\n"
+"}")
+
+        self.horizontalLayout_21.addWidget(self.colp_e6_btn)
+
+
+        self.gridLayout_13.addLayout(self.horizontalLayout_21, 2, 0, 1, 1)
 
 
         self.verticalLayout_18.addWidget(self.RandomColorFrame, 0, Qt.AlignHCenter)
@@ -2703,11 +2793,11 @@ class Ui_MainWindow(object):
 
         self.WC_GeneratorFrame = QFrame(self.centralwidget)
         self.WC_GeneratorFrame.setObjectName(u"WC_GeneratorFrame")
-        sizePolicy15 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy15.setHorizontalStretch(0)
-        sizePolicy15.setVerticalStretch(0)
-        sizePolicy15.setHeightForWidth(self.WC_GeneratorFrame.sizePolicy().hasHeightForWidth())
-        self.WC_GeneratorFrame.setSizePolicy(sizePolicy15)
+        sizePolicy14 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy14.setHorizontalStretch(0)
+        sizePolicy14.setVerticalStretch(0)
+        sizePolicy14.setHeightForWidth(self.WC_GeneratorFrame.sizePolicy().hasHeightForWidth())
+        self.WC_GeneratorFrame.setSizePolicy(sizePolicy14)
         self.WC_GeneratorFrame.setMinimumSize(QSize(0, 300))
         self.horizontalLayout = QHBoxLayout(self.WC_GeneratorFrame)
         self.horizontalLayout.setSpacing(0)
@@ -2833,8 +2923,11 @@ class Ui_MainWindow(object):
 
         self.exportAs_label = QLabel(self.export_as_frame)
         self.exportAs_label.setObjectName(u"exportAs_label")
-        sizePolicy14.setHeightForWidth(self.exportAs_label.sizePolicy().hasHeightForWidth())
-        self.exportAs_label.setSizePolicy(sizePolicy14)
+        sizePolicy15 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.MinimumExpanding)
+        sizePolicy15.setHorizontalStretch(0)
+        sizePolicy15.setVerticalStretch(0)
+        sizePolicy15.setHeightForWidth(self.exportAs_label.sizePolicy().hasHeightForWidth())
+        self.exportAs_label.setSizePolicy(sizePolicy15)
         self.exportAs_label.setFont(font6)
 
         self.gridLayout_2.addWidget(self.exportAs_label, 0, 0, 1, 1, Qt.AlignHCenter)
@@ -3289,20 +3382,20 @@ class Ui_MainWindow(object):
         self.collocations_thresh_info_label.setText(QCoreApplication.translate("MainWindow", u"result here", None))
         self.label_color_presets.setText(QCoreApplication.translate("MainWindow", u"Color Presets", None))
         self.colormaps_dropdown.setItemText(0, QCoreApplication.translate("MainWindow", u"Default", None))
-        self.colormaps_dropdown.setItemText(1, QCoreApplication.translate("MainWindow", u"Gradient", None))
+        self.colormaps_dropdown.setItemText(1, QCoreApplication.translate("MainWindow", u"Dark2", None))
         self.colormaps_dropdown.setItemText(2, QCoreApplication.translate("MainWindow", u"Accent", None))
-        self.colormaps_dropdown.setItemText(3, QCoreApplication.translate("MainWindow", u"Reds", None))
-        self.colormaps_dropdown.setItemText(4, QCoreApplication.translate("MainWindow", u"Dark2", None))
-        self.colormaps_dropdown.setItemText(5, QCoreApplication.translate("MainWindow", u"Paired", None))
-        self.colormaps_dropdown.setItemText(6, QCoreApplication.translate("MainWindow", u"Set1", None))
-        self.colormaps_dropdown.setItemText(7, QCoreApplication.translate("MainWindow", u"Set2", None))
-        self.colormaps_dropdown.setItemText(8, QCoreApplication.translate("MainWindow", u"Set3", None))
-        self.colormaps_dropdown.setItemText(9, QCoreApplication.translate("MainWindow", u"Random Colors", None))
-        self.colormaps_dropdown.setItemText(10, QCoreApplication.translate("MainWindow", u"Greens", None))
-        self.colormaps_dropdown.setItemText(11, QCoreApplication.translate("MainWindow", u"Blues", None))
-        self.colormaps_dropdown.setItemText(12, QCoreApplication.translate("MainWindow", u"Greys", None))
-        self.colormaps_dropdown.setItemText(13, QCoreApplication.translate("MainWindow", u"Purples", None))
-        self.colormaps_dropdown.setItemText(14, QCoreApplication.translate("MainWindow", u"Oranges", None))
+        self.colormaps_dropdown.setItemText(3, QCoreApplication.translate("MainWindow", u"Paired", None))
+        self.colormaps_dropdown.setItemText(4, QCoreApplication.translate("MainWindow", u"Random Colors", None))
+        self.colormaps_dropdown.setItemText(5, QCoreApplication.translate("MainWindow", u"Set1", None))
+        self.colormaps_dropdown.setItemText(6, QCoreApplication.translate("MainWindow", u"Set2", None))
+        self.colormaps_dropdown.setItemText(7, QCoreApplication.translate("MainWindow", u"Set3", None))
+        self.colormaps_dropdown.setItemText(8, QCoreApplication.translate("MainWindow", u"Reds", None))
+        self.colormaps_dropdown.setItemText(9, QCoreApplication.translate("MainWindow", u"Greens", None))
+        self.colormaps_dropdown.setItemText(10, QCoreApplication.translate("MainWindow", u"Blues", None))
+        self.colormaps_dropdown.setItemText(11, QCoreApplication.translate("MainWindow", u"Greys", None))
+        self.colormaps_dropdown.setItemText(12, QCoreApplication.translate("MainWindow", u"Purples", None))
+        self.colormaps_dropdown.setItemText(13, QCoreApplication.translate("MainWindow", u"Oranges", None))
+        self.colormaps_dropdown.setItemText(14, QCoreApplication.translate("MainWindow", u"Gradient", None))
         self.colormaps_dropdown.setItemText(15, QCoreApplication.translate("MainWindow", u"plasma", None))
         self.colormaps_dropdown.setItemText(16, QCoreApplication.translate("MainWindow", u"Spectral", None))
         self.colormaps_dropdown.setItemText(17, QCoreApplication.translate("MainWindow", u"Pastel1", None))
@@ -3334,6 +3427,22 @@ class Ui_MainWindow(object):
 
         self.gradient_settings_btn.setText(QCoreApplication.translate("MainWindow", u"Gradient Settings", None))
 #if QT_CONFIG(tooltip)
+        self.rcp_bright.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.rcp_bright.setText(QCoreApplication.translate("MainWindow", u"Bright", None))
+#if QT_CONFIG(tooltip)
+        self.rcp_gray.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.rcp_gray.setText(QCoreApplication.translate("MainWindow", u"Gray", None))
+#if QT_CONFIG(tooltip)
+        self.rcp_dark.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.rcp_dark.setText(QCoreApplication.translate("MainWindow", u"Dark", None))
+#if QT_CONFIG(tooltip)
+        self.rcp_reset.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Reset all colors to max range </span></p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.rcp_reset.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
+#if QT_CONFIG(tooltip)
         self.rcp_minimize_red.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Min Red </span></p></body></html>", None))
 #endif // QT_CONFIG(tooltip)
         self.rcp_minimize_red.setText(QCoreApplication.translate("MainWindow", u"\u25bc", None))
@@ -3358,23 +3467,23 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(tooltip)
         self.rcp_minimize_blue.setText(QCoreApplication.translate("MainWindow", u"\u25bc", None))
         self.ColorsMinGP.setTitle(QCoreApplication.translate("MainWindow", u"Min", None))
-#if QT_CONFIG(tooltip)
-        self.rcp_dark.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Dark color range </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.rcp_dark.setText(QCoreApplication.translate("MainWindow", u"Dark", None))
-#if QT_CONFIG(tooltip)
-        self.rcp_reset.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Reset all colors to max range </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.rcp_reset.setText(QCoreApplication.translate("MainWindow", u"Reset", None))
-#if QT_CONFIG(tooltip)
-        self.rcp_bright.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Bright color range </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.rcp_bright.setText(QCoreApplication.translate("MainWindow", u"Bright", None))
-#if QT_CONFIG(tooltip)
-        self.rcp_gray.setToolTip(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-weight:400;\">Reset all colors to max range </span></p></body></html>", None))
-#endif // QT_CONFIG(tooltip)
-        self.rcp_gray.setText(QCoreApplication.translate("MainWindow", u"Gray", None))
         self.ColorsMaxGP.setTitle(QCoreApplication.translate("MainWindow", u"Max", None))
+#if QT_CONFIG(tooltip)
+        self.colp_pink_btn.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.colp_pink_btn.setText("")
+#if QT_CONFIG(tooltip)
+        self.colp_wpp_btn.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.colp_wpp_btn.setText("")
+#if QT_CONFIG(tooltip)
+        self.colp_14_btn.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.colp_14_btn.setText("")
+#if QT_CONFIG(tooltip)
+        self.colp_e6_btn.setToolTip("")
+#endif // QT_CONFIG(tooltip)
+        self.colp_e6_btn.setText("")
 #if QT_CONFIG(tooltip)
         self.stash_last_generated_button.setToolTip(QCoreApplication.translate("MainWindow", u"Stash the last generated image", None))
 #endif // QT_CONFIG(tooltip)

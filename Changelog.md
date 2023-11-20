@@ -1,3 +1,11 @@
+**0.7.2**
+
+- Added a few extra presets to Random Colors (Color Presets)
+- When clicking on Update Settings Profile button, an extra step is required for the selected profile to be updated
+- On app start, the first Settings Profile from the list will be applied
+- Some UI touch-ups
+
+
 **0.7.1**
 
 - Implemented "Profile Fonts" - fonts added to this list can be stored in a Settings profile

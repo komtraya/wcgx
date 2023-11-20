@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1962</width>
-    <height>1360</height>
+    <height>1368</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -3014,11 +3014,14 @@ QComboBox QScrollBar:vertical {
 /* Style the drop-down list scroll bar handle (thumb) */
 QComboBox QScrollBar::handle:vertical {
     background: #141414; /* Background color of the scrollbar handle */
-    border-radius:5px;
+    border-radius:0px;
 }</string>
                   </property>
                   <property name="currentIndex">
                    <number>-1</number>
+                  </property>
+                  <property name="maxVisibleItems">
+                   <number>15</number>
                   </property>
                  </widget>
                 </item>
@@ -4278,6 +4281,9 @@ QComboBox QScrollBar::handle:vertical {
     background: #141414; /* Background color of the scrollbar handle */
 }</string>
             </property>
+            <property name="maxVisibleItems">
+             <number>15</number>
+            </property>
            </widget>
           </item>
           <item>
@@ -4561,6 +4567,9 @@ QComboBox QScrollBar:vertical {
 QComboBox QScrollBar::handle:vertical {
     background: #141414; /* Background color of the scrollbar handle */
 }</string>
+            </property>
+            <property name="maxVisibleItems">
+             <number>15</number>
             </property>
            </widget>
           </item>
@@ -5157,30 +5166,18 @@ QComboBox QScrollBar:vertical {
 /* Style the drop-down list scroll bar handle (thumb) */
 QComboBox QScrollBar::handle:vertical {
     background: #141414; /* Background color of the scrollbar handle */
-    border-radius:5px;
+    border-radius:0px;
 }</string>
                </property>
                <property name="currentIndex">
                 <number>0</number>
                </property>
+               <property name="maxVisibleItems">
+                <number>15</number>
+               </property>
                <item>
                 <property name="text">
                  <string>Default</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Gradient</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Accent</string>
-                </property>
-               </item>
-               <item>
-                <property name="text">
-                 <string>Reds</string>
                 </property>
                </item>
                <item>
@@ -5190,7 +5187,17 @@ QComboBox QScrollBar::handle:vertical {
                </item>
                <item>
                 <property name="text">
+                 <string>Accent</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
                  <string>Paired</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Random Colors</string>
                 </property>
                </item>
                <item>
@@ -5210,7 +5217,7 @@ QComboBox QScrollBar::handle:vertical {
                </item>
                <item>
                 <property name="text">
-                 <string>Random Colors</string>
+                 <string>Reds</string>
                 </property>
                </item>
                <item>
@@ -5236,6 +5243,11 @@ QComboBox QScrollBar::handle:vertical {
                <item>
                 <property name="text">
                  <string>Oranges</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Gradient</string>
                 </property>
                </item>
                <item>
@@ -5431,10 +5443,131 @@ color:#e6e6e6;
              </sizepolicy>
             </property>
             <layout class="QGridLayout" name="gridLayout_13">
-             <item row="0" column="0" alignment="Qt::AlignHCenter">
+             <property name="bottomMargin">
+              <number>20</number>
+             </property>
+             <property name="horizontalSpacing">
+              <number>0</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>20</number>
+             </property>
+             <item row="1" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_22">
+               <item>
+                <widget class="QPushButton" name="rcp_bright">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>10</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>Bright</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="rcp_gray">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>10</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>Gray</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="rcp_dark">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>10</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>Dark</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="rcp_reset">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>10</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                 </property>
+                 <property name="text">
+                  <string>Reset</string>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="0" column="0">
               <widget class="QFrame" name="rColorRangeContainer">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -5804,97 +5937,12 @@ color: rgb(255, 255, 255);</string>
                 <item alignment="Qt::AlignHCenter">
                  <widget class="QFrame" name="rcpresets3">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
-                  <layout class="QGridLayout" name="gridLayout_7">
-                   <item row="0" column="2">
-                    <widget class="QPushButton" name="rcp_dark">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Dark color range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Dark</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                   <item row="0" column="4">
-                    <widget class="QPushButton" name="rcp_reset">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Reset</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                   <item row="0" column="0">
-                    <widget class="QPushButton" name="rcp_bright">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Bright color range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Bright</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                   <item row="0" column="1">
-                    <widget class="QPushButton" name="rcp_gray">
-                     <property name="font">
-                      <font>
-                       <family>Inter</family>
-                       <pointsize>9</pointsize>
-                       <italic>false</italic>
-                       <bold>true</bold>
-                      </font>
-                     </property>
-                     <property name="toolTip">
-                      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:400;&quot;&gt;Reset all colors to max range &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                     </property>
-                     <property name="text">
-                      <string>Gray</string>
-                     </property>
-                     <attribute name="buttonGroup">
-                      <string notr="true">randomColorsPresetsGroup</string>
-                     </attribute>
-                    </widget>
-                   </item>
-                  </layout>
+                  <layout class="QGridLayout" name="gridLayout_7"/>
                  </widget>
                 </item>
                 <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
@@ -6034,6 +6082,190 @@ color: rgb(255, 255, 255);</string>
                 </item>
                </layout>
               </widget>
+             </item>
+             <item row="2" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_21">
+               <item>
+                <widget class="QPushButton" name="colp_pink_btn">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>9</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background: #ff00ff;
+border-radius: 4px;
+}
+QPushButton:pressed{
+background:rgba(100,100,100,100)
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="colp_wpp_btn">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>9</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background:#590d3b;
+border-radius:3px;
+}
+QPushButton:pressed{
+background:rgba(100,100,100,100)
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="colp_14_btn">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>9</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background:#141414;
+border-radius:3px;
+}
+QPushButton:pressed{
+background:rgba(100,100,100,100)
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="colp_e6_btn">
+                 <property name="enabled">
+                  <bool>true</bool>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>32</width>
+                   <height>32</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Inter</family>
+                   <pointsize>9</pointsize>
+                   <italic>false</italic>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="toolTip">
+                  <string/>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton{
+background:#e6e6e6;
+border-radius:3px;
+}
+QPushButton:pressed{
+background:rgba(100,100,100,100)
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <attribute name="buttonGroup">
+                  <string notr="true">randomColorsPresetsGroup</string>
+                 </attribute>
+                </widget>
+               </item>
+              </layout>
              </item>
             </layout>
            </widget>
@@ -6688,8 +6920,8 @@ padding-bottom:20px
  <connections/>
  <buttongroups>
   <buttongroup name="parametersButtonGroup"/>
-  <buttongroup name="fontSizePresetsGroup"/>
   <buttongroup name="characterFilteringOptionsGroup"/>
+  <buttongroup name="fontSizePresetsGroup"/>
   <buttongroup name="randomColorsPresetsGroup"/>
  </buttongroups>
 </ui>
