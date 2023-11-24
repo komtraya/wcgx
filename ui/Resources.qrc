@@ -3,6 +3,8 @@
     <file>WCGXicon2.ico</file>
   </qresource>
   <qresource prefix="Media">
+    <file>arrow_back.png</file>
+    <file>arrow_forward.png</file>
     <file>delete_minus.png</file>
     <file>update_repair_settings.png</file>
     <file>add_plus.png</file>

@@ -1,3 +1,11 @@
+**0.7.3**
+
+- Implemented new color preset: "Mask Image Colors"
+    - When this preset is selected, the WordCloud will retain the colors of the mask image
+- Minor refactoring
+- UI touch-ups
+
+
 **0.7.2**
 
 - Added a few extra presets to Random Colors (Color Presets)

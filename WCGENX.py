@@ -3,8 +3,8 @@ import random
 import sys
 import os
 import json
-from wordcloud import WordCloud
-from PIL import Image
+from wordcloud import WordCloud, ImageColorGenerator
+from PIL import Image, ImageEnhance
 from PIL.ImageQt import ImageQt
 from PySide6 import QtWidgets as widget
 from PySide6.QtGui import QFont, QFontDatabase, QPixmap, QImage, QPainter, QColor, QIcon
@@ -468,49 +468,41 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.select_destination_button.clicked.connect(
             self.select_destination_button_clicked
         )
-
+        ## Turn the page
+        self.pageSwitchButtonsGroup.buttonClicked.connect(self.turn_the_page)
         ## Margin.current
         # Connect the slider to the function that updates the label to reflect changes
         self.margin_slider.valueChanged.connect(self.margin_slider_changed)
-        # Connect the slider to the function that updates the label to reflect changes
-        self.margin_slider_changed(self.margin_slider.value())
+        
         ## Image Scale Slider
         # Connect the slider to the function that updates the label to reflect changes
         self.scale_slider.valueChanged.connect(self.scale_slider_changed)
-        # Call the slot initially to update label from start
-        self.scale_slider_changed(self.scale_slider.value())
+        
         ## Minimum Font Size Slider
         self.min_font_size_slider.valueChanged.connect(
             self.min_font_size_slider_changed
         )
-        # Call the slot initially to set the initial value of the label
-        self.min_font_size_slider_changed(self.min_font_size_slider.value())
 
         ## Maximum Font Size Slider
         self.max_font_size_slider.valueChanged.connect(
             self.max_font_size_slider_changed
         )
-        # Call the slot initially to set the initial font_size label
-        self.max_font_size_slider_changed(self.max_font_size_slider.value())
-
+        
+        ## Color detection thresh
+        # Hide color frame on app start:
+        self.colorEdgeSliderFrame.setVisible(False)
+        self.color_thresh_slider.valueChanged.connect(self.color_thresh_slider_changed)
         ## Prefer Horizontal Slider
         self.prefer_horizontal_slider.valueChanged.connect(
             self.prefer_horizontal_slider_changed
         )
-        # Call the slot initially to set the initial value of the label
-        self.prefer_horizontal_slider_changed(self.prefer_horizontal_slider.value())
-
         ## Collocation Thresh Slider
-
         self.collocations_thresh_slider.valueChanged.connect(
             self.collocations_thresh_slider_changed
         )
-        # Connect the slider to the function that updates the label to reflect changes from the start
-        self.collocations_thresh_slider_changed(self.collocations_thresh_slider.value())
         ## Font Step Slider
         self.font_step_slider.valueChanged.connect(self.font_step_slider_changed)
-        # Connect the slider to the function that updates the label to reflect changes from the start
-        self.font_step_slider_changed(self.font_step_slider.value())
+        
         ## Random Seed Slider
         self.random_seed_slider.valueChanged.connect(self.random_seed_slider_changed)
         ##Gradient Settings and Color selection Buttons
@@ -555,8 +547,27 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.apply_selected_font(first_item)
     # # # # # Create WordCloud object and Export Image(s) # # # # #
     def generate_WordCloud(self):
+
+        if self.colormaps_dropdown.currentText() == "Mask Image Colors":
+            # Maintain original colors 
+            color_thresh = self.color_thresh_slider.value()
+            color_mask = self.mask_image.copy()
+            color_mask[np.sum(color_mask, axis=2) == 0] = 255
+
+            # Enforce boundaries between colors
+            edges = np.mean([np.gradient(color_mask[:, :, i].astype(float)) for i in range(3)], axis=0)
+            color_mask[np.linalg.norm(edges, axis=0) > color_thresh] = 255  # Adjust the threshold as needed
+
+            mask_image = color_mask
+
+            # Create coloring from mask image
+            image_colors = ImageColorGenerator(color_mask)
+        else:
+            mask_image = self.mask_image
+
+        
         wordcloud = WordCloud(
-            mask=self.mask_image,
+            mask=mask_image,
             regexp=self.custom_regexp(),
             background_color=None,
             scale=self.scale_slider.value(),  # this controls the size of the image - multiplier for original size
@@ -576,16 +587,23 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             min_word_length=0,
             include_numbers=True,
             random_state=self.random_state_fnc(),  # Generated WC will be the same color/layout, until random_state int is different
+            #relative_scaling="auto"
         )
         # @ generate wc
-
         try:
             wordcloud.generate(self.word_input.toPlainText())
+            
         except Exception as e:
             self.error_window.error_lbl.setText(f"\n # Error:\n{e}")
             self.error_window.show()
             self.error_window.adjustSize()
-
+        if self.colormaps_dropdown.currentText() == "Mask Image Colors":
+                try:
+                    wordcloud.recolor(color_func=image_colors)
+                except:
+                    self.error_window.error_lbl.setText(f"\n # Error:\nColor boundaries algorithm failed.\nApplying default color preset instead...")
+                    self.error_window.show()
+                    self.error_window.adjustSize()
         # @ Export Image @ #
         ##PNG
         if self.export_format_options.currentText() == "PNG":
@@ -689,7 +707,7 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
                         255,
                         255,
                         255,
-                    ]  # Replace transparent with white
+                    ]  # Replace transparent with white (because white is ignored)
                 except:
                     self.mask_image = np.array(Image.open((self.mask_path)))
                 self.update_image_dimensions()
@@ -1020,6 +1038,9 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
         self.label_max_font_size_slider.setText(f"{(value)}")
         self.max_font_size_info_label.setText(f"{(value)}")
 
+    def color_thresh_slider_changed(self, value:int):
+        self.color_thresh_slider_lbl.setText(f"{(value)}")
+    
     def collocations_thresh_slider_changed(self, value: int):
         self.collocation_thresh_slider_label.setText(f"{(value)}")
         self.collocations_thresh_info_label.setText(f"{value}")
@@ -1134,7 +1155,11 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.WC_GeneratorFrame.setVisible(True)
         else:
             self.WC_GeneratorFrame.setVisible(False)
-
+    def turn_the_page(self, button):
+        if button == self.page_forward_btn:
+            self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() + 1)
+        if button == self.page_back_btn:
+            self.stackedWidget.setCurrentIndex(self.stackedWidget.currentIndex() - 1)
     ## SELECT FONT and FONT HANDLING
     def apply_selected_font(self, item):
         try:
@@ -1398,6 +1423,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
 
     ## ColorMap and Color Function Conditions ##
     def colormap_conditions(self):
+        if self.colormaps_dropdown.currentText() == "Mask Image Colors":
+            self.colormap = "gist_ncar"
+            self.color_function = None
+            return self.colormap
         if self.colormaps_dropdown.currentText() == "Default":
             self.colormap = "gist_ncar"
             self.color_function = None
@@ -1445,6 +1474,10 @@ class WCGX(widget.QMainWindow, Ui_MainWindow):
             self.gradient_settings_btn.setVisible(True)
         else:
             self.gradient_settings_btn.setVisible(False)
+        if self.colormaps_dropdown.currentText() == "Mask Image Colors":
+            self.colorEdgeSliderFrame.setVisible(True)
+        else:
+            self.colorEdgeSliderFrame.setVisible(False)
 
     def update_gradient_transparency_indicator_fnc(self, int):
         self.gradient_window.transparency_indicator_lbl.setText(f"{int}")
